@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-lazy="false" auto-import="false">
+	<import class="org.kisti.edison.model.Workflow" />
+	<import class="org.kisti.edison.model.WorkflowInstance" />
+	<class name="org.kisti.edison.model.impl.WorkflowImpl" table="EDWF_Workflow">
+		<cache usage="read-write" />
+		<id name="workflowId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="isPublic" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="parentWorkflowId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="screenLogic" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="org.kisti.edison.model.impl.WorkflowInstanceImpl" table="EDWF_WorkflowInstance">
+		<cache usage="read-write" />
+		<id name="workflowInstanceId" type="long">
+			<generator class="increment" />
+		</id>
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="status" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="startTime" type="org.hibernate.type.TimestampType" />
+		<property name="endTime" type="org.hibernate.type.TimestampType" />
+		<property name="workflowId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="workflowUUID" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="screenLogic" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE look-and-feel PUBLIC "-//Liferay//DTD Look and Feel 6.2.0//EN" "http://www.liferay.com/dtd/liferay-look-and-feel_6_2_0.dtd">
+
+<look-and-feel>
+	<compatibility>
+		<version>6.2.5+</version>
+	</compatibility>
+	<theme id="edison-chem-type1" name="Edison Chem Type1" >
+	<root-path>/</root-path>
+		<css-path>${root-path}/css</css-path>
+		<images-path>${root-path}/images</images-path>
+		<javascript-path>${root-path}/js</javascript-path>
+		<settings>
+			<setting key="content-title" value="CHEM" configurable="true" type="text"></setting>
+			<setting key="portlet-setup-show-borders-default" value="false"></setting>
+		</settings>
+	</theme>
+</look-and-feel>

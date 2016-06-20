@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="org.kisti.edison.customauthmanager.model.UserGroupRoleCustom">
+		<field name="userId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="roleId" type="long" />
+		<field name="customId" type="long" />
+		<field name="createDate" type="Date" />
+	</model>
+</model-hints>

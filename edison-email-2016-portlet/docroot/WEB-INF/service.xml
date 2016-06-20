@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
+<service-builder package-path="org.kisti.edison">
+	<author>EDISON</author>
+	<namespace>EDMAIL</namespace>
+
+	<entity name="SendMailContent" local-service="true">
+
+    	<!-- PK fields -->
+
+    	<column name="sendMailId" type="long" primary="true"></column>
+    	
+    	<!-- Audit fields -->
+		
+    	<column name="userId" type="long"></column>
+    	
+    	<column name="sendCount" type="int"></column>
+    	<column name="successCount" type="int"></column>
+    	<column name="failCount" type="int"></column>
+    	<column name="sendDate" type="Date"></column>
+    	
+		<column name="siteGroup" type="String"></column>
+		<column name="userGroup" type="String"></column>
+		<column name="state" type="String"></column>
+		<column name="title" type="String"></column>
+		<column name="content" type="String"></column>
+    </entity> 
+	
+</service-builder>

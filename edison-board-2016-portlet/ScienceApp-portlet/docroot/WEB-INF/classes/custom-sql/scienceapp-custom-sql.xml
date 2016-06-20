@@ -1,0 +1,629 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom-sql>
+	<sql id="com.kisti.science.platform.app.service.persistence.ScienceAppFinder.retrieveScienceAppsOnNameTitleScreenNameAffiliationName" >
+		<![CDATA[
+			(
+				SELECT app.*
+				from
+					ScienceApp_ScienceApp AS app
+				where
+					(app.title LIKE ?) OR
+					(app.name LIKE ?)
+			)    
+			UNION
+			(    
+				SELECT app.*
+				FROM (
+						SELECT man.*
+				        FROM
+							(
+								SELECT user.*
+								FROM 
+									User_ AS user
+								WHERE
+									user.screenName = ?
+							) AS user
+							JOIN
+								ScienceApp_ScienceAppManager AS man
+								ON user.userId = man.managerId
+					) AS sm
+					JOIN
+						ScienceApp_ScienceApp AS app
+				        ON sm.scienceAppId = app.scienceAppId
+			)        
+			UNION
+			(
+				SELECT app.*
+				FROM (
+					SELECT aff.*
+					FROM
+						SciencePlatformHook_SpAffiliation AS aff
+					WHERE
+						aff.spAffiliationName LIKE ?
+					) AS affid
+					JOIN 
+						SciencePlatformHook_SpUser AS spUser 
+						ON
+							spUser.spAffiliationId = affid.spAffiliationId
+				    JOIN
+						ScienceApp_ScienceApp AS app ON (app.userId = spUser.spUserId OR app.authorId = spUser.spUserId)
+			)
+		]]>
+	</sql>
+	<sql id="com.kisti.science.platform.app.service.persistence.ScienceAppFinder.retrieveScienceAppsOnNameTitleScreenNameAffiliationNameByStage" >
+		<![CDATA[
+			(
+				SELECT app.*
+				from
+					ScienceApp_ScienceApp AS app
+				where
+					((app.title LIKE ?) OR
+					(app.name LIKE ?)) AND
+					app.stage = ?
+			)    
+			UNION
+			(    
+				SELECT app.*
+				FROM (
+						SELECT man.*
+				        FROM
+							(
+								SELECT user.*
+								FROM 
+									User_ AS user
+								WHERE
+									user.screenName = ?
+							) AS user
+							JOIN
+								ScienceApp_ScienceAppManager AS man
+								ON user.userId = man.managerId
+					) AS sm
+					JOIN
+						ScienceApp_ScienceApp AS app
+				        ON sm.scienceAppId = app.scienceAppId
+				WHERE
+					app.stage = ?
+			)        
+			UNION
+			(
+				SELECT app.*
+				FROM (
+					SELECT aff.*
+					FROM
+						SciencePlatformHook_SpAffiliation AS aff
+					WHERE
+						aff.spAffiliationName LIKE ?
+					) AS affid
+					JOIN 
+						SciencePlatformHook_SpUser AS spUser 
+						ON
+							spUser.spAffiliationId = affid.spAffiliationId
+				    JOIN
+						ScienceApp_ScienceApp AS app ON (app.userId = spUser.spUserId OR app.authorId = spUser.spUserId)
+				WHERE
+					app.stage = ?
+			)
+		]]>
+	</sql>
+	<sql id="com.kisti.science.platform.app.service.persistence.ScienceAppFinder.retrieveScienceAppsOnNameTitleScreenNameAffiliationNameByTarget" >
+		<![CDATA[
+			(
+				SELECT app.*
+				from
+					ScienceApp_ScienceApp AS app
+				where
+					((app.title LIKE ?) OR
+					(app.name LIKE ?)) AND
+					app.stage = ? AND
+					app.targetLanguage = ?
+			)    
+			UNION
+			(    
+				SELECT app.*
+				FROM (
+						SELECT man.*
+				        FROM
+							(
+								SELECT user.*
+								FROM 
+									User_ AS user
+								WHERE
+									user.screenName = ?
+							) AS user
+							JOIN
+								ScienceApp_ScienceAppManager AS man
+								ON user.userId = man.managerId
+					) AS sm
+					JOIN
+						ScienceApp_ScienceApp AS app
+				        ON sm.scienceAppId = app.scienceAppId
+				WHERE
+					app.targetLanguage = ?
+			)        
+			UNION
+			(
+				SELECT app.*
+				FROM (
+					SELECT aff.*
+					FROM
+						SciencePlatformHook_SpAffiliation AS aff
+					WHERE
+						aff.spAffiliationName LIKE ?
+					) AS affid
+					JOIN 
+						SciencePlatformHook_SpUser AS spUser 
+						ON
+							spUser.spAffiliationId = affid.spAffiliationId
+				    JOIN
+						ScienceApp_ScienceApp AS app ON (app.userId = spUser.spUserId OR app.authorId = spUser.spUserId)
+				WHERE
+					app.targetLanguage = ?
+			)
+		]]>
+	</sql>
+	<sql id="com.kisti.science.platform.app.service.persistence.ScienceAppFinder.retrieveScienceAppsOnNameTitleScreenNameAffiliationNameByStageTarget" >
+		<![CDATA[
+			(
+				SELECT app.*
+				from
+					ScienceApp_ScienceApp AS app
+				where
+					((app.title LIKE ?) OR
+					(app.name LIKE ?)) AND
+					app.stage = ? AND
+					app.targetLanguage = ?
+			)    
+			UNION
+			(    
+				SELECT app.*
+				FROM (
+						SELECT man.*
+				        FROM
+							(
+								SELECT user.*
+								FROM 
+									User_ AS user
+								WHERE
+									user.screenName = ?
+							) AS user
+							JOIN
+								ScienceApp_ScienceAppManager AS man
+								ON user.userId = man.managerId
+					) AS sm
+					JOIN
+						ScienceApp_ScienceApp AS app
+				        ON sm.scienceAppId = app.scienceAppId
+				WHERE
+					app.stage = ? AND
+					app.targetLanguage = ?
+			)        
+			UNION
+			(
+				SELECT app.*
+				FROM (
+					SELECT aff.*
+					FROM
+						SciencePlatformHook_SpAffiliation AS aff
+					WHERE
+						aff.spAffiliationName LIKE ?
+					) AS affid
+					JOIN 
+						SciencePlatformHook_SpUser AS spUser 
+						ON
+							spUser.spAffiliationId = affid.spAffiliationId
+				    JOIN
+						ScienceApp_ScienceApp AS app ON (app.userId = spUser.spUserId OR app.authorId = spUser.spUserId)
+				WHERE
+					app.stage = ? AND
+					app.targetLanguage = ?
+			)
+		]]>
+	</sql>
+	
+	<sql id="com.kisti.science.platform.app.service.persistence.ScienceAppFinder.retrieveScienceAppsOnScreenName" >
+		<![CDATA[
+			SELECT app.*
+			FROM (
+					SELECT man.*
+			        FROM
+						(
+							SELECT user.*
+							FROM 
+								User_ AS user
+							WHERE
+								user.screenName = ?
+						) AS user
+						JOIN
+							ScienceApp_ScienceAppManager AS man
+							ON user.userId = man.managerId
+				) AS sm
+				JOIN
+			        ON sm.scienceAppId = app.scienceAppId
+		]]>
+	</sql>
+	<sql id="com.kisti.science.platform.app.service.persistence.ScienceAppFinder.retrieveScienceAppsOnScreenNameByStage" >
+		<![CDATA[
+			SELECT app.*
+			FROM (
+					SELECT man.*
+			        FROM
+						(
+							SELECT user.*
+							FROM 
+								User_ AS user
+							WHERE
+								user.screenName = ?
+						) AS user
+						JOIN
+							ScienceApp_ScienceAppManager AS man
+							ON user.userId = man.managerId
+				) AS sm
+				JOIN
+					ScienceApp_ScienceApp AS app
+			        ON sm.scienceAppId = app.scienceAppId
+			WHERE
+				app.stage = ?
+		]]>
+	</sql>
+	<sql id="com.kisti.science.platform.app.service.persistence.ScienceAppFinder.retrieveScienceAppsOnScreenNameByTarget" >
+		<![CDATA[
+			SELECT app.*
+			FROM (
+					SELECT man.*
+			        FROM
+						(
+							SELECT user.*
+							FROM 
+								User_ AS user
+							WHERE
+								user.screenName = ?
+						) AS user
+						JOIN
+							ScienceApp_ScienceAppManager AS man
+							ON user.userId = man.managerId
+				) AS sm
+				JOIN
+					ScienceApp_ScienceApp AS app
+			        ON sm.scienceAppId = app.scienceAppId
+			WHERE
+				app.targetLanguage = ?
+		]]>
+	</sql>
+	<sql id="com.kisti.science.platform.app.service.persistence.ScienceAppFinder.retrieveScienceAppsOnScreenNameByStageTarget" >
+		<![CDATA[
+			SELECT app.*
+			FROM (
+					SELECT man.*
+			        FROM
+						(
+							SELECT user.*
+							FROM 
+								User_ AS user
+							WHERE
+								user.screenName = ?
+						) AS user
+						JOIN
+							ScienceApp_ScienceAppManager AS man
+							ON user.userId = man.managerId
+				) AS sm
+				JOIN
+					ScienceApp_ScienceApp AS app
+			        ON sm.scienceAppId = app.scienceAppId
+			WHERE
+				app.stage = ? AND
+				app.targetLanguage = ?
+		]]>
+	</sql>
+	<sql id="com.kisti.science.platform.app.service.persistence.ScienceAppFinder.retrieveScienceAppsOnAffiliationName" >
+		<![CDATA[
+			SELECT app.*
+			FROM (
+				SELECT aff.*
+				FROM
+					SciencePlatformHook_SpAffiliation AS aff
+				WHERE
+					aff.spAffiliationName LIKE ?
+				) AS affid
+				JOIN 
+					SciencePlatformHook_SpUser AS spUser 
+					ON
+						spUser.spAffiliationId = affid.spAffiliationId
+			    JOIN
+					ScienceApp_ScienceApp AS app ON (app.userId = spUser.spUserId OR app.authorId = spUser.spUserId)
+		]]>
+	</sql>
+	<sql id="com.kisti.science.platform.app.service.persistence.ScienceAppFinder.retrieveScienceAppsOnAffiliationNameByStage" >
+		<![CDATA[
+			SELECT app.*
+			FROM (
+				SELECT aff.*
+				FROM
+					SciencePlatformHook_SpAffiliation AS aff
+				WHERE
+					aff.spAffiliationName LIKE ?
+				) AS affid
+				JOIN 
+					SciencePlatformHook_SpUser AS spUser 
+					ON
+						spUser.spAffiliationId = affid.spAffiliationId
+			    JOIN
+					ScienceApp_ScienceApp AS app ON (app.userId = spUser.spUserId OR app.authorId = spUser.spUserId)
+			WHERE
+				app.stage = ?
+		]]>
+	</sql>
+	<sql id="com.kisti.science.platform.app.service.persistence.ScienceAppFinder.retrieveScienceAppsOnAffiliationNameByTarget" >
+		<![CDATA[
+			SELECT app.*
+			FROM (
+				SELECT aff.*
+				FROM
+					SciencePlatformHook_SpAffiliation AS aff
+				WHERE
+					aff.spAffiliationName LIKE ?
+				) AS affid
+				JOIN 
+					SciencePlatformHook_SpUser AS spUser 
+					ON
+						spUser.spAffiliationId = affid.spAffiliationId
+			    JOIN
+					ScienceApp_ScienceApp AS app ON (app.userId = spUser.spUserId OR app.authorId = spUser.spUserId)
+			WHERE
+				app.targetLanguage = ?
+		]]>
+	</sql>
+	<sql id="com.kisti.science.platform.app.service.persistence.ScienceAppFinder.retrieveScienceAppsOnAffiliationNameByStageTarget" >
+		<![CDATA[
+			SELECT app.*
+			FROM (
+				SELECT aff.*
+				FROM
+					SciencePlatformHook_SpAffiliation AS aff
+				WHERE
+					aff.spAffiliationName LIKE ?
+				) AS affid
+				JOIN 
+					SciencePlatformHook_SpUser AS spUser 
+					ON
+						spUser.spAffiliationId = affid.spAffiliationId
+			    JOIN
+					ScienceApp_ScienceApp AS app ON (app.userId = spUser.spUserId OR app.authorId = spUser.spUserId)
+			WHERE
+				app.stage = ? AND
+				app.targetLanguage = ?
+		]]>
+	</sql>
+	<sql id="com.kisti.science.platform.app.service.persistence.ScienceAppFinder.retrieveScienceAppsByVocabularyId" >
+		<![CDATA[
+			SELECT app.*
+			FROM
+				(
+				SELECT link.scienceAppId
+				FROM
+					(
+						SELECT category.*
+						FROM
+							AssetCategory AS category
+						WHERE
+							category.vocabularyId = ?
+					) AS catId
+					JOIN 
+						scienceapp_scienceappcategorylink AS link
+						ON catId.categoryId = link.categoryId
+				) AS slink
+    			JOIN
+					scienceapp_scienceapp AS app
+        			ON slink.scienceAppId = app.scienceAppId
+		]]>
+	</sql>
+	<sql id="com.kisti.science.platform.app.service.persistence.ScienceAppFinder.retrieveScienceAppsByVocabularyIdStage" >
+		<![CDATA[
+			SELECT app.*
+			FROM
+				(
+				SELECT link.scienceAppId
+				FROM
+					(
+						SELECT category.*
+						FROM
+							AssetCategory AS category
+						WHERE
+							category.vocabularyId = ?
+					) AS catId
+					JOIN 
+						scienceapp_scienceappcategorylink AS link
+						ON catId.categoryId = link.categoryId
+				) AS slink
+    			JOIN
+					scienceapp_scienceapp AS app
+        			ON slink.scienceAppId = app.scienceAppId
+        	WHERE
+        		app.stage = ?
+		]]>
+	</sql>
+	<sql id="com.kisti.science.platform.app.service.persistence.ScienceAppFinder.retrieveScienceAppsByVocabularyIdTarget" >
+		<![CDATA[
+			SELECT app.*
+			FROM
+				(
+				SELECT link.scienceAppId
+				FROM
+					(
+						SELECT category.*
+						FROM
+							AssetCategory AS category
+						WHERE
+							category.vocabularyId = ?
+					) AS catId
+					JOIN 
+						scienceapp_scienceappcategorylink AS link
+						ON catId.categoryId = link.categoryId
+				) AS slink
+    			JOIN
+					scienceapp_scienceapp AS app
+        			ON slink.scienceAppId = app.scienceAppId
+        	WHERE
+        		app.targetLanguage = ?
+		]]>
+	</sql>
+	<sql id="com.kisti.science.platform.app.service.persistence.ScienceAppFinder.retrieveScienceAppsByVocabularyIdStageTarget" >
+		<![CDATA[
+			SELECT app.*
+			FROM
+				(
+				SELECT link.scienceAppId
+				FROM
+					(
+						SELECT category.*
+						FROM
+							AssetCategory AS category
+						WHERE
+							category.vocabularyId = ?
+					) AS catId
+					JOIN 
+						scienceapp_scienceappcategorylink AS link
+						ON catId.categoryId = link.categoryId
+				) AS slink
+    			JOIN
+					scienceapp_scienceapp AS app
+        			ON slink.scienceAppId = app.scienceAppId
+        	WHERE
+        		app.stage = ? AND
+        		app.targetLanguage = ?
+		]]>
+	</sql>
+	<sql id="com.kisti.science.platform.app.service.persistence.ScienceAppFinder.retrieveScienceAppsByCategoryId" >
+		<![CDATA[
+			SELECT app.*
+			FROM
+				(
+				SELECT link.scienceAppId
+				FROM
+					(
+						(
+							SELECT rc.*
+							FROM
+								AssetCategory AS rc
+							WHERE
+								rc.categoryId = ?
+						)
+						UNION
+						(
+							SELECT cc.*
+							FROM
+								AssetCategory as cc
+							WHERE
+								cc.parentCategoryId = ?
+						)
+					) AS catId
+					JOIN 
+						scienceapp_scienceappcategorylink AS link
+						ON catId.categoryId = link.categoryId
+				) AS slink
+    			JOIN
+					scienceapp_scienceapp AS app
+        			ON slink.scienceAppId = app.scienceAppId
+		]]>
+	</sql>
+	<sql id="com.kisti.science.platform.app.service.persistence.ScienceAppFinder.retrieveScienceAppsByCategoryIdStage" >
+		<![CDATA[
+			SELECT app.*
+			FROM(
+				SELECT link.scienceAppId
+				FROM(
+						(
+							SELECT rc.*
+							FROM
+								AssetCategory AS rc
+							WHERE
+								rc.categoryId = ?
+						)
+						UNION
+						(
+							SELECT cc.*
+							FROM
+								AssetCategory as cc
+							WHERE
+								cc.parentCategoryId = ?
+						)
+				) AS catId
+				JOIN 
+					scienceapp_scienceappcategorylink AS link
+					ON catId.categoryId = link.categoryId
+			) AS slink
+    		JOIN
+				scienceapp_scienceapp AS app
+        		ON slink.scienceAppId = app.scienceAppId
+        	WHERE
+        		app.stage = ?
+		]]>
+	</sql>
+	<sql id="com.kisti.science.platform.app.service.persistence.ScienceAppFinder.retrieveScienceAppsByCategoryIdTarget" >
+		<![CDATA[
+			SELECT app.*
+			FROM (
+				SELECT link.scienceAppId
+				FROM(
+						(
+							SELECT rc.*
+							FROM
+								AssetCategory AS rc
+							WHERE
+								rc.categoryId = ?
+						)
+						UNION
+						(
+							SELECT cc.*
+							FROM
+								AssetCategory as cc
+							WHERE
+								cc.parentCategoryId = ?
+						)
+				) AS catId
+				JOIN 
+					scienceapp_scienceappcategorylink AS link
+					ON catId.categoryId = link.categoryId
+			) AS slink
+    		JOIN
+				scienceapp_scienceapp AS app
+        		ON slink.scienceAppId = app.scienceAppId
+        	WHERE
+        		app.targetLanguage = ?
+		]]>
+	</sql>
+	<sql id="com.kisti.science.platform.app.service.persistence.ScienceAppFinder.retrieveScienceAppsByCategoryIdStageTarget" >
+		<![CDATA[
+			SELECT app.*
+			FROM(
+				SELECT link.scienceAppId
+				FROM(
+						(
+							SELECT rc.*
+							FROM
+								AssetCategory AS rc
+							WHERE
+								rc.categoryId = ?
+						)
+						UNION
+						(
+							SELECT cc.*
+							FROM
+								AssetCategory as cc
+							WHERE
+								cc.parentCategoryId = ?
+						)
+				) AS catId
+				JOIN 
+					scienceapp_scienceappcategorylink AS link
+					ON catId.categoryId = link.categoryId
+			) AS slink
+    		JOIN
+				scienceapp_scienceapp AS app
+        		ON slink.scienceAppId = app.scienceAppId
+        	WHERE
+        		app.stage = ? AND
+        		app.targetLanguage = ?
+		]]>
+	</sql>
+	
+</custom-sql>

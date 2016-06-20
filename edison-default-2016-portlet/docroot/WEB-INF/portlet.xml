@@ -1,0 +1,171 @@
+<?xml version="1.0"?>
+
+<portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd" version="2.0">
+	<portlet>
+		<portlet-name>edison-privateinfoporlicy</portlet-name>
+		<display-name>Edison Private Info Porlicy</display-name>
+		<portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+		<init-param>
+			<name>contextConfigLocation</name>
+			<value>classpath:org/kisti/edison/privateinfopolicy/edison-privateinfoporlicy-portlet.xml</value>
+		</init-param>
+		<init-param>
+			<name>check-auth-token</name>
+			<value>false</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<portlet-info>
+			<title>Edison Private Info Porlicy</title>
+			<short-title>Edison Private Info Porlicy</short-title>
+			<keywords>Edison Private Info Porlicy</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	
+	
+	<portlet>
+		<portlet-name>edison-termsofuse</portlet-name>
+		<display-name>Edison Terms Of Use</display-name>
+		<portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+		<init-param>
+			<name>contextConfigLocation</name>
+			<value>classpath:org/kisti/edison/termsofuse/edison-termsofuse-portlet.xml</value>
+		</init-param>
+		<init-param>
+			<name>check-auth-token</name>
+			<value>false</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<portlet-info>
+			<title>Edison Terms Of Use</title>
+			<short-title>Edison Terms Of Use</short-title>
+			<keywords>Edison Terms Of Use</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	
+	
+	<portlet>
+		<portlet-name>edison-orgcodesearch</portlet-name>
+		<display-name>Edison OrgCodeSearch</display-name>
+		<portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+		<init-param>
+			<name>contextConfigLocation</name>
+			<value>classpath:org/kisti/edison/orgcodesearch/edison-orgcodesearch-portlet.xml</value>
+		</init-param>
+		<init-param>
+			<name>check-auth-token</name>
+			<value>false</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<portlet-info>
+			<title>Edison OrgCodeSearch</title>
+			<short-title>Edison OrgCodeSearch</short-title>
+			<keywords>Edison OrgCodeSearch</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	
+	
+	<portlet>
+		<portlet-name>edison-portalagree</portlet-name>
+		<display-name>Edison Portal Agree</display-name>
+		<portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+		<init-param>
+			<name>contextConfigLocation</name>
+			<value>classpath:org/kisti/edison/portalagree/edison-portalagree-portlet.xml</value>
+		</init-param>
+		<init-param>
+			<name>check-auth-token</name>
+			<value>false</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<portlet-info>
+			<title>Edison Portal Agree</title>
+			<short-title>Edison Portal Agree</short-title>
+			<keywords>Edison Portal Agree</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	
+	<portlet>
+		<portlet-name>edison-site-join</portlet-name>
+		<display-name>Edison Site Join</display-name>
+		<portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+		<init-param>
+			<name>contextConfigLocation</name>
+			<value>classpath:org/kisti/edison/sitejoin/edison-sitejoin-portlet.xml</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<portlet-info>
+			<title>Edison Site Join</title>
+			<short-title>Edison Site Join</short-title>
+			<keywords>Edison Site Join</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+</portlet-app>

@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+
+<ivy-module
+	version="2.0"
+	xmlns:m2="http://ant.apache.org/ivy/maven"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd"
+>
+	<info module="edison-workflow-2016-portlet" organisation="com.liferay">
+		<extends extendType="configurations,description,info" location="../../ivy.xml" module="com.liferay.sdk" organisation="com.liferay" revision="latest.integration" />
+	</info>
+
+	<dependencies defaultconf="default">
+		<dependency conf="test->default" name="arquillian-junit-container" org="org.jboss.arquillian.junit" rev="1.1.6.Final" />
+		<dependency conf="test->default" name="arquillian-tomcat-remote-7" org="org.jboss.arquillian.container" rev="1.0.0.CR6" />
+		<dependency conf="test->default" name="com.liferay.ant.arquillian" org="com.liferay" rev="1.0.0-SNAPSHOT" />
+		
+		<dependency org="org.springframework" name="spring-webmvc-portlet" rev="3.0.7.RELEASE" />
+		<dependency org="org.springframework" name="spring-webmvc" rev="3.0.7.RELEASE" />
+		
+		<dependency org="org.codehaus.jackson" name="jackson-mapper-asl" rev="1.9.13" />
+		<dependency org="org.codehaus.jackson" name="jackson-core-asl" rev="1.9.13" />
+		
+		<dependency org="uk.com.robust-it" name="cloning" rev="1.9.2" />
+	</dependencies>
+</ivy-module>

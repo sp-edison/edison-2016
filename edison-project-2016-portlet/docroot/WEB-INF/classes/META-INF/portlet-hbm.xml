@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-lazy="false" auto-import="false">
+	<import class="org.kisti.edison.project.model.HistoryAppSimulation" />
+	<import class="org.kisti.edison.project.model.HistoryContent" />
+	<import class="org.kisti.edison.project.model.HistoryScienceApp" />
+	<class name="org.kisti.edison.project.model.impl.HistoryAppSimulationImpl" table="EDPRJ_HistoryAppSimulation">
+		<cache usage="read-write" />
+		<composite-id name="primaryKey" class="org.kisti.edison.project.service.persistence.HistoryAppSimulationPK">
+			<key-property name="scienceAppId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="projectCategoryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		</composite-id>
+		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="version" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="affiliation_id" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="AppStatus" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="runtime" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="executeCount" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="averageRuntime" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userCount" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="insertDate" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class name="org.kisti.edison.project.model.impl.HistoryContentImpl" table="EDPRJ_HistoryContent">
+		<cache usage="read-write" />
+		<composite-id name="primaryKey" class="org.kisti.edison.project.service.persistence.HistoryContentPK">
+			<key-property name="contentSeq" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="projectCategoryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		</composite-id>
+		<property name="contentDiv" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="insertId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="insertDate" type="org.hibernate.type.TimestampType" />
+		<property name="updateId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="updateDate" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class name="org.kisti.edison.project.model.impl.HistoryScienceAppImpl" table="EDPRJ_HistoryScienceApp">
+		<cache usage="read-write" />
+		<composite-id name="primaryKey" class="org.kisti.edison.project.service.persistence.HistoryScienceAppPK">
+			<key-property name="scienceAppId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="projectCategoryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		</composite-id>
+		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="version" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="affiliation_id" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="AppStatus" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="insertDate" type="org.hibernate.type.TimestampType" />
+	</class>
+</hibernate-mapping>

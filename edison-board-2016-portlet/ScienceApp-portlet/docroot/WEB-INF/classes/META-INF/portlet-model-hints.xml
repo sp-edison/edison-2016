@@ -1,0 +1,148 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.kisti.science.platform.app.model.CommonLibrary">
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="libName" type="String" />
+		<field name="cLibVer" type="String" />
+		<field name="sysArch" type="String" />
+		<field name="kernelVer" type="String" />
+		<field name="libPath" type="String" />
+	</model>
+	<model name="com.kisti.science.platform.app.model.CommonModule">
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="moduleName" type="String" />
+		<field name="moduleRootDir" type="String" />
+	</model>
+	<model name="com.kisti.science.platform.app.model.CommonPackage">
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="pkgName" type="String" />
+		<field name="pkgVersion" type="String" />
+		<field name="sysArch" type="String" />
+		<field name="installMethod" type="String" />
+		<field name="installPath" type="String" />
+	</model>
+	<model name="com.kisti.science.platform.app.model.PortType">
+		<field name="uuid" type="String" />
+		<field name="portTypeId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="defaultEditorId" type="long" />
+		<field name="defaultAnalyzerId" type="long" />
+		<field name="name" type="String" />
+		<field name="dataType" type="String" />
+		<field name="sampleFilePath" type="String" />
+		<field name="targetLanguage" type="String" />
+		<field name="status" type="String" />
+	</model>
+	<model name="com.kisti.science.platform.app.model.PortTypeAnalyzerLink">
+		<field name="uuid" type="String" />
+		<field name="portTypeAnalyzerLinkId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="portTypeId" type="long" />
+		<field name="analyzerId" type="long" />
+	</model>
+	<model name="com.kisti.science.platform.app.model.PortTypeEditorLink">
+		<field name="uuid" type="String" />
+		<field name="portTypeEditorLinkId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="portTypeId" type="long" />
+		<field name="editorId" type="long" />
+	</model>
+	<model name="com.kisti.science.platform.app.model.PortTypeInputdeckForm">
+		<field name="portTypeId" type="long" />
+		<field name="inputdeckForm" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+	</model>
+	<model name="com.kisti.science.platform.app.model.PortTypeInputdeckUserForm">
+		<field name="inputdeckId" type="long" />
+		<field name="portTypeId" type="long" />
+		<field name="inputdeckUserForm" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+	</model>
+	<model name="com.kisti.science.platform.app.model.ScienceApp">
+		<field name="uuid" type="String" />
+		<field name="scienceAppId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="name" type="String" />
+		<field name="version" type="String" />
+		<field name="title" type="String" localized="true">
+			<hint name="display-width">800</hint>
+			<hint name="max-length">512</hint>
+		</field>
+		<field name="descriptionId" type="long" />
+		<field name="previousVersionId" type="long" />
+		<field name="iconId" type="long" />
+		<field name="manualId" type="long" />
+		<field name="exeFileName" type="String">
+			<hint name="max-length">256</hint>
+		</field>
+		<field name="appType" type="String" />
+		<field name="runType" type="String" />
+		<field name="authorId" type="long" />
+		<field name="stage" type="String" />
+		<field name="status" type="int" />
+		<field name="recentModifierId" type="long" />
+		<field name="parallelModule" type="String" />
+		<field name="maxCpus" type="int" />
+		<field name="defaultCpus" type="int" />
+		<field name="statusDate" type="Date" />
+		<field name="openLevel" type="String" />
+		<field name="license" type="String" />
+		<field name="srcFileName" type="String">
+			<hint name="max-length">256</hint>
+		</field>
+		<field name="targetLanguage" type="String" />
+	</model>
+	<model name="com.kisti.science.platform.app.model.ScienceAppCategoryLink">
+		<field name="uuid" type="String" />
+		<field name="scienceAppCategoryLinkId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="categoryId" type="long" />
+		<field name="scienceAppId" type="long" />
+		<field name="parentCategoryId" type="long" />
+	</model>
+	<model name="com.kisti.science.platform.app.model.ScienceAppInputPorts">
+		<field name="scienceAppId" type="long" />
+		<field name="inputPorts" type="String" />
+	</model>
+	<model name="com.kisti.science.platform.app.model.ScienceAppManager">
+		<field name="scienceAppManagerId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="scienceAppId" type="long" />
+		<field name="managerId" type="long" />
+	</model>
+	<model name="com.kisti.science.platform.app.model.ScienceAppOutputPorts">
+		<field name="scienceAppId" type="long" />
+		<field name="outputPorts" type="String" />
+	</model>
+</model-hints>

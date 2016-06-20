@@ -1,0 +1,79 @@
+.viewer {
+    -ms-touch-action: none;
+	border: 1px solid black;
+	position: relative;
+}
+
+.wrapper
+{
+	overflow: hidden;
+}
+
+.iviewer_common {
+    position:absolute;
+    bottom:10px;
+    border: 1px  solid #000;
+    height: 28px;
+    z-index: 5000;
+}
+
+.iviewer_cursor {
+    cursor: url(../../../images/imageviewer/hand.cur) 6 8, pointer;
+}
+
+.iviewer_drag_cursor {
+    cursor: url(../../../images/imageviewer/grab.cur) 6 8, pointer;
+}
+
+.iviewer_button {
+    width: 28px;
+    cursor: pointer;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.iviewer_zoom_in {
+	top:10px;
+    right: 262px;
+    background: url(../../../images/imageviewer/iviewer.zoom_in.gif);
+}
+
+.iviewer_zoom_out {    
+	top:10px;
+    right: 227px;
+    background: url(../../../images/imageviewer/iviewer.zoom_out.gif);
+}
+
+.iviewer_zoom_zero {    
+	top:10px;
+    right: 192px;
+    background: url(../../../images/imageviewer/iviewer.zoom_zero.gif);
+}
+
+.iviewer_zoom_fit {    
+	top:10px;
+    right: 157px;
+    background: url(../../../images/imageviewer/iviewer.zoom_fit.gif);
+}
+
+.iviewer_zoom_status {
+    top:10px;
+    right: 90px;
+    font: 1em/28px Sans;
+    color: #000;
+    background-color: #fff;
+    text-align: center;
+    width: 60px;
+}
+
+.iviewer_rotate_left {
+    top:10px;
+    right: 55px;
+    background: #fff url(../../../images/imageviewer/iviewer.rotate_left.png) center center no-repeat;
+}
+
+.iviewer_rotate_right {
+    top:10px;
+    right: 20px;
+    background: #fff url(../../../images/imageviewer/iviewer.rotate_right.png) center center no-repeat;
+}

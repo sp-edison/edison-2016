@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<bean id="org.kisti.edison.virtuallaboratory.service.SurveyLocalService" class="org.kisti.edison.virtuallaboratory.service.impl.SurveyLocalServiceImpl" />
+	<bean id="org.kisti.edison.virtuallaboratory.service.SurveyService" class="org.kisti.edison.virtuallaboratory.service.impl.SurveyServiceImpl" />
+	<bean id="org.kisti.edison.virtuallaboratory.service.persistence.SurveyPersistence" class="org.kisti.edison.virtuallaboratory.service.persistence.SurveyPersistenceImpl" parent="basePersistence" />
+	<bean id="org.kisti.edison.virtuallaboratory.service.persistence.SurveyFinder" class="org.kisti.edison.virtuallaboratory.service.persistence.SurveyFinderImpl" parent="basePersistence" />
+	<bean id="org.kisti.edison.virtuallaboratory.service.SurveyAnswerLocalService" class="org.kisti.edison.virtuallaboratory.service.impl.SurveyAnswerLocalServiceImpl" />
+	<bean id="org.kisti.edison.virtuallaboratory.service.SurveyAnswerService" class="org.kisti.edison.virtuallaboratory.service.impl.SurveyAnswerServiceImpl" />
+	<bean id="org.kisti.edison.virtuallaboratory.service.persistence.SurveyAnswerPersistence" class="org.kisti.edison.virtuallaboratory.service.persistence.SurveyAnswerPersistenceImpl" parent="basePersistence" />
+	<bean id="org.kisti.edison.virtuallaboratory.service.SurveyQuestionLocalService" class="org.kisti.edison.virtuallaboratory.service.impl.SurveyQuestionLocalServiceImpl" />
+	<bean id="org.kisti.edison.virtuallaboratory.service.SurveyQuestionService" class="org.kisti.edison.virtuallaboratory.service.impl.SurveyQuestionServiceImpl" />
+	<bean id="org.kisti.edison.virtuallaboratory.service.persistence.SurveyQuestionPersistence" class="org.kisti.edison.virtuallaboratory.service.persistence.SurveyQuestionPersistenceImpl" parent="basePersistence" />
+	<bean id="org.kisti.edison.virtuallaboratory.service.VirtualLabLocalService" class="org.kisti.edison.virtuallaboratory.service.impl.VirtualLabLocalServiceImpl" />
+	<bean id="org.kisti.edison.virtuallaboratory.service.VirtualLabService" class="org.kisti.edison.virtuallaboratory.service.impl.VirtualLabServiceImpl" />
+	<bean id="org.kisti.edison.virtuallaboratory.service.persistence.VirtualLabPersistence" class="org.kisti.edison.virtuallaboratory.service.persistence.VirtualLabPersistenceImpl" parent="basePersistence" />
+	<bean id="org.kisti.edison.virtuallaboratory.service.persistence.VirtualLabFinder" class="org.kisti.edison.virtuallaboratory.service.persistence.VirtualLabFinderImpl" parent="basePersistence" />
+	<bean id="org.kisti.edison.virtuallaboratory.service.VirtualLabClassLocalService" class="org.kisti.edison.virtuallaboratory.service.impl.VirtualLabClassLocalServiceImpl" />
+	<bean id="org.kisti.edison.virtuallaboratory.service.VirtualLabClassService" class="org.kisti.edison.virtuallaboratory.service.impl.VirtualLabClassServiceImpl" />
+	<bean id="org.kisti.edison.virtuallaboratory.service.persistence.VirtualLabClassPersistence" class="org.kisti.edison.virtuallaboratory.service.persistence.VirtualLabClassPersistenceImpl" parent="basePersistence" />
+	<bean id="org.kisti.edison.virtuallaboratory.service.persistence.VirtualLabClassFinder" class="org.kisti.edison.virtuallaboratory.service.persistence.VirtualLabClassFinderImpl" parent="basePersistence" />
+	<bean id="org.kisti.edison.virtuallaboratory.service.VirtualLabClassScienceAppLocalService" class="org.kisti.edison.virtuallaboratory.service.impl.VirtualLabClassScienceAppLocalServiceImpl" />
+	<bean id="org.kisti.edison.virtuallaboratory.service.VirtualLabClassScienceAppService" class="org.kisti.edison.virtuallaboratory.service.impl.VirtualLabClassScienceAppServiceImpl" />
+	<bean id="org.kisti.edison.virtuallaboratory.service.persistence.VirtualLabClassScienceAppPersistence" class="org.kisti.edison.virtuallaboratory.service.persistence.VirtualLabClassScienceAppPersistenceImpl" parent="basePersistence" />
+	<bean id="org.kisti.edison.virtuallaboratory.service.persistence.VirtualLabClassScienceAppFinder" class="org.kisti.edison.virtuallaboratory.service.persistence.VirtualLabClassScienceAppFinderImpl" parent="basePersistence" />
+	<bean id="org.kisti.edison.virtuallaboratory.service.VirtualLabUserLocalService" class="org.kisti.edison.virtuallaboratory.service.impl.VirtualLabUserLocalServiceImpl" />
+	<bean id="org.kisti.edison.virtuallaboratory.service.VirtualLabUserService" class="org.kisti.edison.virtuallaboratory.service.impl.VirtualLabUserServiceImpl" />
+	<bean id="org.kisti.edison.virtuallaboratory.service.persistence.VirtualLabUserPersistence" class="org.kisti.edison.virtuallaboratory.service.persistence.VirtualLabUserPersistenceImpl" parent="basePersistence" />
+	<bean id="org.kisti.edison.virtuallaboratory.service.persistence.VirtualLabUserFinder" class="org.kisti.edison.virtuallaboratory.service.persistence.VirtualLabUserFinderImpl" parent="basePersistence" />
+	<bean id="org.kisti.edison.virtuallaboratory.service.VirtualLabUserTempLocalService" class="org.kisti.edison.virtuallaboratory.service.impl.VirtualLabUserTempLocalServiceImpl" />
+	<bean id="org.kisti.edison.virtuallaboratory.service.VirtualLabUserTempService" class="org.kisti.edison.virtuallaboratory.service.impl.VirtualLabUserTempServiceImpl" />
+	<bean id="org.kisti.edison.virtuallaboratory.service.persistence.VirtualLabUserTempPersistence" class="org.kisti.edison.virtuallaboratory.service.persistence.VirtualLabUserTempPersistenceImpl" parent="basePersistence" />
+</beans>

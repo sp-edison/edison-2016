@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
+<service-builder package-path="org.kisti.edison">
+  <author>EDISON</author>
+  <namespace>EDWF</namespace>
+  
+  <entity name="Workflow" local-service="true" remote-service="false">
+    <!-- PK fields -->
+    <column name="workflowId" type="long" primary="true" />
+    <!-- Audit fields -->
+    <column name="companyId" type="long" />
+    <column name="userId" type="long" />
+    <column name="createDate" type="Date" />
+    <column name="modifiedDate" type="Date" />
+    <!-- List fields -->
+    <column name="title" type="String" localized="true" />
+    <column name="description" type="String" localized="true" />
+    <column name="isPublic" type="boolean" />
+    <column name="parentWorkflowId" type="long" />
+    <column name="targetLanguage" type="String" />
+    <!-- View fields -->
+    <column name="screenLogic" type="String" />
+    <!-- collections -->
+    <column name="workflowInstances" type="Collection" 
+      entity="WorkflowInstance" mapping-table="Workflow_WorkflowInstance"/>
+    <!-- Order -->
+    <order by="desc">
+      <order-column name="createDate" />
+    </order>
+    <!-- Finder methods -->
+    <finder name="Title" return-type="Collection">
+      <finder-column name="title" comparator="LIKE" />
+    </finder>
+    <finder name="IsPublic" return-type="Collection">
+      <finder-column name="isPublic" />
+    </finder>
+  </entity>
+
+  <entity name="WorkflowInstance" local-service="true" remote-service="false">
+    <!-- PK fields -->
+    <column name="workflowInstanceId" type="long" primary="true" id-type="increment"/>
+    <!-- Audit fields -->
+    <column name="companyId" type="long" />
+    <column name="userId" type="long" />
+    <column name="createDate" type="Date" />
+    <column name="modifiedDate" type="Date" />
+    <!-- List fields -->
+    <column name="title" type="String" localized="true" />
+    <column name="status" type="String" />
+    <column name="statusResponse" type="String" />
+    <column name="startTime" type="Date" />
+    <column name="endTime" type="Date" />
+    <!-- Workflow Definition -->
+    <column name="workflowId" type="long" />
+    <!-- Workflow Engine fields -->
+    <column name="workflowUUID" type="String" />
+    <column name="screenLogic" type="String" />
+    
+    <column name="workflows" type="Collection" 
+      entity="Workflow" mapping-table="Workflow_WorkflowInstance"/>
+    
+    <!-- Order -->
+    <order by="desc">
+      <order-column name="workflowInstanceId" />
+    </order>
+    <!-- Finder methods -->
+    <finder name="Title" return-type="Collection">
+      <finder-column name="title" comparator="LIKE" />
+    </finder>
+    <finder name="UserId" return-type="Collection">
+      <finder-column name="userId" />
+    </finder>
+  </entity>
+</service-builder>

@@ -1,0 +1,26 @@
+/* ---- 추천 솔버  ------*/
+/*추천 solver 박스*/
+.solverbox {
+	width: 594px;
+	height: 114px;
+	float: left;
+	background: url(../../../portelt/images/ko_KR/solverbg.gif) no-repeat;
+	margin-bottom: 30px;
+}
+
+.solvertitle {
+	font-size: 15px;
+	color: #050505;
+	padding-left: 20px;
+	padding-right: 10px;
+	font-weight: 600;
+	white-space:nowrap;
+	overflow:hidden;
+	text-overflow:ellipsis;
+}
+
+.solverstxt {
+	padding-left: 20px;
+	font-size: 13px;
+	color: #454849;
+}

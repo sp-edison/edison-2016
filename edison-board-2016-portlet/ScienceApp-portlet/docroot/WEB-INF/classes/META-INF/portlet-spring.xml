@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<bean id="com.kisti.science.platform.app.service.AppTestHistoryLocalService" class="com.kisti.science.platform.app.service.impl.AppTestHistoryLocalServiceImpl" />
+	<bean id="com.kisti.science.platform.app.service.AppTestHistoryService" class="com.kisti.science.platform.app.service.impl.AppTestHistoryServiceImpl" />
+	<bean id="com.kisti.science.platform.app.service.CommonLibraryLocalService" class="com.kisti.science.platform.app.service.impl.CommonLibraryLocalServiceImpl" />
+	<bean id="com.kisti.science.platform.app.service.CommonLibraryService" class="com.kisti.science.platform.app.service.impl.CommonLibraryServiceImpl" />
+	<bean id="com.kisti.science.platform.app.service.persistence.CommonLibraryPersistence" class="com.kisti.science.platform.app.service.persistence.CommonLibraryPersistenceImpl" parent="basePersistence" />
+	<bean id="com.kisti.science.platform.app.service.CommonModuleService" class="com.kisti.science.platform.app.service.impl.CommonModuleServiceImpl" />
+	<bean id="com.kisti.science.platform.app.service.persistence.CommonModulePersistence" class="com.kisti.science.platform.app.service.persistence.CommonModulePersistenceImpl" parent="basePersistence" />
+	<bean id="com.kisti.science.platform.app.service.CommonPackageLocalService" class="com.kisti.science.platform.app.service.impl.CommonPackageLocalServiceImpl" />
+	<bean id="com.kisti.science.platform.app.service.CommonPackageService" class="com.kisti.science.platform.app.service.impl.CommonPackageServiceImpl" />
+	<bean id="com.kisti.science.platform.app.service.persistence.CommonPackagePersistence" class="com.kisti.science.platform.app.service.persistence.CommonPackagePersistenceImpl" parent="basePersistence" />
+	<bean id="com.kisti.science.platform.app.service.PortTypeLocalService" class="com.kisti.science.platform.app.service.impl.PortTypeLocalServiceImpl" />
+	<bean id="com.kisti.science.platform.app.service.PortTypeService" class="com.kisti.science.platform.app.service.impl.PortTypeServiceImpl" />
+	<bean id="com.kisti.science.platform.app.service.persistence.PortTypePersistence" class="com.kisti.science.platform.app.service.persistence.PortTypePersistenceImpl" parent="basePersistence" />
+	<bean id="com.kisti.science.platform.app.service.PortTypeAnalyzerLinkLocalService" class="com.kisti.science.platform.app.service.impl.PortTypeAnalyzerLinkLocalServiceImpl" />
+	<bean id="com.kisti.science.platform.app.service.PortTypeAnalyzerLinkService" class="com.kisti.science.platform.app.service.impl.PortTypeAnalyzerLinkServiceImpl" />
+	<bean id="com.kisti.science.platform.app.service.persistence.PortTypeAnalyzerLinkPersistence" class="com.kisti.science.platform.app.service.persistence.PortTypeAnalyzerLinkPersistenceImpl" parent="basePersistence" />
+	<bean id="com.kisti.science.platform.app.service.PortTypeEditorLinkLocalService" class="com.kisti.science.platform.app.service.impl.PortTypeEditorLinkLocalServiceImpl" />
+	<bean id="com.kisti.science.platform.app.service.PortTypeEditorLinkService" class="com.kisti.science.platform.app.service.impl.PortTypeEditorLinkServiceImpl" />
+	<bean id="com.kisti.science.platform.app.service.persistence.PortTypeEditorLinkPersistence" class="com.kisti.science.platform.app.service.persistence.PortTypeEditorLinkPersistenceImpl" parent="basePersistence" />
+	<bean id="com.kisti.science.platform.app.service.PortTypeInputdeckFormLocalService" class="com.kisti.science.platform.app.service.impl.PortTypeInputdeckFormLocalServiceImpl" />
+	<bean id="com.kisti.science.platform.app.service.persistence.PortTypeInputdeckFormPersistence" class="com.kisti.science.platform.app.service.persistence.PortTypeInputdeckFormPersistenceImpl" parent="basePersistence" />
+	<bean id="com.kisti.science.platform.app.service.PortTypeInputdeckUserFormLocalService" class="com.kisti.science.platform.app.service.impl.PortTypeInputdeckUserFormLocalServiceImpl" />
+	<bean id="com.kisti.science.platform.app.service.persistence.PortTypeInputdeckUserFormPersistence" class="com.kisti.science.platform.app.service.persistence.PortTypeInputdeckUserFormPersistenceImpl" parent="basePersistence" />
+	<bean id="com.kisti.science.platform.app.service.ScienceAppLocalService" class="com.kisti.science.platform.app.service.impl.ScienceAppLocalServiceImpl" />
+	<bean id="com.kisti.science.platform.app.service.ScienceAppService" class="com.kisti.science.platform.app.service.impl.ScienceAppServiceImpl" />
+	<bean id="com.kisti.science.platform.app.service.persistence.ScienceAppPersistence" class="com.kisti.science.platform.app.service.persistence.ScienceAppPersistenceImpl" parent="basePersistence" />
+	<bean id="com.kisti.science.platform.app.service.persistence.ScienceAppFinder" class="com.kisti.science.platform.app.service.persistence.ScienceAppFinderImpl" parent="basePersistence" />
+	<bean id="com.kisti.science.platform.app.service.ScienceAppCategoryLinkLocalService" class="com.kisti.science.platform.app.service.impl.ScienceAppCategoryLinkLocalServiceImpl" />
+	<bean id="com.kisti.science.platform.app.service.ScienceAppCategoryLinkService" class="com.kisti.science.platform.app.service.impl.ScienceAppCategoryLinkServiceImpl" />
+	<bean id="com.kisti.science.platform.app.service.persistence.ScienceAppCategoryLinkPersistence" class="com.kisti.science.platform.app.service.persistence.ScienceAppCategoryLinkPersistenceImpl" parent="basePersistence" />
+	<bean id="com.kisti.science.platform.app.service.ScienceAppInputPortsLocalService" class="com.kisti.science.platform.app.service.impl.ScienceAppInputPortsLocalServiceImpl" />
+	<bean id="com.kisti.science.platform.app.service.persistence.ScienceAppInputPortsPersistence" class="com.kisti.science.platform.app.service.persistence.ScienceAppInputPortsPersistenceImpl" parent="basePersistence" />
+	<bean id="com.kisti.science.platform.app.service.ScienceAppManagerLocalService" class="com.kisti.science.platform.app.service.impl.ScienceAppManagerLocalServiceImpl" />
+	<bean id="com.kisti.science.platform.app.service.ScienceAppManagerService" class="com.kisti.science.platform.app.service.impl.ScienceAppManagerServiceImpl" />
+	<bean id="com.kisti.science.platform.app.service.persistence.ScienceAppManagerPersistence" class="com.kisti.science.platform.app.service.persistence.ScienceAppManagerPersistenceImpl" parent="basePersistence" />
+	<bean id="com.kisti.science.platform.app.service.ScienceAppOutputPortsLocalService" class="com.kisti.science.platform.app.service.impl.ScienceAppOutputPortsLocalServiceImpl" />
+	<bean id="com.kisti.science.platform.app.service.persistence.ScienceAppOutputPortsPersistence" class="com.kisti.science.platform.app.service.persistence.ScienceAppOutputPortsPersistenceImpl" parent="basePersistence" />
+</beans>

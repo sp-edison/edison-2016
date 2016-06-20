@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="org.kisti.edison.content.model.AdvancedContent">
+		<field name="contentSeq" type="long" />
+		<field name="groupId" type="long" />
+		<field name="title" type="String" />
+		<field name="resume" type="String" />
+		<field name="contentFilePath" type="String" />
+		<field name="contentFileNm" type="String" />
+		<field name="contentStartFileNm" type="String" />
+		<field name="serviceLanguage" type="String" />
+		<field name="viewCnt" type="long" />
+		<field name="insertId" type="long" />
+		<field name="insertDate" type="Date" />
+		<field name="updateId" type="long" />
+		<field name="updateDate" type="Date" />
+	</model>
+	<model name="org.kisti.edison.content.model.GeneralContent">
+		<field name="contentSeq" type="long" />
+		<field name="groupId" type="long" />
+		<field name="contentDiv" type="long" />
+		<field name="title" type="String" localized="true" />
+		<field name="downloadCnt" type="long" />
+		<field name="serviceLanguage" type="String" />
+		<field name="projectYn" type="String" />
+		<field name="projectId" type="long" />
+		<field name="insertId" type="long" />
+		<field name="insertDate" type="Date" />
+		<field name="updateId" type="long" />
+		<field name="updateDate" type="Date" />
+	</model>
+	<model name="org.kisti.edison.content.model.OrgImgContent">
+		<field name="orgImgSeq" type="long" />
+		<field name="groupId" type="long" />
+		<field name="order" type="long" />
+		<field name="orgNm" type="String" />
+		<field name="orgLink" type="String" />
+		<field name="fileEntryId" type="long" />
+		<field name="insertId" type="long" />
+		<field name="insertDate" type="Date" />
+		<field name="updateId" type="long" />
+		<field name="updateDate" type="Date" />
+	</model>
+</model-hints>

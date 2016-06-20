@@ -1,0 +1,673 @@
+<?xml version="1.0"?>
+
+<portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd" version="2.0">
+	<portlet>
+		<portlet-name>science-app-manager</portlet-name>
+		<display-name>Science App Manager</display-name>
+		<portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+		<init-param>
+			<name>contextConfigLocation</name>
+			<value>classpath:org/kisti/edison/science/portlet/appmanager/edison-appmanager-portlet.xml</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<portlet-info>
+			<title>Science App Manager</title>
+			<short-title>ScienceApp Manager</short-title>
+			<keywords>ScienceApp Manager</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	<portlet>
+		<portlet-name>edison-main-search-app</portlet-name>
+		<display-name>Edison Main Search App</display-name>
+		<portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+		<init-param>
+			<name>contextConfigLocation</name>
+			<value>classpath:org/kisti/edison/science/portlet/mainSearchApp/edison-main-search-app-portlet.xml</value>
+		</init-param>
+		<init-param>
+			<name>config-template</name>
+			<value>/WEB-INF/html/mainSearchApp/configuration.jsp</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<portlet-info>
+			<title>Edison Main Search App</title>
+			<short-title>Edison Main Search App</short-title>
+			<keywords>Edison Main Search App</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	<portlet>
+		<portlet-name>edison-workspace</portlet-name>
+		<display-name>Edison Workspace</display-name>
+		<portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+		<init-param>
+			<name>contextConfigLocation</name>
+			<value>classpath:org/kisti/edison/science/portlet/workspace/edison-workspace-portlet.xml</value>
+		</init-param>
+		<init-param>
+			<name>config-template</name>
+			<value>/WEB-INF/html/workspace/configuration.jsp</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<portlet-info>
+			<title>Edison Workspace</title>
+			<short-title>Edison Workspace</short-title>
+			<keywords>Edison Workspace</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	<portlet>
+		<portlet-name>edison-developer-request-list</portlet-name>
+		<display-name>Edison Developer Request List</display-name>
+		<portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+		<init-param>
+			<name>contextConfigLocation</name>
+			<value>classpath:org/kisti/edison/science/portlet/developerRequestList/edison-developer-request-list-portlet.xml</value>
+		</init-param>
+		<init-param>
+			<name>config-template</name>
+			<value>/WEB-INF/html/developerRequestList/configuration.jsp</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<portlet-info>
+			<title>Edison Developer Request List</title>
+			<short-title>Edison Developer Request List</short-title>
+			<keywords>Edison Developer Request List</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	<portlet>
+		<portlet-name>edison-favoriteApp</portlet-name>
+		<display-name>Edison FavoriteApp</display-name>
+		<portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+		<init-param>
+			<name>contextConfigLocation</name>
+			<value>classpath:org/kisti/edison/science/portlet/favoriteApp/edison-favoriteApp-portlet.xml</value>
+		</init-param>
+		<init-param>
+			<name>config-template</name>
+			<value>/WEB-INF/html/favoriteApp/configuration.jsp</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<portlet-info>
+			<title>Edison FavoriteApp</title>
+			<short-title>Edison FavoriteApp</short-title>
+			<keywords>Edison FavoriteApp</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	<portlet>
+		<portlet-name>edison-developerInfomation</portlet-name>
+		<display-name>Edison DeveloperInfomation</display-name>
+		<portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+		<init-param>
+			<name>contextConfigLocation</name>
+			<value>classpath:org/kisti/edison/science/portlet/developerInfomation/edison-developerInfomation-portlet.xml</value>
+		</init-param>
+		<init-param>
+			<name>config-template</name>
+			<value>/WEB-INF/html/developerInfomation/configuration.jsp</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<portlet-info>
+			<title>Edison DeveloperInfomation</title>
+			<short-title>Edison DeveloperInfomation</short-title>
+			<keywords>Edison DeveloperInfomation</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	<portlet>
+		<portlet-name>edison-request-popup</portlet-name>
+		<display-name>Edison Request Popup</display-name>
+		<portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+		<init-param>
+			<name>contextConfigLocation</name>
+			<value>classpath:org/kisti/edison/science/portlet/requestPopup/edison-request-popup-portlet.xml</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<portlet-info>
+			<title>Edison Request Popup</title>
+			<short-title>Edison Request Popup</short-title>
+			<keywords>Edison Request Popup</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	<portlet>
+		<portlet-name>edison-scienceAppstore</portlet-name>
+		<display-name>Edison ScienceAppstore</display-name>
+		<portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+		<init-param>
+			<name>contextConfigLocation</name>
+			<value>classpath:org/kisti/edison/science/portlet/scienceAppstore/edison-scienceAppstore-portlet.xml</value>
+		</init-param>
+		<init-param>
+			<name>config-template</name>
+			<value>/WEB-INF/html/scienceAppstore/configuration.jsp</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<portlet-info>
+			<title>Edison ScienceAppstore</title>
+			<short-title>Edison ScienceAppstore</short-title>
+			<keywords>Edison ScienceAppstore</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	
+	<portlet>
+		<portlet-name>edison-inputDeck</portlet-name>
+		<display-name>Edison InputDeck</display-name>
+		<portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+		<init-param>
+			<name>contextConfigLocation</name>
+			<value>classpath:org/kisti/edison/science/portlet/InputDeck/edison-inputDeck-portlet.xml</value>
+		</init-param>
+		<init-param>
+			<name>check-auth-token</name>
+			<value>false</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<portlet-info>
+			<title>Edison InputDeck</title>
+			<short-title>Edison InputDeck</short-title>
+			<keywords>Edison InputDeck</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	<portlet>
+		<portlet-name>edison-inputDeck-viewer</portlet-name>
+		<display-name>Edison InputDeck Viewer</display-name>
+		<portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+		<init-param>
+			<name>contextConfigLocation</name>
+			<value>classpath:org/kisti/edison/science/portlet/InputDeckViewer/edison-inputDeck-viewer-portlet.xml</value>
+		</init-param>
+		<init-param>
+			<name>check-auth-token</name>
+			<value>false</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<portlet-info>
+			<title>Edison InputDeck Viewer</title>
+			<short-title>Edison InputDeck Viewer</short-title>
+			<keywords>Edison InputDeck Viewer</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+
+
+	<portlet>
+		<portlet-name>edison-myapp-qna</portlet-name>
+		<display-name>Edison Myapp Qna</display-name>
+		<portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+		<init-param>
+			<name>contextConfigLocation</name>
+			<value>classpath:org/kisti/edison/science/portlet/myAppQna/edison-myapp-qna-portlet.xml</value>
+		</init-param>
+		<init-param>
+			<name>config-template</name>
+			<value>/WEB-INF/html/myAppQna/configuration.jsp</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<portlet-info>
+			<title>Edison Myapp Qna</title>
+			<short-title>Edison Myapp Qna</short-title>
+			<keywords>Edison Myapp Qna</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+
+	<portlet>
+		<portlet-name>edison-library-required-list</portlet-name>
+		<display-name>Edison Library Required List</display-name>
+		<portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+		<init-param>
+			<name>contextConfigLocation</name>
+			<value>classpath:org/kisti/edison/science/portlet/requiredLibList/edison-required-lib-list-portlet.xml</value>
+		</init-param>
+		<init-param>
+			<name>config-template</name>
+			<value>/WEB-INF/html/requiredLibList/configuration.jsp</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<portlet-info>
+			<title>Edison Library Required List</title>
+			<short-title>Edison Library Required List</short-title>
+			<keywords>Edison Library Required List</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	
+	<portlet>
+		<portlet-name>science-app-string-editor</portlet-name>
+		<display-name>ScienceApp StringEditor</display-name>
+		<portlet-class>
+			org.kisti.edison.science.portlet.stringeditor.StringEditorPortlet
+		</portlet-class>
+		<init-param>
+			<name>view-template</name>
+			<value>/WEB-INF/html/stringeditor/view.jsp</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>view</portlet-mode>
+		</supports>
+		<portlet-info>
+			<title>ScienceApp StringEditor</title>
+			<short-title>String Editor</short-title>
+			<keywords></keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	<portlet>
+		<portlet-name>science-app-file-selector</portlet-name>
+		<display-name>ScienceApp FileSelector</display-name>
+		<portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+		<init-param>
+			<name>contextConfigLocation</name>
+			<value>classpath:org/kisti/edison/science/portlet/fileselector/edison-fileselector-portlet.xml</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>view</portlet-mode>
+		</supports>
+		<portlet-info>
+			<title>ScienceApp FileSelector</title>
+			<short-title>FileSelector</short-title>
+			<keywords></keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	<portlet>
+		<portlet-name>science-app-image-viewer</portlet-name>
+		<display-name>ScienceApp ImageViewer</display-name>
+		<portlet-class>
+			org.kisti.edison.science.portlet.imageviewer.ImageViewerPortlet
+		</portlet-class>
+		<init-param>
+			<name>view-template</name>
+			<value>/WEB-INF/html/imageviewer/view.jsp</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>view</portlet-mode>
+		</supports>
+		<portlet-info>
+			<title>ScienceApp ImageViewer</title>
+			<short-title>Image Viewer</short-title>
+			<keywords></keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	<portlet>
+		<portlet-name>science-app-text-viewer</portlet-name>
+		<display-name>Scienceapp TextViewer</display-name>
+		<portlet-class>
+			org.kisti.edison.science.portlet.textviewer.TextViewerPortlet
+		</portlet-class>
+		<init-param>
+			<name>view-template</name>
+			<value>/WEB-INF/html/textviewer/view.jsp</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>view</portlet-mode>
+		</supports>
+		<portlet-info>
+			<title>Scienceapp TextViewer</title>
+			<short-title>Scienceapp Text Viewer</short-title>
+			<keywords></keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	<portlet>
+		<portlet-name>science-app-onedplot-viewer</portlet-name>
+		<display-name>ScienceApp OneDPlotViewer</display-name>
+		<portlet-class>
+			org.kisti.edison.science.portlet.onedplotviewer.OneDPlotViewerPortlet
+		</portlet-class>
+		<init-param>
+			<name>view-template</name>
+			<value>/WEB-INF/html/onedplotviewer/view.jsp</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>view</portlet-mode>
+		</supports>
+		<portlet-info>
+			<title>ScienceApp OneDPlotViewer</title>
+			<short-title>Science App Onedplot Viewer</short-title>
+			<keywords></keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	<portlet>
+		<portlet-name>science-app-webgl-viewer</portlet-name>
+		<display-name>ScienceApp WebGL Viewer</display-name>
+		<portlet-class>
+			org.kisti.edison.science.portlet.webglviewer.WebGLViewerPortlet
+		</portlet-class>
+		<init-param>
+			<name>view-template</name>
+			<value>/WEB-INF/html/webglviewer/view.jsp</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>view</portlet-mode>
+		</supports>
+		<portlet-info>
+			<title>ScienceApp WebGL Viewer</title>
+			<short-title>ScienceApp Webgl viewer</short-title>
+			<keywords></keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	<portlet>
+		<portlet-name>science-app-founder</portlet-name>
+		<display-name>ScienceApp Founder</display-name>
+		<portlet-class>
+			org.kisti.edison.science.portlet.appmanager.ScienceAppFounderPortlet
+		</portlet-class>
+		<init-param>
+			<name>view-template</name>
+			<value>/WEB-INF/html/scienceappfounder/view.jsp</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>view</portlet-mode>
+		</supports>
+		<portlet-info>
+			<title>ScienceApp Founder</title>
+			<short-title>ScienceApp Founder</short-title>
+			<keywords></keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	<portlet>
+		<portlet-name>science-app-text-editor</portlet-name>
+		<display-name>ScienceApp TextEditor</display-name>
+		<portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+		<init-param>
+			<name>contextConfigLocation</name>
+			<value>classpath:org/kisti/edison/science/portlet/texteditor/edison-texteditor-portlet.xml</value>
+		</init-param>
+		<init-param>
+			<name>view-template</name>
+			<value>/WEB-INF/html/texteditor/view.jsp</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>view</portlet-mode>
+		</supports>
+		<portlet-info>
+			<title>ScienceApp TextEditor</title>
+			<short-title>TextEditor</short-title>
+			<keywords></keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+</portlet-app>

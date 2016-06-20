@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+<!DOCTYPE liferay-portlet-app PUBLIC "-//Liferay//DTD Portlet Application 6.2.0//EN" "http://www.liferay.com/dtd/liferay-portlet-app_6_2_0.dtd">
+
+<liferay-portlet-app>
+	<portlet>
+		<portlet-name>edison-content</portlet-name>
+		<icon>/icon.png</icon>
+		<configuration-action-class>org.kisti.edison.content.portlet.content.ConfigurationController</configuration-action-class>
+		<action-url-redirect>true</action-url-redirect>
+		<header-portlet-css>/css/style.css</header-portlet-css>
+		<header-portlet-css>/css/jquery/jquery-ui.min.css</header-portlet-css>
+		<header-portlet-css>/css/jquery/jquery-ui.theme.min.css</header-portlet-css>
+		<header-portlet-javascript>/js/jquery-1.10.2.min.js</header-portlet-javascript>
+		<header-portlet-javascript>/js/jquery-ui.min.js</header-portlet-javascript>
+		<footer-portlet-javascript>/js/main.js</footer-portlet-javascript>
+		<css-class-wrapper>edison-content</css-class-wrapper>	
+		<add-default-resource>false</add-default-resource>
+	</portlet>
+	
+	<portlet>
+		<portlet-name>edison-orgImgScroll</portlet-name>
+		<icon>/icon.png</icon>
+		<configuration-action-class>org.kisti.edison.content.portlet.orgImgContent.ConfigurationController</configuration-action-class>
+		<action-url-redirect>true</action-url-redirect>
+		<header-portlet-css>/css/style.css</header-portlet-css>
+		<header-portlet-css>/css/jquery/jquery-ui.min.css</header-portlet-css>
+		<header-portlet-css>/css/jquery/jquery-ui.theme.min.css</header-portlet-css>
+		<header-portlet-javascript>/js/jquery-1.10.2.min.js</header-portlet-javascript>
+		<header-portlet-javascript>/js/jquery-ui.min.js</header-portlet-javascript>
+		<footer-portlet-javascript>/js/main.js</footer-portlet-javascript>
+		<css-class-wrapper>edison-content</css-class-wrapper>
+	</portlet>
+	
+	<portlet>
+		<portlet-name>edison-siteMainContent</portlet-name>
+		<icon>/icon.png</icon>
+		<action-url-redirect>true</action-url-redirect>
+		<header-portlet-css>/css/style.css</header-portlet-css>
+		<header-portlet-css>/css/jquery/jquery-ui.min.css</header-portlet-css>
+		<header-portlet-css>/css/jquery/jquery-ui.theme.min.css</header-portlet-css>
+		<header-portlet-javascript>/js/jquery-1.10.2.min.js</header-portlet-javascript>
+		<header-portlet-javascript>/js/jquery-ui.min.js</header-portlet-javascript>
+		<footer-portlet-javascript>/js/main.js</footer-portlet-javascript>
+		<css-class-wrapper>edison-content</css-class-wrapper>
+	</portlet>
+	
+	
+	<portlet>
+		<portlet-name>edison-siteQuickLink</portlet-name>
+		<icon>/icon.png</icon>
+		<action-url-redirect>true</action-url-redirect>
+		<header-portlet-css>/css/style.css</header-portlet-css>
+		<header-portlet-css>/css/jquery/jquery-ui.min.css</header-portlet-css>
+		<header-portlet-css>/css/jquery/jquery-ui.theme.min.css</header-portlet-css>
+		<header-portlet-javascript>/js/jquery-1.10.2.min.js</header-portlet-javascript>
+		<header-portlet-javascript>/js/jquery-ui.min.js</header-portlet-javascript>
+		<footer-portlet-javascript>/js/main.js</footer-portlet-javascript>
+		<css-class-wrapper>edison-content</css-class-wrapper>
+	</portlet>
+	
+	
+	<portlet>
+		<portlet-name>edison-mainLink</portlet-name>
+		<icon>/icon.png</icon>
+		<action-url-redirect>true</action-url-redirect>
+		<header-portlet-css>/css/style.css</header-portlet-css>
+		<header-portlet-css>/css/jquery/jquery-ui.min.css</header-portlet-css>
+		<header-portlet-css>/css/jquery/jquery-ui.theme.min.css</header-portlet-css>
+		<header-portlet-javascript>/js/jquery-1.10.2.min.js</header-portlet-javascript>
+		<header-portlet-javascript>/js/jquery-ui.min.js</header-portlet-javascript>
+		<footer-portlet-javascript>/js/main.js</footer-portlet-javascript>
+		<css-class-wrapper>edison-content</css-class-wrapper>
+	</portlet>
+	
+	<portlet>
+		<portlet-name>edison-mainResource</portlet-name>
+		<icon>/icon.png</icon>
+		<configuration-action-class>org.kisti.edison.content.portlet.mainResource.ConfigurationController</configuration-action-class>
+		<action-url-redirect>true</action-url-redirect>
+		<header-portlet-css>/css/style.css</header-portlet-css>
+		<header-portlet-css>/css/jquery/jquery-ui.min.css</header-portlet-css>
+		<header-portlet-css>/css/jquery/jquery-ui.theme.min.css</header-portlet-css>
+		<header-portlet-javascript>/js/jquery-1.10.2.min.js</header-portlet-javascript>
+		<header-portlet-javascript>/js/jquery-ui.min.js</header-portlet-javascript>
+		<footer-portlet-javascript>/js/main.js</footer-portlet-javascript>
+		<css-class-wrapper>edison-content</css-class-wrapper>
+	</portlet>
+	
+	<portlet>
+		<portlet-name>edison-statistics-content</portlet-name>
+		<icon>/icon.png</icon>
+		<action-url-redirect>true</action-url-redirect>
+		<header-portlet-css>/css/style.css</header-portlet-css>
+		<header-portlet-css>/css/jquery/jquery-ui.min.css</header-portlet-css>
+		<header-portlet-css>/css/jquery/jquery-ui.theme.min.css</header-portlet-css>
+		<header-portlet-javascript>/js/jquery-1.10.2.min.js</header-portlet-javascript>
+		<header-portlet-javascript>/js/jquery-ui.min.js</header-portlet-javascript>
+		<footer-portlet-javascript>/js/main.js</footer-portlet-javascript>
+		<css-class-wrapper>edison-content</css-class-wrapper>
+	</portlet>
+	
+	
+	
+	<role-mapper>
+		<role-name>administrator</role-name>
+		<role-link>Administrator</role-link>
+	</role-mapper>
+	<role-mapper>
+		<role-name>guest</role-name>
+		<role-link>Guest</role-link>
+	</role-mapper>
+	<role-mapper>
+		<role-name>power-user</role-name>
+		<role-link>Power User</role-link>
+	</role-mapper>
+	<role-mapper>
+		<role-name>user</role-name>
+		<role-link>User</role-link>
+	</role-mapper>
+</liferay-portlet-app>

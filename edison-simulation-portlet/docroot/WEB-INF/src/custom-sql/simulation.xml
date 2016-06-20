@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom-sql>
+
+	<sql id="org.kisti.edison.service.persistence.SimulationJob.getMaxJobSeqNoSimulationJob">
+	<![CDATA[
+		SELECT 
+			IFNULL(MAX(jobSeqNo),0)+1 AS maxJobSeqNo
+		FROM
+			EDSIM_SimulationJob
+		WHERE
+				groupId = #groupId#
+			AND simulationUuid = #simulationUuid#
+	]]>
+	</sql>
+
+
+	<sql id="org.kisti.edison.service.persistence.SimulationJob.deleteSimulationJob">
+	<![CDATA[
+		DELETE FROM EDSIM_SimulationJob
+		WHERE
+				groupId = #groupId#
+			AND simulationUuid = #simulationUuid#
+		<isNotEmpty property="jobPhase">
+			AND	jobPhase = #jobPhase#
+		</isNotEmpty>
+		<isNotEmpty property="jobSeqNo">
+			AND	jobSeqNo = #jobSeqNo#
+		</isNotEmpty>
+	]]>
+	</sql>
+	
+	<sql id="org.kisti.edison.service.persistence.SimulationParameter.deleteSimulationParameter">
+	<![CDATA[
+		DELETE FROM EDSIM_SimulationParameter
+		WHERE
+				groupId = #groupId#
+			AND simulationUuid = #simulationUuid#
+			AND	jobSeqNo = #jobSeqNo#
+	]]>
+	</sql>
+
+	<sql id="org.kisti.edison.service.persistence.SimulationJob.getListSimulationJob">
+	<![CDATA[
+		SELECT 
+  			jobSeqNo, 
+  			simulationUuid,
+			groupId,
+			jobUuid,
+			jobStatus,
+			jobStartDt,
+			jobEndDt,
+			jobTitle,
+			jobExecPath,
+			jobPhase,
+			jobSubmitDt,
+			jobPostProcessor,
+			jobUniversityField,
+			jobVirtualLabId,
+			jobClassId,
+			jobInputDeckYn,
+			jobInputDeckName,
+			resultSize,
+			testYn
+		FROM      
+  			EDSIM_SimulationJob 
+		WHERE
+				groupId = #groupId#
+			AND	simulationUuid = #simulationUuid#
+			AND testYn != "Y"
+		<isNotEmpty property="jobPhase">
+			AND	jobPhase = #jobPhase#
+		</isNotEmpty>
+		<isNotEmpty property="jobSeqNo">
+			AND	jobSeqNo = #jobSeqNo#
+		</isNotEmpty>
+		ORDER BY
+			jobStatus DESC
+	]]>
+	</sql>
+
+
+	<sql id="org.kisti.edison.service.persistence.SimulationCommandOption.deleteSimulationCommandOption">
+	<![CDATA[
+		DELETE FROM EDSIM_SimulationCommandOption
+		WHERE
+				groupId = #groupId#
+			AND simulationUuid = #simulationUuid#
+		<isNotEmpty property="optionSeq">
+			AND	optionSeq = #optionSeq#
+		</isNotEmpty>			
+		<isNotEmpty property="optionSeq">
+			AND	optionSeq = #optionSeq#
+		</isNotEmpty>
+	]]>
+	</sql>
+	
+	
+	<sql id="org.kisti.edison.service.persistence.SimulationJob.updateJobSeqNoSimulationJob">
+	<![CDATA[
+		UPDATE EDSIM_SimulationJob
+		SET jobSeqNo = #V_jobSeqNo#
+		WHERE
+			jobSeqNo = #jobSeqNo#
+		AND
+			simulationUuid = #simulationUuid#
+		AND
+			groupId = #groupId#
+	]]>
+	</sql>
+
+	<sql id="org.kisti.edison.service.persistence.SimulationJob.getJobSeqNoSimulationJob">
+	<![CDATA[
+		SELECT
+			jobSeqNo
+		FROM
+			EDSIM_SimulationJob
+		WHERE
+				groupId = #groupId#
+			AND simulationUuid = #simulationUuid# 			
+			AND jobUuid = #jobUuid#
+	]]>
+	</sql>
+
+	<sql id="org.kisti.edison.service.persistence.SimulationJob.getStatusSimulationJobStatus">
+	<![CDATA[
+		SELECT
+			jobStatus
+		FROM
+			(SELECT	jobStatus, @curRank /*'*/:=/*'*/ @curRank + 1 AS rank
+			 FROM EDSIM_SimulationJobStatus A,  (SELECT @curRank /*'*/:=/*'*/ 0) Q
+			 WHERE groupId = #groupId#
+				AND simulationUuid = #simulationUuid# 			
+				AND jobUuid = #jobUuid#
+			 ORDER BY writeDt DESC) A
+		WHERE
+  			rank = 1
+	]]>
+	</sql>
+
+	<sql id="org.kisti.edison.service.persistence.SimulationJob.getMaxStatusSeqSimulationJobStatus">
+	<![CDATA[
+		SELECT 
+			IFNULL(MAX(statusSeq),0)+1 AS maxStatusSeq
+		FROM
+			EDSIM_SimulationJobStatus
+		WHERE 
+				groupId = #groupId#
+			AND simulationUuid = #simulationUuid# 			
+			AND jobUuid = #jobUuid#
+	]]>
+	</sql>
+
+</custom-sql>

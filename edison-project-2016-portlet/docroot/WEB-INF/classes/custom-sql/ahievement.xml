@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<custom-sql>
+	<sql id="org.kisti.edison.project.service.persistence.getMajorAchievementsSelectHeader" >
+	<![CDATA[
+		SELECT 
+			category.categoryId,
+			category.name,
+			property.key_,
+			property.value,
+			IFNULL
+			(
+				(
+				SELECT count(CONTENT.projectId)
+					FROM EDMED_GeneralContent CONTENT 
+					WHERE 
+							category.categoryId = CONTENT.projectId 
+						AND CONTENT.projectId != 0 AND CONTENT.projectYn= #projectYn# 
+					GROUP BY category.categoryId
+			),0	) CONCNT,
+			IFNULL
+			(
+				(
+				SELECT count(HISCONTENT.projectCategoryId) 
+					FROM EDPRJ_HistoryContent HISCONTENT 
+					WHERE 
+							category.categoryId = HISCONTENT.projectCategoryId 
+						AND HISCONTENT.projectCategoryId  != 0 
+					GROUP BY category.categoryId
+			),0	) HISCONCNT,
+			
+			IFNULL
+			(
+				(
+				SELECT count(SimulAPP.projectCategoryId) 
+					FROM(
+						SELECT APP.projectCategoryId, APP.scienceAppId, APP.groupId
+							FROM EDAPP_ScienceApp APP
+							INNER JOIN EDSIM_Simulation SIMULATION ON APP.scienceAppId = SIMULATION.scienceAppId
+							INNER JOIN (SELECT * FROM EDSIM_SimulationJob WHERE testYn != "Y") JOB ON SIMULATION.simulationUuid = JOB.simulationUuid
+						WHERE APP.projectCategoryId != 0 
+						GROUP BY APP.scienceAppId
+				) SimulAPP
+					WHERE 
+						category.categoryId =  SimulAPP.projectCategoryId
+					GROUP BY SimulAPP.projectCategoryId
+			),	0) APPCNT,
+			IFNULL
+			(
+				(
+				SELECT COUNT(APP.projectCategoryId)
+					FROM EDPRJ_HistoryAppSimulation APP
+					WHERE category.categoryId = APP.projectCategoryId  AND APP.projectCategoryId != '0' 
+					GROUP BY category.categoryId
+			),	0) HISAPPCNT			
+		FROM AssetCategory category
+		INNER JOIN AssetCategoryProperty property on category.categoryId = property.categoryId
+		WHERE property.key_ = #propertyKey#
+		ORDER BY category.categoryId ASC
+	]]>
+	</sql>
+</custom-sql>

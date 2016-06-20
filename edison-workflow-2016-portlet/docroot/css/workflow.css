@@ -1,0 +1,221 @@
+
+/*좌측 트리*/
+.leftwrap{width:376px; float:left;}
+
+.lefttabm{}
+.lefttabm ul{margin:0; padding:0;}
+.lefttabm ul li{float:left; font-size:13px; font-weight:500; color:#383838; list-style:none; padding:7px 9px; line-height:20px; border-radius:3px 3px 0 0; border:solid 1px #9ec3df; border-bottom:solid 1px #00c7e5;}
+.lefttabm ul li.on{float:left; font-size:18px; font-weight:600; color:#383838; list-style:none; padding:7px 9px; line-height:20px; border-radius:3px 3px 0 0; border:solid 1px #00c7e5; border-bottom:solid 1px #fff; position:relative; top:0px; z-index:999;}
+.lefttabm ul li a:link{color:#383838;}
+.lefttabm ul li a:hover{ font-weight:600; color:#000;}
+
+
+.lefttreemenu{width:356px; border:solid 1px #00c7e5; min-height:589px; clear:both; position:relative; top:-5px; padding:15px 10px 10px 10px;}
+
+.lefttreemenu1{padding-top:45px;}
+.lefttreemenu1 ul{margin:0; padding:0;}
+.lefttreemenu1 ul li{list-style:none; font-size:15px; color:#666; background:url(../images/Workflow/folder_icon.png)no-repeat 0 3px; padding-left:25px; line-height:30px;}
+.lefttreemenu1 ul li a:link{color:#666;}
+.lefttreemenu1 ul li  a:hover{text-decoration:underline;}
+.lefttreemenu1 ul li ul{margin:0; padding:0;}
+.lefttreemenu1 ul li ul li{font-size:15px; font-weight:600; color:000; list-style:none; background:url(../images/Workflow/subdir_arrow.png) no-repeat 0 4px; line-height:30px;}
+.lefttreemenu1 ul li ul li a:link{color:000;}
+.lefttreemenu1 ul li ul li a:hover{text-decoration:underline;}
+
+.lefttreemenu1 ul li ul li ul{margin:0; padding:0;}
+.lefttreemenu1 ul li ul li ul li{list-style:none; font-size:15px; color:666; font-weight:500; background:url(../images/Workflow/file_icon.png) no-repeat 0 6px; line-height:28px;}
+.lefttreemenu1 ul li ul li ul li a:link{color:666;}
+.lefttreemenu1 ul li ul li ul li a:hover{text-decoration:underline;}
+
+.openslidearrow{position: absolute; left: 377px; top: -1px; z-index:100;}
+.closeslidearrow{position: absolute; left: 377px; top: -1px; z-index:100;}
+
+
+.rightwrap{width:819px; float:left; background-color:#f9f9f9; border:solid 1px #dedede; padding:10px; min-height:300px; margin-top:35px; margin-left:3px;}
+
+.apparea{padding:10px; min-height:400px;}
+
+.waitingbox{width:150px; height:165px; border-radius:3px; border:solid 1px #00abe3; background-color:#b6e1f8;}
+.waitingbox span{font-size:18px; color:#114a69; font-weight:500;}
+
+.runningbox{width:150px; height:165px; border-radius:3px; border:solid 1px #00abe3; background-color:#8db9e5;}
+.runningbox span{font-size:18px; color:#fff; font-weight:500;}
+
+.failbox{width:150px; height:165px; border-radius:3px; border:solid 1px #00abe3; background-color:#f8799b;}
+.failbox span{font-size:18px; color:#fff; font-weight:500;}
+
+.donebox{width:150px; height:165px; border-radius:3px; border:solid 1px #00abe3; background-color:#76d6cd;}
+.donebox span{font-size:18px; color:#fff; font-weight:500;}
+
+
+.leftlistbox{width:356px; border:solid 1px #00c7e5; min-height:589px; clear:both; position:relative; top:-5px; padding:15px 10px 10px 10px;}
+
+.wfconwrap{width:100%;}
+
+.listboxtopsp{padding-top:45px;}
+.listbox{width:310px; margin:0 auto; padding:7px 15px; background-color:#f9f9f9; border:solid 1px #ddd; border-radius:3px; margin-bottom:12px;}
+.listbox ul{margin:0; padding:0;}
+.listbox ul li{list-style:none; font-size:15px; font-weight:600; color:#000; line-height:2.0em;}
+.listbox ul li a{color:#000 !important; }
+.listbox ul li a:link{color:#000; }
+.listbox ul li a:hover{text-decoration:underline;}
+.listbox ul li.date{list-style:none; font-size:15px; font-weight:500; color:#666; line-height:1.5em;}
+.listbox ul li.date span{color:#418ccf;}
+
+.listboxon{width:310px; margin:0 auto; padding:7px 15px; background-color:#8db9e5; border-radius:3px; margin-bottom:12px; border:solid 1px #8db9e5;}
+.listboxon ul{margin:0; padding:0;}
+.listboxon ul li{list-style:none; font-size:15px; font-weight:600; color:#fff; line-height:2.0em;}
+.listboxon ul li a:link{color:#fff; }
+.listboxon ul li a:hover{text-decoration:underline;}
+.listboxon ul li.date{list-style:none; font-size:15px; font-weight:500; color:#000; line-height:1.5em;}
+.listboxon ul li.date span{color:#f4fd02;}
+
+ .edison .tablemf_list {
+    line-height: 1.3em;
+    width: 100%;
+    border-top: 2px solid #6a8ec6;
+    border-collapse: collapse;
+    font-size: 15px; }
+  .edison .borderno {
+    border-top: 0px solid #6a8ec6; }
+  .edison .tablemf_list a {
+    text-decoration: none; }
+  .edison .tablemf_list a:hover {
+    color: #000;
+    text-decoration: none; }
+  .edison .tablemf_list caption {
+    text-align: right;
+    padding-right: 15px;
+    color: #777;
+    width: 100%;
+    padding-bottom: 5px; }
+  .edison .tablemf_list th {
+    line-height: 2.0em;
+	border: 1px solid #e1e1e1;
+    border-bottom: 1px solid #ccc;
+    padding:4px;
+    color: #000;
+    font-weight:500;
+    background-color: #f1f1f1;
+    text-align: center;
+    font-size: 15px; }
+  .edison .tablemf_list td.bottom {
+    border-bottom: 1px solid #9397AE; }
+  .edison .tablemf_list td {
+    border: 1px solid #e1e1e1;
+    color: #000; font-weight:500;
+    padding:7px;
+    vertical-align: middle; }
+  .edison .tablemf_list td img {
+    vertical-align: middle; }
+  .edison .tablemf_list td.view {
+    padding-top: 15px;
+    padding-bottom: 20px;
+    min-height: 250px; }
+  .edison .tablemf_list td.name {
+    color: #2184aa; }
+  .bgcolor{ background-color:#fcfcfc;}
+  .edison .tablemf_list td.pdleft20{ padding-left:20px;}
+  
+  
+  
+   .edison .buttonwait {
+    font-weight: 500;
+    text-decoration: none;
+    background: #6ba0c3;
+    text-indent: 0px;
+    line-height: 0px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    text-align: center;
+    vertical-align: middle;
+    display: inline-block;
+    font-size: 12px;
+    color: #fff;
+    padding: 10px;
+    text-shadow: #ade6ff 0px 0px 0px;
+    border-color: #5492ba;
+    border-width: 1px;
+    border-style: solid; }
+	
+	
+	
+	
+   .edison .buttonrunning {
+    font-weight: 500;
+    text-decoration: none;
+    background: #3a81c0;
+    text-indent: 0px;
+    line-height: 0px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    text-align: center;
+    vertical-align: middle;
+    display: inline-block;
+    font-size: 12px;
+    color: #fff;
+    padding: 10px;
+    text-shadow: #ade6ff 0px 0px 0px;
+    border-color: #3371a8;
+    border-width: 1px;
+    border-style: solid; }
+	
+	
+   .edison .buttonfail {
+    font-weight: 500;
+    text-decoration: none;
+    background: #c84444;
+    text-indent: 0px;
+    line-height: 0px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    text-align: center;
+    vertical-align: middle;
+    display: inline-block;
+    font-size: 12px;
+    color: #fff;
+    padding: 10px;
+    text-shadow: #ade6ff 0px 0px 0px;
+    border-color: #b73535;
+    border-width: 1px;
+    border-style: solid; }
+	
+   .edison .buttondone {
+    font-weight: 500;
+    text-decoration: none;
+    background: #32a993;
+    text-indent: 0px;
+    line-height: 0px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    text-align: center;
+    vertical-align: middle;
+    display: inline-block;
+    font-size: 12px;
+    color: #fff;
+    padding: 10px;
+    text-shadow: #ade6ff 0px 0px 0px;
+    border-color: #2e9886;
+    border-width: 1px;
+    border-style: solid; }
+	
+	
+   .edison .tabletopwf{
+    position: absolute;
+    right:395px;
+    top: 11px;
+    width: 120px;
+    height: 17px;
+    border-radius: 3px 3px 3px 3px;
+    -webkit-border-radius: 3px 3px 3px 3px;
+    background-color: #fff;
+    padding: 5px;
+    border: solid 1px #ddd; }
+	
+	.wftitlebox001{width:1163px; margin: 0 auto; padding: 0;   border-radius: 3px 3px 0px 0px; -webkit-border-radius: 3px 3px 0px 0px; color: #fff; font-size: 18px; font-weight: 600; position: relative; height:53px; line-height:2.8em; padding-left:55px; margin-bottom:22px; background:url(../images/Workflow/title_icon.png) no-repeat 15px 12px; background-color:#67788a;}
+	
+	.wftitlebox001 span{float:right; margin-right:15px; margin-top:10px;}

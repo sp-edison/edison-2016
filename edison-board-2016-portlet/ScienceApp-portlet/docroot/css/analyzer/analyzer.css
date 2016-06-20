@@ -1,0 +1,67 @@
+body {
+	padding : 0px;
+	font-size:12px;
+}
+
+#postwrap{
+	width:1180px; 
+	height:750px; 
+	margin:0 auto; 
+	position:relative;
+}
+
+#postwrap label{
+	display:inline;
+}
+
+#postinfo{
+	width:356px;
+	height:750px;
+	float:left;
+	background:url(../../images/analyzer/postprocessor_bg1.png) no-repeat;
+}
+		
+#postinfocon{
+	margin:25px 0px 25px 25px; 
+	width:270px; 
+	height:700px;
+	overflow: auto;
+}
+
+#postlist{
+	width:824px; 
+	height:750px; 
+	float:right; 
+	background:url(../../images/analyzer/postprocessor_bg2.png) no-repeat;
+}
+		
+#postlistcon{
+	margin:25px 25px 25px 15px; 
+	width:785px; 
+	height:700px;
+}
+
+#postbtn_ko_KR{
+	cursor:pointer;
+	position: absolute; 
+	width: 43px; 
+	height: 70px; 
+	left: 302px; 
+	top: 339px;
+	background: url(../../images/analyzer/ko_KR/postprocessor_enter.png) no-repeat;
+}
+
+#postbtn_en_US{
+	cursor:pointer;
+	position: absolute; 
+	width: 43px; 
+	height: 70px; 
+	left: 302px; 
+	top: 339px;
+	background: url(../../images/analyzer/en_US/postprocessor_enter.png) no-repeat;
+}		
+			
+#postTable{
+	line-height: 17px;
+}
+				

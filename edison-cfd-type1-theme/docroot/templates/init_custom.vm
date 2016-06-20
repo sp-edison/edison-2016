@@ -1,0 +1,93 @@
+#*
+This file allows you to override and define new Velocity variables.
+*#
+#set ($css_class = "${css_class} edison ")
+
+#if($themeDisplay.getLanguageId()=="en_US")
+	#set ($infomation_text="Privacy Policy")
+#else
+	#set ($infomation_text="개인정보처리방침")
+#end
+
+
+
+#if($stringUtil.trim($stringUtil.toUpperCase($layout.getName('en_US')))=='HOME')
+	#set ($content_class ="content")
+	#set ($show_breadcrumbs = false)
+	
+	#set($singleValue = $paramUtil.getInteger($request,"p_p_id",0))
+	#if($singleValue=="58"||$singleValue=="1001"||$singleValue=="1004")
+		#set ($content_class ="content-sub")
+		#set ($show_breadcrumbs = true)
+	#end
+	
+	#set($ticketKey = $paramUtil.getString($request,"ticketKey",""))
+	#if($ticketKey!="")
+		#set ($content_class ="content-sub")
+		#set ($show_breadcrumbs = true)
+	#end
+#else
+	#set ($content_class ="content-sub")
+	#set ($show_breadcrumbs = true)
+#end
+
+#if ( $is_signed_in )
+	#if(!$themeDisplay.getUser().isEmailAddressVerificationComplete())
+		#set ($content_class ="content-sub")
+		#set ($show_breadcrumbs = true)
+	#end
+	
+	#if($themeDisplay.getUser().isPasswordReset())
+		#set ($content_class ="content-sub")
+		#set ($show_breadcrumbs = true)
+	#end
+		
+	#foreach($role in $user.getRoles())
+		#if($role.getName() == "Temp User")
+			#set ($temp_user =true)
+		#end
+	#end
+#end
+
+
+#set ($browserErrorMsg = $languageUtil.format($locale, "edison-browser-not-support",""))
+#set ($browserErrorCompMsg = $languageUtil.format($locale, "edison-browser-not-support-compatibility",""))
+
+
+#set ($site_home_url = $themeDisplay.getPortalURL()+"/web"+$page_group.getFriendlyURL())
+#if($themeDisplay.getSiteGroup().getPublicLayoutSet().getVirtualHostname()==$request.getServerName())
+	#if($themeDisplay.isSecure())
+		#set ($site_main_url ="https://"+$themeDisplay.getSiteGroup().getPublicLayoutSet().getVirtualHostname())
+	#else
+		#set ($site_main_url ="http://"+$themeDisplay.getSiteGroup().getPublicLayoutSet().getVirtualHostname())
+	#end
+	
+	#if($request.getServerPort()!="")
+		#set ($site_main_url =$site_main_url+":"+$request.getServerPort())
+	#end
+	
+	#if (!$is_signed_in)
+		#set($edisonLoginURL=$themeDisplay.getURLSignIn())
+		#set($edisonLoginURL=$httpUtil.addParameter($edisonLoginURL,"redirect",$layout.getFriendlyURL()))
+	#end
+#else
+	#if (!$is_signed_in)
+		#set($edisonLoginURL=$themeDisplay.getURLSignIn())
+		#set($edisonLoginParameter="/web"+$layout.getGroup().getFriendlyURL().concat($layout.getFriendlyURL()))
+		#set($edisonLoginURL=$httpUtil.addParameter($edisonLoginURL,"redirect",$edisonLoginParameter))
+	#end
+
+	#set ($site_main_url=$site_home_url)
+#end
+
+#if($permissionChecker.isOmniadmin()||$permissionChecker.isGroupAdmin($group_id))
+	#set ($dock_show=true)
+#else
+	#set ($dock_show=false)
+#end
+
+
+#set($privateInfoURL=$company_url+"/-/privateinfopolicy/view")
+#set($termOfUseURL=$company_url+"/-/termsofuse/view")
+
+

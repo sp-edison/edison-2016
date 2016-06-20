@@ -1,0 +1,55 @@
+<script>
+
+var SciencePlatformEvents = {
+		IPC_EVENT_CONTENT_BROADCAST: 'ipc-event-content-broadcat',
+		IPC_EVENT_REQUEST_CONTENT: 'ipc-event-request-content',
+		
+		TYPE_BROADCAST : 'broadcast',
+		TYPE_TARGET: 'target',
+		
+		EVENT_TYPE:'eventType',
+		EVENT_EMITTER: 'event-emitter',
+		EVENT_TARGET: 'event-target',
+		PORT_NAME: 'portName',
+		EVENT_DATA: 'event-data'
+	};
+
+	function SciencePlatformEvent(portName, type, emitter, target, data){
+		this[SciencePlatformEvents.PORT_NAME] = portName;
+		this[SciencePlatformEvents.EVENT_TYPE] = type;
+		this[SciencePlatformEvents.EVENT_EMITTER] = emitter;
+		this[SciencePlatformEvents.EVENT_TARGET] = target;
+		this[SciencePlatformEvents.EVENT_DATA] = data;
+		
+		this.getPortName = function(){
+			return this[SciencePlatformEvents.PORT_NAME];
+		};
+		this.setPortName = function(portName){
+			this[SciencePlatformEvents.PORT_NAME] = portName;
+		};
+		this.getEventType = function(){
+			return this[SciencePlatformEvents.EVENT_TYPE];
+		};
+		this.setEventType = function(type){
+			this[SciencePlatformEvents.EVENT_TYPE] = type;
+		};
+		this.getEventEmitter = function(){
+			return this[SciencePlatformEvents.EVENT_EMITTER];
+		};
+		this.setEventEmitter = function(emitter){
+			this[SciencePlatformEvents.EVENT_EMITTER] = emitter;
+		};
+		this.getEventTarget = function (){
+			return this[SciencePlatformEvents.EVENT_TARGET];
+		};
+		this.setEventTarget = function(target){
+			this[SciencePlatformEvents.EVENT_TARGET] = target;
+		};
+		this.getEventData = function(){
+			return this[SciencePlatformEvents.EVENT_DATA];
+		};
+		this.setEventData = function(data){
+			this[SciencePlatformEvents.EVENT_DATA] = data;
+		};
+	}
+</script>

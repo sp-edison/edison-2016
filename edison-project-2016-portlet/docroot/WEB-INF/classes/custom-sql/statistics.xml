@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<custom-sql>
+	<sql id="org.kisti.edison.project.service.persistence.getRegistSwContentHeader" >
+		<![CDATA[
+			SELECT 
+				category.categoryId,
+				category.name,
+				property.key_,
+				property.value,
+		]]>
+	</sql>
+	<sql id="org.kisti.edison.project.service.persistence.getRegistContentBody" >
+		<![CDATA[
+			IFNULL
+			(
+				(
+				SELECT count(CONTENT.projectId)
+					FROM EDMED_GeneralContent CONTENT 
+					WHERE 
+							category.categoryId = CONTENT.projectId 
+						AND CONTENT.projectId != 0 AND CONTENT.projectYn= #projectYn# 
+					GROUP BY category.categoryId
+			),0	) CONCNT,
+			IFNULL
+			(
+				(
+				SELECT count(HISCONTENT.projectCategoryId) 
+					FROM EDPRJ_HistoryContent HISCONTENT 
+					WHERE 
+							category.categoryId = HISCONTENT.projectCategoryId 
+						AND HISCONTENT.projectCategoryId  != 0 
+					GROUP BY category.categoryId
+			),0	) HISCONCNT
+		]]>
+	</sql>
+	<sql id="org.kisti.edison.project.service.persistence.getRegistSwBody" >
+		<![CDATA[
+			IFNULL
+			(
+				(
+				SELECT count(SimulAPP.projectCategoryId) 
+					FROM(
+						SELECT APP.projectCategoryId, APP.scienceAppId, APP.groupId
+							FROM EDAPP_ScienceApp APP
+							INNER JOIN EDSIM_Simulation SIMULATION ON APP.scienceAppId = SIMULATION.scienceAppId
+							INNER JOIN EDSIM_SimulationJob JOB ON SIMULATION.simulationUuid = JOB.simulationUuid
+						WHERE APP.projectCategoryId != 0 
+						GROUP BY APP.scienceAppId
+				) SimulAPP
+					WHERE 
+						category.categoryId =  SimulAPP.projectCategoryId
+					GROUP BY SimulAPP.projectCategoryId
+			),	0) APPCNT,
+			IFNULL
+			(
+				(
+				SELECT COUNT(APP.projectCategoryId)
+					FROM EDPRJ_HistoryAppSimulation APP
+					WHERE category.categoryId = APP.projectCategoryId  AND APP.projectCategoryId != '0' 
+					GROUP BY category.categoryId
+			),	0) HISAPPCNT	
+		]]>
+	</sql>
+	<sql id="org.kisti.edison.project.service.persistence.getRegistSwContentFrom" >
+		<![CDATA[
+			FROM AssetCategory category
+			INNER JOIN AssetCategoryProperty property on category.categoryId = property.categoryId
+			WHERE property.key_ = #propertyKey#
+			ORDER BY category.categoryId ASC
+		]]>
+	</sql>
+	
+	
+	
+	<sql id="org.kisti.edison.project.service.persistence.getContentDetail" >
+		<![CDATA[
+			SELECT 
+				CATEGORY.categoryId,
+				CATEGORY.name,
+				PROPERTY.key_,
+				PROPERTY.value,
+				ExtractValue(CONTENT.title, 'root/Title[@language-id="@@languageId@@"]') title,
+				CONTENTUSER.screenName,
+				CONTENTUSER.firstName,
+				CONTENT.insertId,
+				DATE_FORMAT(CONTENT.insertDate, '%Y-%m-%d') insertDate,
+				EXPANDOVALUE.data_ affiliation
+			FROM(
+				SELECT contentSeq, groupId, projectCategoryId, title, insertId, insertDate FROM EDPRJ_HistoryContent WHERE projectCategoryId != 0
+				UNION
+				SELECT contentSeq, groupId, projectId,  title, insertId, insertDate FROM EDMED_GeneralContent  WHERE projectId!= 0 AND	projectYn = #projectYn#
+			)CONTENT
+			INNER JOIN AssetCategory CATEGORY ON CATEGORY.categoryId = CONTENT.projectCategoryId
+			INNER JOIN AssetCategoryProperty PROPERTY ON PROPERTY.categoryId = CATEGORY.categoryId
+			INNER JOIN User_ CONTENTUSER ON CONTENTUSER.userId = CONTENT.insertId
+			INNER JOIN (SELECT * FROM ExpandoValue WHERE columnId = #columnId#) EXPANDOVALUE ON EXPANDOVALUE.classPK = CONTENTUSER.userId
+			
+			<isNotEmpty property="categoryId">
+				WHERE  CATEGORY.categoryId = #categoryId#
+			</isNotEmpty>
+			ORDER BY CONTENT.projectCategoryId
+		]]>
+	</sql>
+	
+	
+	<sql id="org.kisti.edison.project.service.persistence.getAppDetail" >
+		<![CDATA[
+			SELECT
+				A.scienceAppId,
+				A.groupId,
+				A.categoryId,
+				A.name,
+				A.key_,
+				A.value,
+				ExtractValue(A.title, 'root/Solver_title[@language-id="@@languageId@@"]') title,
+				A.data_,
+				A.authorId,
+				users.firstName,
+				users.screenName,
+				A.version,
+				A.runtime,
+				A.executeCount,
+				A.averageRuntime,
+				A.userCount,
+				DATE_FORMAT(A.createDate, '%Y-%m-%d') createDate
+			FROM(
+				SELECT
+					EXECUTE.scienceAppId,
+					EXECUTE.groupId,
+					EXECUTE.categoryId,
+					EXECUTE.name,
+					EXECUTE.key_,
+					EXECUTE.value,
+					EXECUTE.title,
+					EXECUTE.data_,
+					EXECUTE.authorId,
+					EXECUTE.version,
+					EXECUTE.runtime,
+					SUM(CASE WHEN EXECUTE.jobPhase = #jobPhase# THEN 1 ELSE 0 END) executeCount,
+					IFNULL(round(sum(EXECUTE.runtime)/SUM(CASE WHEN EXECUTE.jobPhase = #jobPhase# THEN 1 ELSE 0 END)),0) as averageRuntime,
+					COUNT(distinct(EXECUTE.userId)) userCount,
+					EXECUTE.createDate
+				FROM
+				(
+					SELECT
+						CATEGROY.categoryId,
+						CATEGROY.name,
+						APP.groupId,
+						PROPERTY.key_,
+						PROPERTY.value,
+						APP.scienceAppId,
+						APP.title,
+						EXPANDOVALUE.data_,
+						APP.userId as authorId,
+						APP.version,
+						SIMULATION.userId,
+						JOB.jobSeqNo,
+						JOB.jobPhase,
+						JOB.jobStartDt,
+						JOB.jobEndDt,
+						round(UNIX_TIMESTAMP(JOB.jobEndDt) - UNIX_TIMESTAMP(JOB.jobStartDt),0) runtime,
+						APP.createDate
+					FROM EDAPP_ScienceApp APP
+					INNER JOIN AssetCategory CATEGROY ON APP.projectCategoryId = CATEGROY.categoryId
+					INNER JOIN AssetCategoryProperty PROPERTY ON CATEGROY.categoryId = PROPERTY.categoryId
+					INNER JOIN EDSIM_Simulation SIMULATION ON APP.scienceAppId = SIMULATION.scienceAppId
+					INNER JOIN (SELECT * FROM EDSIM_SimulationJob WHERE testYn != "Y") JOB ON SIMULATION.simulationUuid = JOB.simulationUuid
+					INNER JOIN (SELECT * FROM ExpandoValue WHERE columnId = #columnId#) EXPANDOVALUE ON EXPANDOVALUE.classPK = APP.authorId
+				)EXECUTE GROUP BY EXECUTE.scienceAppId
+				UNION
+				SELECT
+					APP.scienceAppId,
+					APP.groupId,
+					APP.projectCategoryId,
+					CATEGROY.name,
+					PROPERTY.key_,
+					PROPERTY.value,
+					APP.title,
+					APP.affiliation_id,
+					APP.userId,
+					APP.version,
+					APP.runtime,
+					APP.executeCount,
+					APP.averageRuntime,
+					APP.userCount,
+					APP.insertDate
+				FROM EDPRJ_HistoryAppSimulation APP
+				INNER JOIN AssetCategory CATEGROY ON APP.projectCategoryId = CATEGROY.categoryId
+				INNER JOIN AssetCategoryProperty PROPERTY ON CATEGROY.categoryId = PROPERTY.categoryId
+			) A
+			INNER JOIN User_ users ON A.authorId = users.userId
+			<isNotEmpty property="categoryId">
+				WHERE  A.categoryId = #categoryId#
+			</isNotEmpty>
+			ORDER BY categoryId
+		]]>
+	</sql>
+</custom-sql>

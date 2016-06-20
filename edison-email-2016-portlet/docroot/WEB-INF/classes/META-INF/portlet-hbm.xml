@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-lazy="false" auto-import="false">
+	<import class="org.kisti.edison.model.SendMailContent" />
+	<class name="org.kisti.edison.model.impl.SendMailContentImpl" table="EDMAIL_SendMailContent">
+		<cache usage="read-write" />
+		<id name="sendMailId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="sendCount" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="successCount" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="failCount" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="sendDate" type="org.hibernate.type.TimestampType" />
+		<property name="siteGroup" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="userGroup" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="state" type="com.liferay.portal.dao.orm.hibernate.StringType" column="state_" />
+		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="content" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+</hibernate-mapping>

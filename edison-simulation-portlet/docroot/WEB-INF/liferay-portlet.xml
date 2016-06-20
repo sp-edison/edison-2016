@@ -1,0 +1,145 @@
+<?xml version="1.0"?>
+<!DOCTYPE liferay-portlet-app PUBLIC "-//Liferay//DTD Portlet Application 6.2.0//EN" "http://www.liferay.com/dtd/liferay-portlet-app_6_2_0.dtd">
+
+<liferay-portlet-app>
+	<portlet>
+		<portlet-name>edison-bestsimulation</portlet-name>
+		<icon>/icon.png</icon>
+		<configuration-action-class>org.kisti.edison.bestsimulation.portlet.simulation.ConfigurationController</configuration-action-class>
+		<action-url-redirect>true</action-url-redirect>		
+		<instanceable>false</instanceable>
+		<css-class-wrapper>edison-bestsimulation</css-class-wrapper>
+	</portlet>
+	
+	<portlet>
+		<portlet-name>edison-myfile</portlet-name>
+		<icon>/icon.png</icon>
+		<action-url-redirect>true</action-url-redirect>		
+		<header-portlet-css>/css/jstreestyle.css</header-portlet-css>
+		<header-portlet-css>/css/jstreestyle.min.css</header-portlet-css>
+		<header-portlet-css>/css/jquery-ui.min.css</header-portlet-css>
+		<header-portlet-css>/css/main.css</header-portlet-css>
+		<header-portlet-css>/css/myfile.css</header-portlet-css>
+		<header-portlet-css>/css/jstreestyle.min.css</header-portlet-css>
+		<header-portlet-javascript>/js/jquery-1.10.2.min.js</header-portlet-javascript>
+		<header-portlet-javascript>/js/jquery-ui-1.10.4.custom.min.js</header-portlet-javascript>
+		<css-class-wrapper>edison-myfile</css-class-wrapper>		
+	</portlet>
+	
+	
+	<portlet>
+		<portlet-name>edison-monitoring</portlet-name>
+		<icon>/icon.png</icon>
+		<configuration-action-class>org.kisti.edison.bestsimulation.portlet.monitoring.ConfigurationController</configuration-action-class>
+		<action-url-redirect>true</action-url-redirect>
+		<header-portlet-css>/css/main.css</header-portlet-css>		
+		<header-portlet-css>/css/jquery-ui.min.css</header-portlet-css>
+		<header-portlet-css>/css/jquery/jquery-ui.theme.min.css</header-portlet-css>
+		<header-portlet-javascript>/js/jquery-1.10.2.min.js</header-portlet-javascript>
+		<header-portlet-javascript>/js/jquery-ui.min.js</header-portlet-javascript>
+		<footer-portlet-javascript>/js/main.js</footer-portlet-javascript>
+		<css-class-wrapper>edison-monitoring</css-class-wrapper>		
+		<add-default-resource>true</add-default-resource>
+	</portlet>
+	
+		<portlet>
+		<portlet-name>edison-myrepository</portlet-name>
+		<icon>/icon.png</icon>
+		<action-url-redirect>true</action-url-redirect>
+		<header-portlet-css>/css/main.css</header-portlet-css>		
+		<header-portlet-css>/css/jquery-ui.min.css</header-portlet-css>
+		<header-portlet-css>/css/jquery/jquery-ui.theme.min.css</header-portlet-css>
+		<header-portlet-javascript>/js/jquery-1.10.2.min.js</header-portlet-javascript>
+		<header-portlet-javascript>/js/jquery-ui.min.js</header-portlet-javascript>
+		<footer-portlet-javascript>/js/main.js</footer-portlet-javascript>
+		<css-class-wrapper>edison-myrepository</css-class-wrapper>		
+		<add-default-resource>true</add-default-resource>
+	</portlet>
+	
+	<portlet>
+		<portlet-name>edison-statistics-user</portlet-name>
+		<icon>/icon.png</icon>
+		<action-url-redirect>true</action-url-redirect>
+		<header-portlet-css>/css/main.css</header-portlet-css>		
+		<header-portlet-css>/css/jquery-ui.min.css</header-portlet-css>
+		<header-portlet-css>/css/jquery/jquery-ui.theme.min.css</header-portlet-css>
+		<header-portlet-javascript>/js/jquery-1.10.2.min.js</header-portlet-javascript>
+		<header-portlet-javascript>/js/jquery-ui.min.js</header-portlet-javascript>
+		<footer-portlet-javascript>/js/main.js</footer-portlet-javascript>
+		<css-class-wrapper>edison-statistics-user</css-class-wrapper>		
+		<add-default-resource>true</add-default-resource>
+	</portlet>
+	
+	<portlet>
+		<portlet-name>edison-statistics-app</portlet-name>
+		<icon>/icon.png</icon>
+		<action-url-redirect>true</action-url-redirect>
+		<header-portlet-css>/css/main.css</header-portlet-css>		
+		<header-portlet-css>/css/jquery-ui.min.css</header-portlet-css>
+		<header-portlet-css>/css/jquery/jquery-ui.theme.min.css</header-portlet-css>
+		<header-portlet-javascript>/js/jquery-1.10.2.min.js</header-portlet-javascript>
+		<header-portlet-javascript>/js/jquery-ui.min.js</header-portlet-javascript>
+		<footer-portlet-javascript>/js/main.js</footer-portlet-javascript>
+		<css-class-wrapper>edison-statistics-app</css-class-wrapper>		
+		<add-default-resource>true</add-default-resource>
+	</portlet>
+	
+	<portlet>
+		<portlet-name>edison-statistics-exec</portlet-name>
+		<icon>/icon.png</icon>
+		<action-url-redirect>true</action-url-redirect>
+		<header-portlet-css>/css/main.css</header-portlet-css>		
+		<header-portlet-css>/css/jquery-ui.min.css</header-portlet-css>
+		<header-portlet-css>/css/jquery/jquery-ui.theme.min.css</header-portlet-css>
+		<header-portlet-javascript>/js/jquery-1.10.2.min.js</header-portlet-javascript>
+		<header-portlet-javascript>/js/jquery-ui.min.js</header-portlet-javascript>
+		<footer-portlet-javascript>/js/main.js</footer-portlet-javascript>
+		<css-class-wrapper>edison-statistics-exec</css-class-wrapper>		
+		<add-default-resource>true</add-default-resource>
+	</portlet>
+	
+	<portlet>
+		<portlet-name>edison-statistics-app-exec</portlet-name>
+		<icon>/icon.png</icon>
+		<action-url-redirect>true</action-url-redirect>
+		<header-portlet-css>/css/main.css</header-portlet-css>		
+		<header-portlet-css>/css/jquery-ui.min.css</header-portlet-css>
+		<header-portlet-css>/css/jquery/jquery-ui.theme.min.css</header-portlet-css>
+		<header-portlet-javascript>/js/jquery-1.10.2.min.js</header-portlet-javascript>
+		<header-portlet-javascript>/js/jquery-ui.min.js</header-portlet-javascript>
+		<footer-portlet-javascript>/js/main.js</footer-portlet-javascript>
+		<css-class-wrapper>edison-statistics-app-exec</css-class-wrapper>		
+		<add-default-resource>true</add-default-resource>
+	</portlet>
+	
+	<portlet>
+		<portlet-name>edison-statistics-exec-time</portlet-name>
+		<icon>/icon.png</icon>
+		<action-url-redirect>true</action-url-redirect>
+		<header-portlet-css>/css/main.css</header-portlet-css>		
+		<header-portlet-css>/css/jquery-ui.min.css</header-portlet-css>
+		<header-portlet-css>/css/jquery/jquery-ui.theme.min.css</header-portlet-css>
+		<header-portlet-javascript>/js/jquery-1.10.2.min.js</header-portlet-javascript>
+		<header-portlet-javascript>/js/jquery-ui.min.js</header-portlet-javascript>
+		<footer-portlet-javascript>/js/main.js</footer-portlet-javascript>
+		<css-class-wrapper>edison-statistics-exec-time</css-class-wrapper>		
+		<add-default-resource>true</add-default-resource>
+	</portlet>
+	
+	<role-mapper>
+		<role-name>administrator</role-name>
+		<role-link>Administrator</role-link>
+	</role-mapper>
+	<role-mapper>
+		<role-name>guest</role-name>
+		<role-link>Guest</role-link>
+	</role-mapper>
+	<role-mapper>
+		<role-name>power-user</role-name>
+		<role-link>Power User</role-link>
+	</role-mapper>
+	<role-mapper>
+		<role-name>user</role-name>
+		<role-link>User</role-link>
+	</role-mapper>
+</liferay-portlet-app>

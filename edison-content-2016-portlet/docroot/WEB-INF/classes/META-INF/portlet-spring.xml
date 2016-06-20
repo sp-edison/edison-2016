@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<bean id="org.kisti.edison.content.service.AdvancedContentLocalService" class="org.kisti.edison.content.service.impl.AdvancedContentLocalServiceImpl" />
+	<bean id="org.kisti.edison.content.service.AdvancedContentService" class="org.kisti.edison.content.service.impl.AdvancedContentServiceImpl" />
+	<bean id="org.kisti.edison.content.service.persistence.AdvancedContentPersistence" class="org.kisti.edison.content.service.persistence.AdvancedContentPersistenceImpl" parent="basePersistence" />
+	<bean id="org.kisti.edison.content.service.GeneralContentLocalService" class="org.kisti.edison.content.service.impl.GeneralContentLocalServiceImpl" />
+	<bean id="org.kisti.edison.content.service.GeneralContentService" class="org.kisti.edison.content.service.impl.GeneralContentServiceImpl" />
+	<bean id="org.kisti.edison.content.service.persistence.GeneralContentPersistence" class="org.kisti.edison.content.service.persistence.GeneralContentPersistenceImpl" parent="basePersistence" />
+	<bean id="org.kisti.edison.content.service.persistence.GeneralContentFinder" class="org.kisti.edison.content.service.persistence.GeneralContentFinderImpl" parent="basePersistence" />
+	<bean id="org.kisti.edison.content.service.OrgImgContentLocalService" class="org.kisti.edison.content.service.impl.OrgImgContentLocalServiceImpl" />
+	<bean id="org.kisti.edison.content.service.OrgImgContentService" class="org.kisti.edison.content.service.impl.OrgImgContentServiceImpl" />
+	<bean id="org.kisti.edison.content.service.persistence.OrgImgContentPersistence" class="org.kisti.edison.content.service.persistence.OrgImgContentPersistenceImpl" parent="basePersistence" />
+	<bean id="org.kisti.edison.content.service.persistence.OrgImgContentFinder" class="org.kisti.edison.content.service.persistence.OrgImgContentFinderImpl" parent="basePersistence" />
+</beans>

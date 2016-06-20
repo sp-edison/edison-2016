@@ -1,0 +1,103 @@
+/* 팝업 */
+
+.puptrline {
+	border-bottom: solid 1px #ccc;
+}
+
+.puptitle {
+	font-size: 17px;
+	font-weight: 600;
+	color: #334b7e;
+	padding-left: 8px;
+	padding: 10px;
+}
+
+.puptxt {
+	font-size: 14px;
+}
+
+.puptxt2 {
+	font-size: 14px;
+	font-weight: 600;
+	color: #666;
+	line-height: 25px;
+	padding: 3px 0 0 10px;
+}
+
+.edison #wrap .table1_list .localDiv td{
+	border-bottom: 0px;
+	padding: 0px;
+}
+
+.aui .localDiv .input-localized-input{
+  	display: inline-block;
+  	margin: 5px 0 5px 0;
+}
+
+/*가상실험실 가상클래스*/
+
+.vltxt01 {
+	margin-top: 160px;
+	font-size: 13px;
+	font-weight: 600;
+	color: #3d4543;
+	padding-left: 25px;
+	float: left;
+}
+
+.vltxt02 {
+	margin-right: 10px;
+	margin-top: 160px;
+	font-size: 13px;
+	font-weight: 600;
+	color: #3d4543;
+	padding-left: 10px;
+	float: left;
+}
+
+.vlbtn {
+	margin-top: 158px;
+	float: left;
+	padding-left: 4px;
+}
+
+.classvisual {
+	width: 1220px;
+	height: 206px;
+	background: url(/edison-virtuallab-2016-portlet/images/virtualvisual.jpg)
+		no-repeat
+}
+
+.cvtxt01 {
+	margin-top: 160px;
+	font-size: 14px;
+	font-weight: 600;
+	color: #fff;
+	padding-left: 25px;
+	float: left;
+}
+
+.cvtxt02 {
+	margin-top: 160px;
+	font-size: 14px;
+	font-weight: 600;
+	color: #fff;
+	padding-left: 25px;
+	float: left;
+}
+
+.cvtxt02 span {
+	font-size: 17px;
+	font-weight: 600;
+	color: #ffeab8;
+}
+
+/*virual*/
+.virtitlebox{margin:0 auto; float:left; width:100%; }
+.virtitlebox img{float:left; padding-top:25px; padding-right:10px;}
+.virtitle{float:left; font-size:18px; color:#000; padding-top:22px; font-family:Tahoma, Arial, Nanum Barun Gothic,"나눔고딕", NanumGothic ;}
+.virclose img{margin:0 auto; padding:16px 17px 0px 50px; float:right;}
+.virsearch{padding:3px 11px 0px 50px; font-size:16px; color:#000;  float:right;}
+
+.button0801{padding:4px 10px 5px 10px; height:32px; background:#606060;  border-radius:3px; -webkit-border-radius:3px; border:solid 1px #6a6a6b; min-width:90px; color:#fff; font-weight:600; font-size:14px;}
+

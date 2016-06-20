@@ -1,0 +1,275 @@
+			  #clear { 
+	clear:both;
+}
+
+/*--- 페이지 타이틀 & 네비게이션 -----*/
+
+#page_title { 
+	margin:10px 15px 0px 15px; 
+	border-bottom:	1px solid #dfdfdf;
+}
+
+#heading_wrap {
+	float:left; 
+	width:400px; 
+	line-height:30px; 
+	font-size:16px; 
+	text-align:left;
+	font-weight:bolder; 
+	vertical-align:middle;
+}
+
+.heading  {
+	background: transparent url(/edison-portlet/images/sub_title_dot.jpg) no-repeat center left; 
+	padding: 0 0 0 14px;
+}
+
+#navi_wrap { 
+	float:right; 
+	width:500px; 
+	line-height:25px; 
+	font-size:11px; 
+	text-align:right; 
+	color:#777777; 
+	vertical-align:middle;
+}
+.navi { 
+	background: transparent url(/edison-portlet/images/nave_icon_home.jpg) no-repeat ;
+	padding: 0 0 0 14px; 
+}
+
+
+/*--- SW 조회 기본내용 ----*/
+
+                   
+#sw_title_wrap{
+	padding:15px; 
+	width: 1139px; 
+	margin: 0 auto; 
+}
+#sw_title_wrap2 {
+	padding:15px 15px 15px 25px; 
+	border-top: 1px solid #e1e1e1; 
+	border-left: 1px solid #e1e1e1; 
+	border-right: 1px solid #e1e1e1;
+	border-bottom: 1px solid #e1e1e1; 
+	background-color: #f3f3f3;
+}
+#sw_title {
+	width:900px; 
+	padding: 0px 0px 10px 0px; 
+	font-size:16px; 
+	font-weight:bolder;
+}
+#sw_title_img {
+	width:79px; 
+	float:left;
+}
+#sw_title_detail {
+	font-size:12px;
+	width:700px; 
+	float:left; 
+	padding: 0px 0px 0px 15px; 
+}
+      
+/*-- SW 기본 내용 테이블 스타일 ---*/
+
+table.swview {
+    width:100%;
+    border-collapse:collapse;
+}
+table.swview td {
+    border-bottom: 1px solid #D5D5D5;
+	vertical-align:middle;
+}
+
+
+/*-------- 탭 -------*/
+#tabs_container {
+	width: 1149px;
+	margin: 0 auto; 
+	height: 34px;
+	padding: 19px 10px 10px 10px; 
+	background-image:url(/edison-portlet/images/btn/sw_view_tap_bg.jpg)
+}
+
+#tabs{
+	list-style: none;
+	margin: 0 0 0 10px;
+	font: 12px malgun gothic;
+}
+
+#tabs li {
+	list-style:none;
+	display: inline;
+}
+#tabs li a {
+	border: 2px solid #d2d2d2;
+	padding: 8px 50px;
+	color : #646464;
+	text-decoration: none;
+	background-color:  #eef8fa;
+	border-bottom: none;
+	outline: none;
+	border-radius: 5px 5px 0 0;
+	-moz-border-radius: 5px 5px 0 0;
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-top-right-radius: 5px;
+}
+
+#tabs li a:hover, #tabs li a.active{
+	font: 13px malgun gothic;
+	color : #FFFFFF;
+	font-weight : bolder;
+	padding-top:13px;
+	background-color:#7ABCED;
+	border: 3px solid #d2d2d2;
+	border-bottom: none;
+}
+
+.tab_content {
+	display: none;
+}
+
+/*-------- 상세정보 탭 -------*/
+#view_detail_wrap {
+	width:1139px; 
+	margin:0 auto; 
+	padding:0px 13px 13px 13px;
+	font-size: 12px; 
+}
+#view_detail_title {
+	font-size:13px; 
+	font-weight:bolder; 
+	padding:10px 5px 5px 5px;
+}
+#view_detail {
+	width:1118px; 
+    padding:7px 10px 10px 10px;
+	background-color:#ffffff; 
+	border-top: 1px solid #e1e1e1;
+	border-left: 1px solid #e1e1e1;
+	border-right: 1px solid #e1e1e1;
+	border-bottom: 1px solid #e1e1e1
+}
+/*------ 스크린 샷 --*/
+#view_screen_title {
+	font-size:13px; 
+	font-weight:bolder;  
+	padding:15px 5px 5px 5px;
+}
+#view_screen {
+	width:1136px; 
+	background-color:#ffffff; 
+	border-top: 1px solid #e1e1e1;
+	border-left: 1px solid #e1e1e1;
+	border-right: 1px solid #e1e1e1;
+	border-bottom: 1px solid #e1e1e1;
+}
+
+/*---- 파라미터 정보 TABLE ------------------*/
+#pra_wrap {
+	width:1115px; 
+	margin:0 auto; 
+	padding:0px 15px 5px 15px;
+	font-size: 12px;
+}
+
+table.pralist {
+	width:100%;
+	border-collapse:collapse;
+	border-bottom: 1px solid #D5D5D5;
+}
+
+table.pralist th {
+	color:#434343;
+	text-align:center;
+	line-height:40px;
+	background-color: #eef9ff;
+	height:40px;
+	border-top: 1px solid #D5D5D5;
+}
+table.pralist td {
+    color:#595959;
+    text-align:center;
+    border-top: 1px solid #D5D5D5;
+    height:60px;
+	vertical-align:middle;
+}
+
+/* kd 추가 */
+table.pralist td.TL{
+	text-align:left;
+	padding-left: 10px;
+}
+
+/*---- 문제필터  ------*/
+
+#filter_wrap{
+	padding:15px; 
+	width: 1139px; 
+	margin: 0 auto; 
+}
+table.filter {
+	width:100%;
+	border-collapse:collapse;
+	border-top: 1px solid #D5D5D5;
+	border-bottom: 1px solid #D5D5D5;
+	border-left: 1px solid #D5D5D5;
+	border-right: 1px solid #D5D5D5;
+	font-size:12px;
+	color:#444444;
+}
+table.filter th {
+	color:#434343;
+	text-align:center;
+	background-color: #eef9ff;
+	height:32px;
+	border-left: 1px solid #D5D5D5;
+	border-right: 1px solid #D5D5D5;
+
+}
+table.filter td {
+	color:#595959;
+	padding: 0px 0px 0px 7px;
+	border-top: 1px solid #D5D5D5;
+	height:32px;
+	border-left: 1px solid #D5D5D5;
+	border-right: 1px solid #D5D5D5;
+}
+/*---- 최종 버튼 ------------------*/
+#bottom_btn {
+	width:1139px; 
+	margin:0 auto; 
+	padding:13px;
+}
+
+/*------------- Reference Link 테이블 -----------------*/
+#sciencedetail img{
+	padding-left: 10px;
+	vertical-align: middle;
+}
+
+
+/*------------- 상세정보 테이블 -----------------*/
+
+table.etail_info {
+    width:100%;
+    border-collapse:collapse;
+}
+table.etail_info th {
+	vertical-align:top;
+    color:#606060;
+    height:21px;
+	text-align:left;
+	padding:5px 0px 5px 5px ;
+    border-bottom: 1px solid #eeeeee;
+}
+table.etail_info td {
+	line-height: 25px;
+    color:#818181;
+    height:21px;
+	vertical-align:middle;
+	padding:5px 0px 5px 5px ;
+    border-bottom: 1px solid #eeeeee;
+}

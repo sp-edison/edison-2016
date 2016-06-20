@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom-sql>
+	<sql id="com.kisti.science.platform.app.service.persistence.ScienceAppFinder.retrieveScienceAppOnNameTitleScreenNameAffiliationName" >
+		<![CDATA[
+			(
+				SELECT app.*
+				from
+					ScienceApp_ScienceApp AS app
+				where
+					(app.title LIKE ?) OR
+					(app.name LIKE ?)
+			)		
+			UNION
+			(		
+				SELECT app.*
+				FROM (
+						SELECT man.*
+								FROM
+							(
+								SELECT user.*
+								FROM 
+									User_ AS user
+								WHERE
+									user.screenName = ?
+							) AS user
+							JOIN
+								ScienceApp_ScienceAppManager AS man
+								ON user.userId = man.managerId
+					) AS sm
+					JOIN
+						ScienceApp_ScienceApp AS app
+								ON sm.scienceAppId = app.scienceAppId
+			)				
+			UNION
+			(
+				SELECT app.*
+				FROM (
+					SELECT aff.*
+					FROM
+						SciencePlatformhook_SpAffiliation AS aff
+					WHERE
+						aff.spAffiliationName LIKE ?
+					) AS affid
+					JOIN 
+						SciencePlatformHook_SpUser AS spUser 
+						ON
+							spUser.spAffiliationId = affid.spAffiliationId
+						JOIN
+						ScienceApp_ScienceApp AS app ON (app.userId = spUser.spUserId OR app.authorId = spUser.spUserId)
+			)
+		]]>
+	</sql>
+	<sql id="com.kisti.science.platform.app.service.persistence.ScienceAppFinder.retrieveScienceAppOnScreenName" >
+		<![CDATA[
+			SELECT app.*
+			FROM (
+					SELECT man.*
+							FROM
+						(
+							SELECT user.*
+							FROM 
+								User_ AS user
+							WHERE
+								user.screenName = ?
+						) AS user
+						JOIN
+							ScienceApp_ScienceAppManager AS man
+							ON user.userId = man.managerId
+				) AS sm
+				JOIN
+					ScienceApp_ScienceApp AS app
+							ON sm.scienceAppId = app.scienceAppId
+		]]>
+	</sql>
+	<sql id="com.kisti.science.platform.app.service.persistence.ScienceAppFinder.retrieveScienceAppOnAffiliationName" >
+		<![CDATA[
+			SELECT app.*
+			FROM (
+				SELECT aff.*
+				FROM
+					SciencePlatformhook_SpAffiliation AS aff
+				WHERE
+					aff.spAffiliationName LIKE ?
+				) AS affid
+				JOIN 
+					SciencePlatformHook_SpUser AS spUser 
+					ON
+						spUser.spAffiliationId = affid.spAffiliationId
+					JOIN
+					ScienceApp_ScienceApp AS app ON (app.userId = spUser.spUserId OR app.authorId = spUser.spUserId)
+		]]>
+	</sql>
+	<sql id="org.kisti.edison.science.service.persistence.ScienceAppFinder.getFavoriteAppList" >
+		<![CDATA[
+			SELECT
+				A.*
+			FROM
+				(SELECT
+					E.*,
+					F.data_ universityld
+				FROM
+					EDAPP_ScienceAppCategoryLink D
+					INNER JOIN(
+						SELECT 
+							C.categoryId
+						FROM
+							AssetEntries_AssetCategories C
+							INNER JOIN AssetCategory B ON C.categoryId = B.categoryId
+						WHERE
+							B.vocabularyId = #vocabularyId#
+							<isNotEmpty property="entryId">
+							AND
+							C.entryId = #entryId#
+							</isNotEmpty>
+							AND
+							B.parentCategoryId != 0
+					) AS BC ON D.categoryId = BC.categoryId
+					INNER JOIN EDAPP_ScienceApp E ON D.scienceAppId = E.scienceAppId AND E.status = 1901004
+					INNER JOIN (SELECT F.data_, F.classPK FROM ExpandoValue F WHERE F.columnId = #columnId#) AS F ON E.userId = F.classPK
+				GROUP BY
+					D.scienceAppId
+				) AS A
+			INNER JOIN (SELECT B.* FROM EDAPP_ScienceAppFavorite B WHERE B.userId = #userId#) B ON A.scienceAppId = B.scienceAppId
+		]]>
+	</sql>
+	
+	<sql id="org.kisti.edison.science.service.persistence.ScienceAppFinder.retrieveListScienceAppEditor.header" >
+		<![CDATA[
+		SELECT A.*
+		FROM
+		EDAPP_ScienceApp A, User_ U, ExpandoValue E
+		]]>
+	</sql>
+	
+	<sql id="org.kisti.edison.science.service.persistence.ScienceAppFinder.retrieveListMyManagerScienceAppEditor.header" >
+		<![CDATA[
+		SELECT A.*
+		FROM  
+		EDAPP_ScienceApp A, EDAPP_ScienceAppManager B, User_ U, ExpandoValue E
+		]]>
+	</sql>
+	
+	<sql id="org.kisti.edison.science.service.persistence.ScienceAppFinder.retrieveListScienceAppEditor.where" >
+		<![CDATA[
+		WHERE
+			A.swTest = 0
+			<isNotEmpty property="companyId">
+			AND
+				A.companyId = #companyId#
+			</isNotEmpty>
+			
+			<isNotEmpty property="userId">
+			AND 
+				A.authorId = #userId#
+			</isNotEmpty>
+			<isNotEmpty property="myManagerAppSearch">
+			AND 
+				A.scienceAppId = B.scienceAppId	
+			</isNotEmpty>
+				
+			<isNotEmpty property="myManagerAppUserId">
+			AND 
+				B.userId = #myManagerAppUserId#
+			</isNotEmpty>
+			
+		AND 
+			A.authorId = U.userId
+		
+		<isNotEmpty property="notEditorTypeString">	
+		AND 
+			UPPER(A.editorType) != 'STRING'
+		</isNotEmpty>
+		
+		<isNotEmpty property="appType">
+		AND
+			A.appType = #appType#
+		</isNotEmpty>
+		
+		<isNotEmpty property="status">
+		AND
+			A.status = #status#
+		</isNotEmpty>
+		AND 
+			U.userId = E.classPK
+		<isNotEmpty property="columnId">
+		AND 
+			E.columnId = #columnId#
+		</isNotEmpty>
+		<isNotEmpty property="targetLanguage">
+		AND
+			A.targetLanguage LIKE '%@@targetLanguage@@%'
+		</isNotEmpty>
+		<isNotEmpty property="APP_MANAGER_SEARCH_ALL">
+			AND	(
+					A.name LIKE '%@@searchValue@@%'
+				OR
+					EXTRACTVALUE(A.title, 'root/Title[@language-id="@@targetLanguage@@"]') LIKE '%@@searchValue@@%'
+				OR
+					U.firstName LIKE '%@@searchValue@@%'
+				OR
+					E.data_ IN (#searchOrgCode#)
+			)
+		</isNotEmpty>
+		
+		<isNotEmpty property="SWNM">
+		AND
+			A.name LIKE '%@@searchValue@@%'
+		</isNotEmpty>
+		
+		<isNotEmpty property="SWTITLE">
+		AND
+			EXTRACTVALUE(A.title, 'root/Title[@language-id="@@targetLanguage@@"]') LIKE '%@@searchValue@@%'
+		</isNotEmpty>
+		
+		<isNotEmpty property="SWUSERNM">
+		AND
+			U.firstName LIKE '%@@searchValue@@%'
+		</isNotEmpty>
+		
+		ORDER BY A.createDate DESC
+		]]>
+	</sql>
+	
+	<sql id="org.kisti.edison.science.service.persistence.ScienceAppFinder.retrieveListScienceApp.header" >
+		<![CDATA[
+		SELECT A.*, B.* 
+		FROM
+		EDAPP_ScienceAppCategoryLink A , EDAPP_ScienceApp B, User_ U, ExpandoValue E
+		]]>
+	</sql>
+	
+	<sql id="org.kisti.edison.science.service.persistence.ScienceAppFinder.countScienceApp.header" >
+		<![CDATA[
+		SELECT COUNT(distinct B.scienceAppId) AS totalCnt
+		FROM
+		EDAPP_ScienceAppCategoryLink A , EDAPP_ScienceApp B, User_ U, ExpandoValue E
+		]]>
+	</sql>
+	
+	<sql id="org.kisti.edison.science.service.persistence.ScienceAppFinder.retrieveListMyManagerScienceApp.header" >
+		<![CDATA[
+		SELECT A.*, B.* 
+		FROM
+		EDAPP_ScienceAppCategoryLink A, EDAPP_ScienceApp B, EDAPP_ScienceAppManager C, User_ U, ExpandoValue E
+		]]>
+	</sql>
+	
+	<sql id="org.kisti.edison.science.service.persistence.ScienceAppFinder.countMyManagerScienceApp.header" >
+		<![CDATA[
+		SELECT COUNT(distinct B.scienceAppId) AS totalCnt
+		FROM
+		EDAPP_ScienceAppCategoryLink A, EDAPP_ScienceApp B, EDAPP_ScienceAppManager C, User_ U, ExpandoValue E
+		]]>
+	</sql>
+	
+	<sql id="org.kisti.edison.science.service.persistence.ScienceAppFinder.ScienceApp.where" >
+		<![CDATA[
+		WHERE
+		<isNotEmpty property="companyId">
+			A.companyId = #companyId#
+		</isNotEmpty>
+		<isNotEmpty property="appType">
+		AND
+			B.appType = #appType#
+		</isNotEmpty>
+		AND
+			A.scienceAppId = B.scienceAppId
+		<isNotEmpty property="myManagerAppSearch">
+		AND 
+			B.scienceAppId = C.scienceAppId	
+		</isNotEmpty>	
+		AND
+			B.authorId = U.userId
+		AND 
+			U.userId = E.classPK
+		<isNotEmpty property="myManagerAppUserId">
+		AND 
+			C.userId = #myManagerAppUserId#
+		</isNotEmpty>
+		
+		<isNotEmpty property="userId">
+		AND 
+			B.authorId = #userId#
+		</isNotEmpty>
+		
+		<isNotEmpty property="columnId">
+		AND 
+			E.columnId = #columnId#
+		</isNotEmpty>
+		
+		<isNotEmpty property="parentCategoryId">
+		AND
+			A.parentCategoryId IN (#parentCategoryId#)
+		</isNotEmpty>
+		
+		<isNotEmpty property="categoryId">
+		AND
+			A.categoryId = #categoryId#
+		</isNotEmpty>
+		
+		<isNotEmpty property="targetLanguage">
+		AND
+			B.targetLanguage LIKE '%@@targetLanguage@@%'
+		</isNotEmpty>
+		<isNotEmpty property="status">
+		AND
+			B.status = #status#
+		</isNotEmpty>
+		
+		<isNotEmpty property="APP_MANAGER_SEARCH_ALL">
+			AND	(
+					B.name LIKE '%@@searchValue@@%'
+				OR
+					EXTRACTVALUE(B.title, 'root/Title[@language-id="@@targetLanguage@@"]') LIKE '%@@searchValue@@%'
+				OR
+					U.firstName LIKE '%@@searchValue@@%'
+				OR
+					E.data_ IN (#searchOrgCode#)
+			)
+		</isNotEmpty>
+		
+		<isNotEmpty property="NOFILTERSEARCH_SCIENCEAPPSTORE">
+			AND	(
+					EXTRACTVALUE(B.title, 'root/Title[@language-id="@@targetLanguage@@"]') LIKE '%@@searchValue@@%'
+				 OR 
+				 	B.name LIKE '%@@searchValue@@%'
+				 OR 
+				 	E.data_ IN (#searchOrgCode#)
+				 OR 
+				 	EXTRACTVALUE(B.developers, 'root/Developers[@language-id="@@languageId@@"]') LIKE '%@@searchValue@@%'
+				)
+		</isNotEmpty>
+		
+		<isNotEmpty property="SWNM">
+		AND
+			B.name LIKE '%@@searchValue@@%'
+		</isNotEmpty>
+		
+		<isNotEmpty property="SWTITLE">
+		AND
+			EXTRACTVALUE(B.title, 'root/Title[@language-id="@@targetLanguage@@"]') LIKE '%@@searchValue@@%'
+		</isNotEmpty>
+		
+		<isNotEmpty property="SWUSERNM">
+		AND
+			U.firstName LIKE '%@@searchValue@@%'
+		</isNotEmpty>
+		
+		<isNotEmpty property="SWORGNM">
+		AND
+			E.data_ IN (#searchOrgCode#)
+		</isNotEmpty>
+		
+		<isNotEmpty property="SWDEV">
+		AND 
+			EXTRACTVALUE(B.developers, 'root/Developers[@language-id="@@languageId@@"]') LIKE '%@@searchValue@@%'
+		</isNotEmpty>
+		
+		<isNotEmpty property="listsearch">
+			GROUP BY B.scienceAppId
+		</isNotEmpty>
+		
+		ORDER BY B.createDate DESC
+		
+		<isNotEmpty property="begin">
+			LIMIT
+				#begin#, #end#
+		</isNotEmpty>
+		]]>
+	</sql>
+		
+	<sql id="org.kisti.edison.science.service.persistence.ScienceAppFinder.retrieveListAppTest" >
+		<![CDATA[
+			SELECT 
+				DATE_FORMAT(A.simulationCreateDt, "%Y-%m-%d %T") AS simulationCreateDt,
+				COUNT(*) AS TOTAL_CNT,
+				SUM(IF(B.jobStatus=1701005,1,0)) AS QUEUED_CNT,
+				SUM(IF(B.jobStatus=1701006,1,0)) AS RUN_CNT,
+				SUM(IF(B.jobStatus=1701011,1,0)) AS SUCCESS_CNT,
+				SUM(IF(B.jobStatus=1701012,1,0)) AS FAILED_CNT,
+				B.jobUuid
+			FROM
+				EDSIM_Simulation A, EDSIM_SimulationJob B
+			WHERE
+				A.simulationUuid = B.simulationUuid
+			<isNotEmpty property="scienceAppId">
+			AND
+				A.scienceAppId = #scienceAppId#
+			</isNotEmpty>
+			AND
+				A.testYn = 'Y'
+			AND
+				B.jobPhase = '1301003'
+			GROUP BY A.simulationUuid
+			ORDER BY A.simulationCreateDt DESC
+			<isNotEmpty property="begin">
+			LIMIT
+				#begin#, #end#
+			</isNotEmpty>
+		]]>
+	</sql>
+	
+	<sql id="org.kisti.edison.science.service.persistence.ScienceAppFinder.countAppTest" >
+		<![CDATA[
+			SELECT 
+				COUNT(*) AS totalCnt
+			FROM
+				EDSIM_Simulation A
+			WHERE
+				<isNotEmpty property="scienceAppId">
+					A.scienceAppId = #scienceAppId#
+				</isNotEmpty>
+			AND
+				A.testYn = 'Y';
+		]]>
+	</sql>
+	
+    <sql id="org.kisti.edison.science.service.persistence.ScienceAppFinder.getTargetLanguageScienceAppCategory">
+      <![CDATA[
+      SELECT 
+        AC.categoryId,
+        COUNT(APP.scienceAppId) AS appCnt
+      FROM AssetCategory AC
+      LEFT OUTER JOIN (
+        SELECT 
+          ESA.scienceAppId,
+          ESA.targetLanguage,
+          ESACL.categoryId
+        FROM 
+        EDAPP_ScienceApp ESA, EDAPP_ScienceAppCategoryLink ESACL 
+        WHERE ESA.scienceAppId = ESACL.scienceAppId
+        AND ESA.targetLanguage LIKE '%@@targetLanguage@@%'
+        ) APP
+      ON AC.categoryId = APP.categoryId
+      WHERE AC.parentCategoryId = #parentCategoryId#
+      GROUP BY AC.categoryId
+      HAVING COUNT(APP.scienceAppId) > 0
+      ]]>
+    </sql>
+</custom-sql>

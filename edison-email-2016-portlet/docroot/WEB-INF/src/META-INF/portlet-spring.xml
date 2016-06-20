@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<bean id="org.kisti.edison.service.SendMailContentLocalService" class="org.kisti.edison.service.impl.SendMailContentLocalServiceImpl" />
+	<bean id="org.kisti.edison.service.SendMailContentService" class="org.kisti.edison.service.impl.SendMailContentServiceImpl" />
+	<bean id="org.kisti.edison.service.persistence.SendMailContentPersistence" class="org.kisti.edison.service.persistence.SendMailContentPersistenceImpl" parent="basePersistence" />
+	<bean id="org.kisti.edison.service.persistence.SendMailContentFinder" class="org.kisti.edison.service.persistence.SendMailContentFinderImpl" parent="basePersistence" />
+</beans>

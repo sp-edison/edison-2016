@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom-sql>
+	<sql id="org.kisti.edison.science.service.persistence.PortTypeFinder.countCommonLibHeader" >
+		<![CDATA[
+		SELECT COUNT(*) AS totalCnt
+		FROM
+			EDAPP_CommonLib A
+		]]>
+	</sql>
+	
+	<sql id="org.kisti.edison.science.service.persistence.PortTypeFinder.retrieveListCommonLibHeader" >
+		SELECT 
+			*
+		FROM
+			EDAPP_CommonLib A
+	</sql>
+	
+	<sql id="org.kisti.edison.science.service.persistence.PortTypeFinder.retrieveListCommonLibWhere" >
+	<![CDATA[
+		<isNotEmpty property="searchValue">
+		WHERE
+			A.libName LIKE '%@@searchValue@@%'
+		</isNotEmpty>
+		
+		ORDER BY A.libName
+		
+		<isNotEmpty property="begin">
+			LIMIT
+				#begin#, #end#
+		</isNotEmpty>
+	]]>
+	</sql>
+</custom-sql>

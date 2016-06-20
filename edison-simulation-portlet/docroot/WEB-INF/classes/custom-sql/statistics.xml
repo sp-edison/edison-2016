@@ -1,0 +1,514 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom-sql>
+
+	<sql id="org.kisti.edison.statistics.getListVirtualLabSearchUni">	
+	<![CDATA[
+		SELECT
+  			virtualLabId,
+  			ExtractValue(virtualLabTitle, 'root/VirtualLabTitle[@language-id="@@languageId@@"]') AS virtualLabTitle
+		FROM
+  			EDVIR_VirtualLab
+		WHERE
+  				virtualLabUniversityField = #jobUniversityField#
+			AND groupId = #groupId#
+	]]>
+	</sql>
+
+	<sql id="org.kisti.edison.statistics.getListVirtualClassSearchLab">	
+	<![CDATA[
+		SELECT
+  			B.classId,
+  			ExtractValue(classTitle, 'root/ClassTitle[@language-id="@@languageId@@"]') AS classTitle
+		FROM
+  			EDVIR_VirtualLab A, EDVIR_VirtualLabClass B, EDVIR_VirtualLabs_VirtualLabClasses C
+		WHERE
+				A.virtualLabId	= C.virtualLabId
+			AND A.groupId = #groupId#
+			AND B.classId = C.classId
+			AND A.virtualLabId = #jobVirtualLabId#
+	]]>
+	</sql>
+	
+	
+	
+<!-- 1. EXE START -->
+	<sql id="org.kisti.edison.statistics.getStatisticsExecTableOrganigation">	
+	<![CDATA[
+		SELECT 
+		  DATA.affiliation,
+		  SUM(DATA.userCnt) AS userCnt,
+		  IFNULL(ROUND(SUM(DATA.idTime)/SUM(DATA.jobCnt)),0) AS averageRuntime,
+		  SUM(DATA.jobCnt) AS jobCnt,
+		  IFNULL(ROUND(SUM(DATA.idTime)),0)AS cputime,
+		  fnClassTopThirdSolver(#groupId#,DATA.virtualLabUniversityField) AS topString
+		FROM(
+		  SELECT 
+		    EDVIR_VL.virtualLabUniversityField,
+		    EDVIR_VL.virtualLabId,
+		    fnGetCdNm(EDVIR_VL.virtualLabUniversityField, #languageId#) AS affiliation,			
+		    ROUND(SUM(UNIX_TIMESTAMP(jobEndDt) - UNIX_TIMESTAMP(jobStartDt)), 0) AS idTime,
+		    COUNT(JOB.jobUuid) AS jobCnt,
+		    (
+		  		SELECT 
+		  			COUNT(*) AS user_count
+		  		FROM
+		  			EDVIR_VirtualLabClass EDVIR_VLC, 
+		        EDVIR_VirtualLabs_VirtualLabClasses EDVIR_VLCS, 
+		        EDVIR_VirtualLabClasses_VirtualLabUsers EDVIR_VLUS, 
+		        User_ USERD, 
+		        EDVIR_VirtualLabUser EDVIR_VLU
+		  		WHERE
+		  			EDVIR_VLCS.virtualLabId = EDVIR_VL.virtualLabId
+		  			AND EDVIR_VLC.classId = EDVIR_VLCS.classId
+		  			AND EDVIR_VLC.classId = EDVIR_VLUS.classId			
+		  			AND EDVIR_VLUS.virtualLabUserId = EDVIR_VLU.virtualLabUserId
+		  			AND EDVIR_VLU.userId = USERD.userId
+		  			AND USERD.createDate BETWEEN STR_TO_DATE('2015-01-01', '%Y-%m-%d') AND STR_TO_DATE('2016-04-04', '%Y-%m-%d')
+		  	) AS userCnt
+		  FROM
+		  EDVIR_VirtualLab EDVIR_VL LEFT JOIN EDSIM_SimulationJob JOB ON JOB.jobVirtualLabId = EDVIR_VL.virtualLabId
+		  AND JOB.jobPhase = '1301003'
+		  AND JOB.testYn != "Y"
+		  AND (JOB.jobStartDt BETWEEN STR_TO_DATE(#startDt#, '%Y-%m-%d') AND STR_TO_DATE(#endDt#, '%Y-%m-%d') 
+		      OR	JOB.jobEndDt BETWEEN STR_TO_DATE(#startDt#, '%Y-%m-%d') AND STR_TO_DATE(#endDt#, '%Y-%m-%d'))
+		WHERE
+		  EDVIR_VL.groupId = #groupId#
+		  <isNotEmpty property="jobUniversityField">
+			AND EDVIR_VL.virtualLabUniversityField = #jobUniversityField#
+		</isNotEmpty>
+		  GROUP BY EDVIR_VL.virtualLabUniversityField, EDVIR_VL.virtualLabId ) DATA
+		GROUP BY DATA.virtualLabUniversityField
+	]]>
+	</sql>
+
+	<sql id="org.kisti.edison.statistics.getStatisticsExecPieChartOrganigation">	
+	<![CDATA[
+		SELECT
+			count(*) AS count 
+			,fnGetCdNm(virtualLabUniversityField, 'ko_KR') AS affiliation
+		FROM 
+			EDVIR_VirtualLab EDVIR_VL, EDSIM_SimulationJob JOB, EDSIM_Simulation SIM
+		WHERE
+		    EDVIR_VL.groupId = #groupId#
+		    AND JOB.testYn != "Y"
+			<isNotEmpty property="jobUniversityField">
+				AND EDVIR_VL.virtualLabUniversityField = #jobUniversityField#
+			</isNotEmpty>
+		AND EDVIR_VL.virtualLabId = JOB.jobVirtualLabId
+		AND JOB.jobPhase = '1301003'
+		AND SIM.simulationUuid = JOB.simulationUuid
+		AND (
+				jobStartDt BETWEEN STR_TO_DATE(#startDt#, '%Y-%m-%d') AND STR_TO_DATE(#endDt#, '%Y-%m-%d') 
+			OR	jobEndDt BETWEEN STR_TO_DATE(#startDt#, '%Y-%m-%d') AND STR_TO_DATE(#endDt#, '%Y-%m-%d')
+			)
+		GROUP BY	virtualLabUniversityField
+	]]>
+	</sql>
+
+	<sql id="org.kisti.edison.statistics.getStatisticsExecBarChartDate">	
+	<![CDATA[
+		SELECT   
+			DATE_FORMAT(jobStartDt, '%Y-%m') AS month, 
+			COUNT(*) AS monthCnt
+		FROM     EDVIR_VirtualLab EDVIR_VL, EDSIM_SimulationJob JOB, EDSIM_Simulation SIM
+		WHERE    
+			EDVIR_VL.groupId = #groupId#
+			AND JOB.testYn != "Y"
+			<isNotEmpty property="jobUniversityField">
+				AND EDVIR_VL.virtualLabUniversityField = #jobUniversityField#
+			</isNotEmpty>
+			AND EDVIR_VL.virtualLabId = JOB.jobVirtualLabId
+			AND JOB.jobPhase = '1301003'
+			AND SIM.simulationUuid = JOB.simulationUuid
+			AND (
+					jobStartDt BETWEEN STR_TO_DATE(#startDt#, '%Y-%m-%d') AND STR_TO_DATE(#endDt#, '%Y-%m-%d') 
+				OR	jobEndDt BETWEEN STR_TO_DATE(#startDt#, '%Y-%m-%d') AND STR_TO_DATE(#endDt#, '%Y-%m-%d')
+      			)
+		GROUP BY DATE_FORMAT(jobStartDt, '%Y-%m')
+		ORDER BY jobStartDt ASC
+	]]>
+	</sql>
+<!-- 1. EXE END -->
+
+<!-- 2. Sw START -->
+	<sql id="org.kisti.edison.statistics.getStatisticsSwTableOrganigation">	
+	<![CDATA[
+		SELECT 
+		  AC.universityId, 
+		  IFNULL(AC.universityNm, 'Unknown') AS universityNm, 
+		  COUNT(*) AS cnt 
+		FROM 
+		  ( 
+		  SELECT 
+		    BB.universityId, 
+		    fnGetCdNm(BB.universityId, #languageId#) AS universityNm 
+		  FROM 
+		    (SELECT
+		      E.version,  E.uuid_,  E.userId,  E.title,  E.targetLanguage,  E.statusDate,
+		      E.status,  E.stage,  E.srcFileName,  E.scienceAppId,  E.runType,  E.recentModifierId,
+		      E.projectCategoryId,  E.previousVersionId,  E.parallelModule,  E.openLevel,  E.name,
+		      E.modifiedDate,  E.manualId,  E.license,  E.iconId,  E.groupId,  E.exeFileName,
+		      E.developers,  E.descriptionId,  E.createDate,  E.companyId,  E.authorId,
+		      E.appType,  E.swTest,  F.data_ universityId
+		    FROM
+		      EDAPP_ScienceAppCategoryLink D
+		      INNER JOIN(
+		        SELECT 
+		          C.categoryId
+		        FROM
+		          AssetEntries_AssetCategories C
+		          INNER JOIN AssetCategory B ON C.categoryId = B.categoryId
+		        WHERE
+		          C.entryId = #entryId#
+		          AND
+		          B.vocabularyId = #vocabularyId#
+		          AND
+		          B.parentCategoryId != 0
+		      ) AS BC ON D.categoryId = BC.categoryId
+		      INNER JOIN EDAPP_ScienceApp E ON D.scienceAppId = E.scienceAppId
+		      INNER JOIN (SELECT F.data_, F.classPK FROM ExpandoValue F WHERE F.columnId = #columnId#) AS F ON E.userId = F.classPK
+		    WHERE
+		      E.status = 1901004
+		    <isNotEmpty property="universityId">
+		      AND  F.data_ = #universityId#
+		    </isNotEmpty>
+		    GROUP BY
+		      D.scienceAppId
+		    ) BB
+		  WHERE 
+		    BB.createDate BETWEEN STR_TO_DATE(#startDt#, '%Y-%m-%d') AND STR_TO_DATE(#endDt#, '%Y-%m-%d')
+		  ) AC
+		GROUP BY 
+		  AC.universityId, AC.universityNm 
+		ORDER BY cnt DESC
+	]]>
+	</sql>
+
+	<sql id="org.kisti.edison.statistics.getStatisticsSwBarChartDate">	
+	<![CDATA[
+		SELECT 
+		  DATE_FORMAT(AC.createDate, '%Y-%m') AS month,
+		  COUNT(*) AS monthCnt
+		FROM
+		  ( 
+		  SELECT 
+		    BB.createDate
+		  FROM 
+		    (SELECT
+		      E.createDate,
+		      F.data_ universityId
+		    FROM
+		      EDAPP_ScienceAppCategoryLink D
+		      INNER JOIN(
+		        SELECT 
+		          C.categoryId
+		        FROM
+		          AssetEntries_AssetCategories C
+		          INNER JOIN AssetCategory B ON C.categoryId = B.categoryId
+		        WHERE
+		          C.entryId = #entryId#
+		          AND
+		          B.vocabularyId = #vocabularyId#
+		          AND
+		          B.parentCategoryId != 0
+		      ) AS BC ON D.categoryId = BC.categoryId
+		      INNER JOIN EDAPP_ScienceApp E ON D.scienceAppId = E.scienceAppId
+		      INNER JOIN (SELECT F.data_, F.classPK FROM ExpandoValue F WHERE F.columnId = #columnId#) AS F ON E.userId = F.classPK
+		    WHERE
+		      E.status = 1901004
+		    <isNotEmpty property="universityId">
+		      AND F.data_ = #universityId#
+		    </isNotEmpty>
+		    GROUP BY
+		      D.scienceAppId
+		    ) BB
+		  WHERE 
+		    BB.createDate BETWEEN STR_TO_DATE(#startDt#, '%Y-%m-%d') AND STR_TO_DATE(#endDt#, '%Y-%m-%d')
+		  ) AC
+		GROUP BY 
+		  DATE_FORMAT(AC.createDate, '%Y-%m') 
+		ORDER BY AC.createDate   
+	]]>
+	</sql>
+<!-- 2. Sw END -->		
+
+
+<!-- 3. SwExe START -->
+	<sql id="org.kisti.edison.statistics.getStatisticsSwExeTableOrganigation">	
+	<![CDATA[
+		SELECT 
+		    TOTAL.scienceApp_name,
+		    TOTAL.scienceAppId,
+		    SUM(TOTAL.userCnt) AS user_count,
+		    CEIL(IFNULL(SUM(TOTAL.runtimeSum),1)/SUM(TOTAL.jobCnt)) AS averageRuntime,
+		    SUM(TOTAL.jobCnt) AS exe_count,
+		    TOTAL.scienceApp_affiliation_name,
+		    TOTAL.mgtName,
+		    TOTAL.mgtDate,
+		    TOTAL.scienceApp_version
+		  FROM(
+		    SELECT 
+		      DATA.scienceAppId,
+		      DATA.scienceApp_name,
+		      COUNT(*) AS userCnt,
+		      SUM(DATA.cnt) AS jobCnt,
+		      SUM(DATA.runtimeSum) AS runtimeSum,
+		      DATA.scienceApp_affiliation_name,
+		      DATA.mgtName,
+		      DATA.mgtDate,
+		      DATA.scienceApp_version
+		    FROM
+		      (
+		      SELECT   
+		        A.simulationUuid,
+		        A.scienceAppId,
+		        C.name AS scienceApp_name,
+		        A.userId,
+		        COUNT(*) AS cnt,
+		        SUM(UNIX_TIMESTAMP(B.jobEndDt) - UNIX_TIMESTAMP(B.jobStartDt))/count(*) AS runtimeSum,
+		         fnGetCdNm(F.data_, #languageId#) AS scienceApp_affiliation_name,
+				 C.authorId mgtName,
+				 C.createDate mgtDate,
+				 C.version scienceApp_version
+		      FROM     
+		        (SELECT A.* FROM EDSIM_Simulation A WHERE A.groupId = #groupId#) A,
+            (SELECT B.* FROM EDSIM_SimulationJob B WHERE B.groupId = #groupId# AND B.testYn != "Y") B,
+            EDAPP_ScienceApp C
+            INNER JOIN (SELECT F.data_, F.classPK FROM ExpandoValue F WHERE F.columnId = #columnId#) AS F ON C.userId = F.classPK
+		      WHERE    
+		      A.simulationUuid = B.simulationUuid
+		      AND A.groupId = #groupId#
+		      AND A.scienceAppId IS NOT NULL 
+		      <isNotEmpty property="scienceAppId">
+				AND A.scienceAppId = #scienceAppId#
+			  </isNotEmpty>
+		      AND A.scienceAppId = C.scienceAppId
+		      AND C.status = 1901004
+		      AND B.jobSubmitDt IS NOT NULL
+		      AND B.jobSubmitDt BETWEEN STR_TO_DATE(#startDt#, '%Y-%m-%d')AND STR_TO_DATE(#endDt#, '%Y-%m-%d')
+		      GROUP BY A.scienceAppId, A.userId
+          ) DATA
+		    GROUP BY DATA.scienceAppId
+		UNION
+		    SELECT 
+		      A.scienceAppId,
+		      B.name AS scienceApp_name,
+		      sum(A.userCnt) AS userCnt,
+		      sum(A.jobCnt) AS jobCnt,
+		      sum(A.runtime) AS runtimeSum,
+		      '' AS scienceApp_affiliation_name,
+		      '' AS mgtName,
+		      '' AS mgtDate,
+		      '' AS scienceApp_version
+		    FROM
+		      (SELECT A.* FROM EDSIM_SimulationExeStsMigration A WHERE A.groupId = #groupId#) A,
+		      EDAPP_ScienceApp B
+		      INNER JOIN (SELECT F.data_, F.classPK FROM ExpandoValue F WHERE F.columnId = #columnId#) AS F ON B.userId = F.classPK
+		    WHERE
+		    A.scienceAppId = B.scienceAppId
+		    <isNotEmpty property="scienceAppId">
+				AND A.scienceAppId = #scienceAppId#
+			</isNotEmpty>
+		    AND B.status = 1901004
+		    AND STR_TO_DATE(A.submitDate,'%Y-%m') BETWEEN STR_TO_DATE(#startDt#, '%Y-%m')AND STR_TO_DATE(#endDt#, '%Y-%m')
+		    GROUP BY A.scienceAppId) TOTAL
+		GROUP BY TOTAL.scienceAppId
+		ORDER BY SUM(TOTAL.jobCnt) DESC
+	]]>
+	</sql>
+
+	<sql id="org.kisti.edison.statistics.getStatisticsSwExeBarChartDate">	
+	<![CDATA[
+		SELECT 
+		  TOTAL.month,
+		  SUM(TOTAL.monthCnt) AS monthCnt
+		FROM
+		  (
+		  SELECT 
+		    DATA.month, 
+		    SUM(DATA.jobCnt) AS monthCnt
+		  FROM
+		    (
+		    SELECT 
+		      A.simulationUuid, 
+		      A.scienceAppId, 
+		      DATE_FORMAT(B.jobSubmitDt, '%Y-%m') AS month, 
+		      COUNT(*) AS jobCnt 
+		    FROM 
+		      EDSIM_Simulation A, 
+		      EDSIM_SimulationJob B, 
+		      EDAPP_ScienceApp C
+		      INNER JOIN (SELECT F.data_, F.classPK FROM ExpandoValue F WHERE F.columnId = #columnId#) AS F ON C.userId = F.classPK
+		    WHERE
+		      A.simulationUuid = B.simulationUuid 
+		      AND 
+		      A.groupId = #groupId#
+		      AND B.testYn != "Y"
+		      <isNotEmpty property="scienceAppId">
+				AND A.scienceAppId = #scienceAppId#
+			  </isNotEmpty>
+		      AND 
+		      A.scienceAppId IS NOT NULL
+		      AND 
+		      A.scienceAppId = C.scienceAppId
+		      AND 
+		      C.status = 1901004
+		      AND 
+		      B.jobSubmitDt IS NOT NULL 
+		      AND 
+		      B.jobSubmitDt BETWEEN STR_TO_DATE(#startDt#, '%Y-%m-%d')AND STR_TO_DATE(#endDt#, '%Y-%m-%d') 
+		    GROUP BY 
+		      A.simulationUuid ORDER BY B.jobSubmitDt
+		    ) DATA 
+		  GROUP BY DATA.month 
+		  UNION 
+		  SELECT 
+		    submitDate as month,
+		    sum(jobCnt) 
+		  FROM 
+		    EDSIM_SimulationExeStsMigration 
+		  WHERE 
+		    groupId = #groupId#
+		    <isNotEmpty property="scienceAppId">
+				AND scienceAppId = #scienceAppId#
+			</isNotEmpty>
+		    AND 
+		    STR_TO_DATE(submitDate,'%Y-%m') BETWEEN STR_TO_DATE(#startDt#, '%Y-%m')AND STR_TO_DATE(#endDt#, '%Y-%m') 
+		  GROUP BY
+		    submitDate
+		  ) TOTAL 
+		GROUP BY 
+		  TOTAL.month  
+	]]>
+	</sql>
+<!-- 3. SwExe END -->
+
+
+<!-- 4. Time START -->
+	<sql id="org.kisti.edison.statistics.getStatisticsTimeTableOrganigation">	
+	<![CDATA[
+		SELECT 
+			IFNULL(ROUND(AVG(UNIX_TIMESTAMP(jobEndDt) - UNIX_TIMESTAMP(jobStartDt)), 0), 0) AS averageRuntime,
+			IFNULL(ROUND(AVG(UNIX_TIMESTAMP(jobStartDt) - UNIX_TIMESTAMP(jobSubmitDt)), 0), 0) AS averageStandbyTime
+		FROM 
+			EDSIM_SimulationJob
+		WHERE
+			    jobStartDt IS NOT NULL
+			AND testYn != "Y"
+			AND groupId = #groupId#
+			AND (
+					jobStartDt BETWEEN STR_TO_DATE(#startDt#, '%Y-%m-%d') AND STR_TO_DATE(#endDt#, '%Y-%m-%d') 
+				OR	jobEndDt BETWEEN STR_TO_DATE(#startDt#, '%Y-%m-%d') AND STR_TO_DATE(#endDt#, '%Y-%m-%d')
+				)
+	]]>
+	</sql>
+<!-- 4. Time END -->
+
+
+<!-- 5. User START -->
+	<sql id="org.kisti.edison.statistics.getStatisticsUserTableOrganigation">	
+	<![CDATA[
+		SELECT 
+			fnGetCdNm(A.virtualLabUniversityField, #languageId#) AS affiliation,
+			ExtractValue(A.virtualLabTitle, 'root/VirtualLabTitle[@language-id="@@languageId@@"]') AS virtualLabTitle,
+			ExtractValue(B.classTitle, 'root/ClassTitle[@language-id="@@languageId@@"]') AS classTitle,
+			COUNT(*) AS user_count
+		FROM
+			EDVIR_VirtualLab A, EDVIR_VirtualLabClass B, EDVIR_VirtualLabs_VirtualLabClasses C, EDVIR_VirtualLabClasses_VirtualLabUsers D, User_ E, EDVIR_VirtualLabUser F
+		WHERE
+			    A.virtualLabId = C.virtualLabId
+			AND B.classId = C.classId
+			AND B.classId = D.classId
+			AND D.virtualLabUserId = F.virtualLabUserId
+			AND F.userId = E.userId
+			AND A.groupId = #groupId#
+			AND E.createDate BETWEEN STR_TO_DATE(#startDt#, '%Y-%m-%d') AND STR_TO_DATE(#endDt#, '%Y-%m-%d') 
+		<isNotEmpty property="jobUniversityField">
+			AND A.virtualLabUniversityField = #jobUniversityField#
+		</isNotEmpty>			
+		GROUP BY
+			A.virtualLabUniversityField, A.virtualLabTitle, B.classTitle		  
+		UNION		
+		SELECT 
+			fnGetCdNm(A.virtualLabUniversityField, #languageId#) AS affiliation,
+			'' AS virtualLabTitle,
+			'Total User' AS classTitle,
+			COUNT(*) AS user_count
+		FROM
+			EDVIR_VirtualLab A, EDVIR_VirtualLabClass B, EDVIR_VirtualLabs_VirtualLabClasses C, EDVIR_VirtualLabClasses_VirtualLabUsers D, User_ E, EDVIR_VirtualLabUser F
+		WHERE
+				A.virtualLabId = C.virtualLabId
+			AND B.classId = C.classId
+			AND B.classId = D.classId			
+			AND D.virtualLabUserId = F.virtualLabUserId
+			AND F.userId = E.userId
+			AND A.groupId = #groupId#
+			AND E.createDate BETWEEN STR_TO_DATE(#startDt#, '%Y-%m-%d') AND STR_TO_DATE(#endDt#, '%Y-%m-%d') 
+		<isNotEmpty property="jobUniversityField">
+			AND A.virtualLabUniversityField = #jobUniversityField#
+		</isNotEmpty>		
+		GROUP BY
+			A.virtualLabUniversityField
+		ORDER BY
+			affiliation
+	]]>
+	</sql>
+
+	<sql id="org.kisti.edison.statistics.getStatisticsUserPieChartOrganigation">	
+	<![CDATA[
+		SELECT 
+			fnGetCdNm(A.virtualLabUniversityField, #languageId#) AS affiliation
+			,COUNT(*) AS user_count			
+			<isNotEmpty property="jobUniversityField">		
+			,ExtractValue(A.virtualLabTitle, 'root/VirtualLabTitle[@language-id="@@languageId@@"]') AS virtualLabTitle
+			,ExtractValue(B.classTitle, 'root/ClassTitle[@language-id="@@languageId@@"]') AS classTitle
+			</isNotEmpty>
+		FROM
+			EDVIR_VirtualLab A, EDVIR_VirtualLabClass B, EDVIR_VirtualLabs_VirtualLabClasses C, EDVIR_VirtualLabClasses_VirtualLabUsers D, User_ E, EDVIR_VirtualLabUser F
+		WHERE
+			    A.virtualLabId = C.virtualLabId
+			AND B.classId = C.classId
+			AND B.classId = D.classId
+			AND D.virtualLabUserId = F.virtualLabUserId
+			AND F.userId = E.userId
+			AND A.groupId = #groupId#
+			AND E.createDate BETWEEN STR_TO_DATE(#startDt#, '%Y-%m-%d') AND STR_TO_DATE(#endDt#, '%Y-%m-%d')	
+		<isNotEmpty property="jobUniversityField">
+			AND A.virtualLabUniversityField = #jobUniversityField#
+		</isNotEmpty>			
+		GROUP BY
+			A.virtualLabUniversityField
+		<isNotEmpty property="jobUniversityField">
+			,A.virtualLabTitle
+			,B.classTitle	
+		</isNotEmpty>			
+	]]>
+	</sql>
+
+	<sql id="org.kisti.edison.statistics.getStatisticsUserBarChartDate">	
+	<![CDATA[
+		SELECT 
+			DATE_FORMAT(E.createDate, '%Y-%m') AS month, 
+			COUNT(*) AS user_count
+		FROM
+			EDVIR_VirtualLab A, EDVIR_VirtualLabClass B, EDVIR_VirtualLabs_VirtualLabClasses C, EDVIR_VirtualLabClasses_VirtualLabUsers D, User_ E, EDVIR_VirtualLabUser F
+		WHERE
+			    A.virtualLabId = C.virtualLabId
+			AND B.classId = C.classId
+			AND B.classId = D.classId
+			AND D.virtualLabUserId = F.virtualLabUserId
+			AND F.userId = E.userId
+			AND A.groupId = #groupId#
+			AND E.createDate BETWEEN STR_TO_DATE(#startDt#, '%Y-%m-%d') AND STR_TO_DATE(#endDt#, '%Y-%m-%d')		
+		<isNotEmpty property="jobUniversityField">
+			AND A.virtualLabUniversityField = #jobUniversityField#
+		</isNotEmpty>			
+		GROUP BY
+			DATE_FORMAT(E.createDate, '%Y-%m')		
+	]]>
+	</sql>
+<!-- 5. User END -->
+
+
+		
+</custom-sql>

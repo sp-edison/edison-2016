@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-lazy="false" auto-import="false">
+	<import class="org.kisti.edison.content.model.AdvancedContent" />
+	<import class="org.kisti.edison.content.model.GeneralContent" />
+	<import class="org.kisti.edison.content.model.OrgImgContent" />
+	<class name="org.kisti.edison.content.model.impl.AdvancedContentImpl" table="EDMED_AdvancedContent">
+		<cache usage="read-write" />
+		<composite-id name="primaryKey" class="org.kisti.edison.content.service.persistence.AdvancedContentPK">
+			<key-property name="contentSeq" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		</composite-id>
+		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="resume" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="contentFilePath" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="contentFileNm" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="contentStartFileNm" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="serviceLanguage" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="viewCnt" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="insertId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="insertDate" type="org.hibernate.type.TimestampType" />
+		<property name="updateId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="updateDate" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class name="org.kisti.edison.content.model.impl.GeneralContentImpl" table="EDMED_GeneralContent">
+		<cache usage="read-write" />
+		<composite-id name="primaryKey" class="org.kisti.edison.content.service.persistence.GeneralContentPK">
+			<key-property name="contentSeq" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		</composite-id>
+		<property name="contentDiv" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="downloadCnt" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="serviceLanguage" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="projectYn" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="projectId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="insertId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="insertDate" type="org.hibernate.type.TimestampType" />
+		<property name="updateId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="updateDate" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class name="org.kisti.edison.content.model.impl.OrgImgContentImpl" table="EDMED_OrgImgContent">
+		<cache usage="read-write" />
+		<composite-id name="primaryKey" class="org.kisti.edison.content.service.persistence.OrgImgContentPK">
+			<key-property name="orgImgSeq" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		</composite-id>
+		<property name="order" type="com.liferay.portal.dao.orm.hibernate.LongType" column="order_" />
+		<property name="orgNm" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="orgLink" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="fileEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="insertId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="insertDate" type="org.hibernate.type.TimestampType" />
+		<property name="updateId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="updateDate" type="org.hibernate.type.TimestampType" />
+	</class>
+</hibernate-mapping>

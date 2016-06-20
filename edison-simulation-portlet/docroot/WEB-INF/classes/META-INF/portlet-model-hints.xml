@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="org.kisti.edison.bestsimulation.model.Simulation">
+		<field name="simulationUuid" type="String" />
+		<field name="groupId" type="long" />
+		<field name="userId" type="long" />
+		<field name="simulationTitle" type="String" localized="true" />
+		<field name="simulationDescription" type="String" localized="true" />
+		<field name="scienceAppId" type="String" />
+		<field name="scienceAppName" type="String" localized="true" />
+		<field name="simulationCreateDt" type="Date" />
+		<field name="cluster" type="String" />
+		<field name="testYn" type="String" />
+	</model>
+	<model name="org.kisti.edison.bestsimulation.model.SimulationJob">
+		<field name="jobSeqNo" type="long" />
+		<field name="simulationUuid" type="String" />
+		<field name="groupId" type="long" />
+		<field name="jobUuid" type="String" />
+		<field name="jobStatus" type="long" />
+		<field name="jobStartDt" type="Date" />
+		<field name="jobEndDt" type="Date" />
+		<field name="jobTitle" type="String" localized="true" />
+		<field name="jobExecPath" type="String" localized="true" />
+		<field name="jobPhase" type="long" />
+		<field name="jobSubmitDt" type="Date" />
+		<field name="jobPostProcessor" type="String" />
+		<field name="jobUniversityField" type="long" />
+		<field name="jobVirtualLabId" type="long" />
+		<field name="jobClassId" type="long" />
+		<field name="jobInputDeckYn" type="boolean" />
+		<field name="jobInputDeckName" type="String" />
+		<field name="resultSize" type="int" />
+		<field name="testYn" type="String" />
+	</model>
+	<model name="org.kisti.edison.bestsimulation.model.SimulationJobData">
+		<field name="jobUuid" type="String" />
+		<field name="jobData" type="String" localized="true" />
+	</model>
+	<model name="org.kisti.edison.bestsimulation.model.SimulationJobStatus">
+		<field name="statusSeq" type="long" />
+		<field name="groupId" type="long" />
+		<field name="simulationUuid" type="String" />
+		<field name="jobUuid" type="String" />
+		<field name="jobStatus" type="long" />
+		<field name="jobStartDt" type="Date" />
+		<field name="jobEndDt" type="Date" />
+		<field name="writeDt" type="Date" />
+	</model>
+</model-hints>

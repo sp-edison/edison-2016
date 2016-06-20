@@ -1,0 +1,28 @@
+#set($availableLocales = $languageUtil.getAvailableLocales())
+#set($selectedLanguageIds=[])
+#foreach( $availableLocale in $availableLocales )
+    #if($locale != $availableLocale) 
+        #set($VOID = $selectedLanguageIds.add($availableLocale))
+    #end
+#end
+
+<div class="toplink">
+	#if (!$is_signed_in)
+		<a href="$edisonLoginURL">
+			<input type="button" class="btn_login" value="$languageUtil.format($locale, "Sign-in","")">
+		</a>
+	#else
+		<a href="$sign_out_url">
+			<input type="button" class="btn_login" value="$languageUtil.format($locale, "Sign-out","")">
+		</a>
+	#end
+	$taglibLiferay.language(null, null, "languageId",$arrayUtil.toStringArray($selectedLanguageIds.toArray()), 0)
+	
+	<span>
+		#if (!$is_signed_in)
+			<img src="$images_folder/custom/header/toplink.gif" width="30" height="22" class="class-toggle-off-click"  data-target-node="#user-sub-menu" sub-menu-align="right">
+		#else
+			<img src="/image/user_male_portrait?img_id=$user.portraitId&amp;" width="30" height="22" class="class-toggle-off-click"  data-target-node="#user-sub-menu" sub-menu-align="right">
+		#end
+	</span>
+</div>

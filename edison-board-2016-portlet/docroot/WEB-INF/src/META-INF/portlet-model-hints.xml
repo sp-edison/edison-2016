@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="org.kisti.edison.multiboard.model.Board">
+		<field name="boardSeq" type="long" />
+		<field name="title" type="String" localized="true" />
+		<field name="content" type="String" localized="true" />
+		<field name="groupId" type="long" />
+		<field name="customId" type="String" />
+		<field name="writerId" type="long" />
+		<field name="writerDate" type="Date" />
+		<field name="readCnt" type="int" />
+		<field name="groupBoardSeq" type="int" />
+		<field name="groupBoardTurn" type="int" />
+		<field name="replyDepth" type="int" />
+		<field name="siteGroup" type="String" />
+		<field name="popupYn" type="boolean" />
+		<field name="popupStartDt" type="Date" />
+		<field name="popupEndDt" type="Date" />
+		<field name="insertId" type="long" />
+		<field name="insertDt" type="Date" />
+		<field name="updateId" type="long" />
+		<field name="updateDt" type="Date" />
+	</model>
+	<model name="org.kisti.edison.multiboard.model.BoardDiv">
+		<field name="divCd" type="long" />
+		<field name="titleNm" type="String" localized="true" />
+		<field name="ContentNm" type="String" localized="true" />
+		<field name="divNm" type="String" />
+		<field name="fileUpLoadUseYn" type="boolean" />
+		<field name="popupYn" type="boolean" />
+		<field name="replyYn" type="boolean" />
+	</model>
+</model-hints>

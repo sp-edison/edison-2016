@@ -1,0 +1,663 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<custom-sql>
+	<sql id="org.kisti.edison.service.persistence.Survey.isExistsUseDate" >
+		<![CDATA[
+		SELECT
+			count(*) AS validCount
+		FROM
+			EDVIR_Survey
+		WHERE
+			surveyDivCd = #surveyDivCd#
+			AND
+			surveyUseYn = 'Y'
+		<isNotEmpty property="surveySeqNo">
+			AND
+			surveySeqNo != #surveySeqNo#
+		</isNotEmpty>
+		<isEqual property="dateDiv" propertyValue="#startDate#">							
+			AND	(surveyStartDate &lt;= #startDate# AND	surveyEndDate &gt;= #startDate#
+			<isNotEmpty property="endDate">
+				OR	(#startDate# &lt;= surveyStartDate AND #endDate# &gt;= surveyStartDate)
+				OR	(#startDate# &lt;= surveyEndDate AND #endDate# &gt;= surveyEndDate)
+			</isNotEmpty>
+			)
+		</isEqual>
+		
+		<isEqual property="dateDiv" propertyValue="#endDate#">
+				AND (surveyStartDate &lt;= #endDate# AND	surveyEndDate &gt;= #endDate#
+			<isNotEmpty property="startDate">
+				OR	(#startDate# &lt;= surveyStartDate AND #endDate# &gt;= surveyStartDate)
+				OR	(#startDate# &lt;= surveyEndDate AND #endDate# &gt;= surveyEndDate)
+			</isNotEmpty>
+			)
+		</isEqual>
+		]]>
+	</sql>
+	
+	<sql id="org.kisti.edison.service.persistence.Survey.getSurveyQuestion" >
+		<![CDATA[
+		SELECT
+			C.questionTitle,
+			C.questionSeqNo,
+			C.questionDivCd,
+			C.question9,
+			C.question8,
+			C.question7,
+			C.question6,
+			C.question5,
+			C.question4,
+			C.question3,
+			C.question2,
+			C.question10,
+			C.question1,
+			IF(C.question1 = '', 0, 1) + IF(C.question2 = '', 0, 1) + IF(C.question3 = '', 0, 1) + IF(C.question4 = '', 0, 1) + 
+			IF(C.question5 = '', 0, 1) + IF(C.question6 = '', 0, 1) + IF(C.question7 = '', 0, 1) + IF(C.question8 = '', 0, 1) +
+			IF(C.question9 = '', 0, 1) + IF(C.question10 = '', 0, 1) AS questionCnt
+		FROM
+			EDVIR_Survey A
+			INNER JOIN EDVIR_Surveys_SurveyQuestions B ON A.surveySeqNo = B.surveySeqNo
+			INNER JOIN EDVIR_SurveyQuestion C ON B.questionSeqNo = C.questionSeqNo
+		WHERE
+			A.surveySeqNo = #surveySeqNo#
+			AND
+			A.surveyUseYn = 'Y'
+		]]>
+	</sql>
+	
+	<sql id="org.kisti.edison.service.persistence.Survey.getSurveyQuestionResult" >
+		<![CDATA[
+			SELECT
+				B.questionTitle,
+				B.questionSeqNo,
+				B.questionDivCd,
+				B.question1,
+				B.question2,
+				B.question3,
+				B.question4,
+				B.question5,
+				B.question6,
+				B.question7,
+				B.question8,
+				B.question9,
+				B.question10,
+				IF(B.question1 = '', 0, 1) + IF(B.question2 = '', 0, 1) + IF(B.question3 = '', 0, 1) + IF(B.question4 = '', 0, 1) + 
+				IF(B.question5 = '', 0, 1) + IF(B.question6 = '', 0, 1) + IF(B.question7 = '', 0, 1) + IF(B.question8 = '', 0, 1) +
+				IF(B.question9 = '', 0, 1) + IF(B.question10 = '', 0, 1) AS questionCnt,
+				COUNT(CASE WHEN D.objecttivityAnswer = 1 THEN 1 ELSE NULL END) AS question1Cnt,
+				COUNT(CASE WHEN D.objecttivityAnswer = 2 THEN 1 ELSE NULL END) AS question2Cnt,
+				COUNT(CASE WHEN D.objecttivityAnswer = 3 THEN 1 ELSE NULL END) AS question3Cnt,
+				COUNT(CASE WHEN D.objecttivityAnswer = 4 THEN 1 ELSE NULL END) AS question4Cnt,
+				COUNT(CASE WHEN D.objecttivityAnswer = 5 THEN 1 ELSE NULL END) AS question5Cnt,
+				COUNT(CASE WHEN D.objecttivityAnswer = 6 THEN 1 ELSE NULL END) AS question6Cnt,
+				COUNT(CASE WHEN D.objecttivityAnswer = 7 THEN 1 ELSE NULL END) AS question7Cnt,
+				COUNT(CASE WHEN D.objecttivityAnswer = 8 THEN 1 ELSE NULL END) AS question8Cnt,
+				COUNT(CASE WHEN D.objecttivityAnswer = 9 THEN 1 ELSE NULL END) AS question9Cnt,
+				COUNT(CASE WHEN D.objecttivityAnswer = 10 THEN 1 ELSE NULL END) AS question10Cnt
+			FROM
+				EDVIR_Surveys_SurveyQuestions A 
+				INNER JOIN EDVIR_SurveyQuestion B ON A.questionSeqNo = B.questionSeqNo
+				LEFT JOIN EDVIR_SurveyQuestions_SurveyAnswers C ON B.questionSeqNo = C.questionSeqNo
+				LEFT JOIN EDVIR_SurveyAnswer D ON C.SurveyAnswerId = D.SurveyAnswerId
+				INNER JOIN EDVIR_VirtualLab F ON D.virtualLabId = F.virtualLabId
+			WHERE
+				1=1
+				<isNotEmpty property="virtualLabId">
+				AND
+				D.virtualLabId = #virtualLabId#
+				</isNotEmpty>
+				<isNotEmpty property="classId">
+				AND
+				D.classId = #classId#
+				</isNotEmpty>
+				<isNotEmpty property="surveySeqNo">
+				AND
+				A.surveySeqNo = #surveySeqNo#
+				</isNotEmpty>
+				<isNotEmpty property="groupId">
+				AND
+				F.groupId = #groupId#
+				</isNotEmpty>
+			GROUP BY
+				B.questionSeqNo
+			ORDER BY
+				B.questionSeqNo ASC
+		]]>
+	</sql>
+		
+	<sql id="org.kisti.edison.service.persistence.Survey.getSurveyQuestionSubject" >
+		<![CDATA[
+			SELECT
+				D.virtualLabId,
+				D.userId,
+				D.SurveyAnswerId,
+				D.subjectivityAnswer,
+				D.objecttivityAnswer,
+				D.classId,
+				D.answerDate
+			FROM
+				EDVIR_Surveys_SurveyQuestions A 
+				INNER JOIN EDVIR_SurveyQuestion B ON A.questionSeqNo = B.questionSeqNo
+				INNER JOIN EDVIR_SurveyQuestions_SurveyAnswers C ON B.questionSeqNo = C.questionSeqNo
+				INNER JOIN EDVIR_SurveyAnswer D ON C.SurveyAnswerId = D.SurveyAnswerId
+				INNER JOIN EDVIR_VirtualLab F ON D.virtualLabId = F.virtualLabId
+			WHERE
+				1=1
+				<isNotEmpty property="questionDivCd">
+				AND
+				B.questionDivCd = #questionDivCd#
+				</isNotEmpty>
+				<isNotEmpty property="surveySeqNo">
+				AND
+				A.surveySeqNo = #surveySeqNo#
+				</isNotEmpty>
+				<isNotEmpty property="virtualLabId">
+				AND
+				D.virtualLabId = #virtualLabId#
+				</isNotEmpty>
+				<isNotEmpty property="questionSeqNo">
+				AND
+				B.questionSeqNo = #questionSeqNo#
+				</isNotEmpty>
+				<isNotEmpty property="classId">
+				AND
+				D.classId = #classId#
+				</isNotEmpty>
+				<isNotEmpty property="groupId">
+				AND
+				F.groupId = #groupId#
+				</isNotEmpty>
+			ORDER BY A.surveySeqNo asc, B.questionSeqNo asc	
+		]]>
+	</sql>
+		
+	<sql id="org.kisti.edison.service.persistence.Survey.getSurveyMappingList" >
+		<![CDATA[
+			SELECT
+				A.surveyTitle,
+				A.surveyStatus,
+				A.surveyStartDate,
+				A.surveySeqNo,
+				A.surveyEndDate,
+				A.surveyCreateDate,
+				A.surveyUseYn
+			FROM
+				EDVIR_Survey A
+				INNER JOIN	(
+							SELECT
+								*
+							FROM
+								EDVIR_VirtualLabs_Surveys
+							WHERE
+								virtualLabId = #virtualLabId#
+							) B ON A.surveySeqNo = B.surveySeqNo
+		WHERE
+			1=1
+			<isNotEmpty property="checkDate">
+			AND
+			(date(surveyStartDate) &lt;= date(now()) AND date(surveyEndDate) &gt;= date(now()))
+			OR
+			(surveyStartDate = '' AND surveyEndDate = '')
+			</isNotEmpty>
+			AND
+			A.surveyUseYn = 'Y'
+		]]>
+	</sql>
+		
+	<sql id="org.kisti.edison.service.persistence.Survey.getSurveyMappingVoteList" >
+		<![CDATA[
+			SELECT
+				A.surveyTitle,
+				A.surveyStatus,
+				A.surveyStartDate,
+				A.surveySeqNo,
+				A.surveyEndDate,
+				A.surveyCreateDate,
+				A.surveyUseYn,
+				( 
+					SELECT
+						COUNT(*)
+					FROM 
+						EDVIR_Surveys_SurveyQuestions AA
+						INNER JOIN EDVIR_SurveyQuestions_SurveyAnswers C ON AA.questionSeqNo = C.questionSeqNo
+						INNER JOIN EDVIR_SurveyAnswer D ON D.surveyAnswerId = C.surveyAnswerId
+					WHERE
+						D.userId = #userId#
+						AND
+						A.surveySeqNo = AA.surveySeqNo
+						<isNotEmpty property="classId">
+						AND
+						D.classId = #classId#
+						</isNotEmpty>
+					) AS surveyCheck
+			FROM
+				EDVIR_Survey A
+				INNER JOIN	(
+							SELECT
+								*
+							FROM
+								EDVIR_VirtualLabs_Surveys
+							WHERE
+								virtualLabId = #virtualLabId#
+							) B ON A.surveySeqNo = B.surveySeqNo
+			WHERE
+				1=1
+				<isNotEmpty property="checkDate">
+				AND
+				(date(surveyStartDate) &lt;= date(now()) AND date(surveyEndDate) &gt;= date(now()))
+				OR
+				(surveyStartDate = '' AND surveyEndDate = '')
+				</isNotEmpty>
+				AND
+				A.surveyUseYn = 'Y'
+		]]>
+		</sql>
+		
+	<sql id="org.kisti.edison.service.persistence.Survey.getSurveyMappingCheckList" >
+		<![CDATA[
+		SELECT
+			A.surveyTitle,
+			A.surveyStatus,
+			A.surveyStartDate,
+			A.surveySeqNo,
+			A.surveyEndDate,
+			A.surveyCreateDate,
+			A.surveyUseYn,
+			B.virtualLabId
+		FROM
+			EDVIR_Survey A
+			LEFT JOIN	(
+						SELECT
+							*
+						FROM
+							EDVIR_VirtualLabs_Surveys
+						WHERE
+							virtualLabId = #virtualLabId#
+						) B ON A.surveySeqNo = B.surveySeqNo
+		WHERE
+			1=1
+			<isNotEmpty property="checkDate">
+			AND
+			(date(surveyStartDate) &lt;= date(now()) AND date(surveyEndDate) &gt;= date(now()))
+			OR
+			(surveyStartDate = '' AND surveyEndDate = '')
+			</isNotEmpty>
+			AND
+				A.surveyUseYn = 'Y'
+		ORDER BY
+			A.surveyCreateDate DESC
+		]]>
+	</sql>
+	
+	<sql id="org.kisti.edison.service.persistence.Survey.getSurveyResultListSelectCount3" >
+		<![CDATA[
+			SELECT
+				COUNT(*) totalCnt
+			FROM
+				EDVIR_VirtualLabs_Surveys A
+				INNER JOIN 
+				(
+					SELECT
+						B.*,
+						fnGetCdNm(A.virtualLabUniversityField, #languageId#) AS virtualLabUniversityFieldSearchField,
+						ExtractValue(B.virtualLabTitle, 'root/VirtualLabTitle[@language-id="@@languageId@@"]') AS virtualLabTitleSearchField,
+						ExtractValue(B.virtualLabPersonName, 'root/VirtualLabPersonName[@language-id="@@languageId@@"]') AS virtualLabPersonNameSearchField
+					FROM
+						EDVIR_VirtualLab B
+					WHERE
+						B.virtualLabUseYn = 'Y'
+					) B ON A.virtualLabId = B.virtualLabId
+				INNER JOIN EDVIR_Survey C ON A.surveySeqNo = C.surveySeqNo
+			WHERE
+				1=1
+				<isNotEmpty property="groupId">
+				AND
+				B.groupId = #groupId#
+				</isNotEmpty>
+				<isNotEmpty property="surveySeqNo">
+				AND
+				A.surveySeqNo = #surveySeqNo#
+				</isNotEmpty>
+				<isNotEmpty property="searchField">
+				AND (
+					B.virtualLabTitleSearchField like '%@@searchField@@%'
+					OR	B.virtualLabPersonNameSearchField like '%@@searchField@@%' 
+					OR	B.virtualLabUniversityFieldSearchField like '%@@searchField@@%'
+					)
+				</isNotEmpty>
+				AND
+					C.surveyUseYn = 'Y'
+		]]>
+	</sql>
+	
+	<sql id="org.kisti.edison.service.persistence.Survey.getSurveyResultListSelectResult" >
+		<![CDATA[
+			SELECT
+				AA.virtualLabUseYn,
+				AA.virtualLabUniversityField,
+				AA.virtualLabTitle,
+				AA.virtualLabStatus,
+				AA.virtualLabRequestDt,
+				AA.virtualLabPersonName,
+				AA.virtualLabId,
+				AA.virtualLabDescription,
+				AA.virtualLabConfirmDt,
+				AA.virtualLabConfirmDescription,
+				AA.userId,
+				AA.groupId,
+				AA.surveyTitle,
+				AA.surveyStatus,
+				AA.surveyStartDate,
+				AA.surveySeqNo,
+				AA.surveyEndDate,
+				AA.surveyCreateDate,
+				AA.surveyUseYn,
+				E.virtualClassCd,
+				E.classUseYn,
+				E.classUpdateDt,
+				E.classTitle,
+				E.classStartDt,
+				E.classPersonnel,
+				E.classId,
+				E.classEndDt,
+				E.classDescription,
+				E.classCreateDt
+		]]>
+	</sql>
+
+	<sql id="org.kisti.edison.service.persistence.Survey.getSurveyResultList" >
+		<![CDATA[
+		FROM
+			(
+			SELECT
+				B.*,
+				C.*
+			FROM
+				EDVIR_VirtualLabs_Surveys A
+				INNER JOIN 
+				(
+					SELECT
+						B.*,
+						fnGetCdNm(A.virtualLabUniversityField, #languageId#) AS virtualLabUniversityFieldSearchField,
+						ExtractValue(B.virtualLabTitle, 'root/VirtualLabTitle[@language-id="@@languageId@@"]') AS virtualLabTitleSearchField,
+						ExtractValue(B.virtualLabPersonName, 'root/VirtualLabPersonName[@language-id="@@languageId@@"]') AS virtualLabPersonNameSearchField
+					FROM
+						EDVIR_VirtualLab B
+					WHERE
+						B.virtualLabUseYn = 'Y'
+					) B ON A.virtualLabId = B.virtualLabId
+				INNER JOIN EDVIR_Survey C ON A.surveySeqNo = C.surveySeqNo
+			WHERE
+				1=1
+				<isNotEmpty property="groupId">
+				AND
+				B.groupId = #groupId#
+				</isNotEmpty>
+				<isNotEmpty property="surveySeqNo">
+				AND
+				A.surveySeqNo = #surveySeqNo#
+				</isNotEmpty>
+				<isNotEmpty property="searchField">
+				AND (
+					B.virtualLabTitleSearchField like '%@@searchField@@%'
+					OR	B.virtualLabPersonNameSearchField like '%@@searchField@@%' 
+					OR	B.virtualLabUniversityFieldSearchField like '%@@searchField@@%'
+					)
+				</isNotEmpty>
+				AND
+					C.surveyUseYn = 'Y'
+			ORDER BY
+				B.virtualLabConfirmDt DESC,
+				B.virtualLabId DESC
+			<isNotEmpty property="begin">
+			LIMIT
+				#begin#, #end#
+			</isNotEmpty>
+			) AA
+			INNER JOIN EDVIR_VirtualLabs_VirtualLabClasses D ON AA.virtualLabId = D.virtuallabId
+			INNER JOIN EDVIR_VirtualLabClass E ON D.classId = E.classId
+		WHERE
+			E.classUseYn = 'Y'
+		]]>
+	</sql>
+	
+	<sql id="org.kisti.edison.service.persistence.Survey.getSurveyResultListSelectCount" >
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT AA.virtualLabId) AS totalCnt
+			FROM
+		]]>
+	</sql>
+	
+	<sql id="org.kisti.edison.service.persistence.Survey.getSurveyResultListSelect" >
+		<![CDATA[
+			SELECT
+				AA.virtualLabId,
+				AA.virtualLabUniversityField,
+				AA.virtualLabUseYn,
+				AA.virtualLabDescription,
+				AA.virtualLabTitle,
+				AA.virtualLabStatus,
+				AA.virtualLabConfirmDescription,
+				AA.virtualLabConfirmDt,
+				AA.virtualLabRequestDt,
+				AA.virtualLabPersonName,
+				AA.userId,
+				AA.groupId,
+				E.virtualClassCd,
+				E.classUseYn,
+				E.classUpdateDt,
+				E.classTitle,
+				E.classStartDt,
+				E.classPersonnel,
+				E.classId,
+				E.classEndDt,
+				E.classDescription,
+				E.classCreateDt,
+				G.surveyTitle,
+				G.surveyStatus,
+				G.surveyStartDate,
+				G.surveySeqNo,
+				G.surveyEndDate,
+				G.surveyCreateDate,
+				G.surveyUseYn,
+				IFNULL(G.answerCount, 0) answerCount, 
+				G.voteStartDate,
+				G.voteEndDate,
+				(SELECT COUNT(*) FROM EDVIR_VirtualLabs_Surveys V WHERE V.virtualLabId = AA.virtualLabId AND V.surveySeqNo = #surveySeqNo#) AS surveyCheck,
+				(SELECT COUNT(case when B.requestSort = "TEMP" then 1 end) tempUserCount FROM EDVIR_VirtualLabClasses_VirtualLabUsers A INNER JOIN EDVIR_VirtualLabUser B ON A.virtualLabUserId = B.virtualLabUserId WHERE classId = E.classId) userTempCount,
+				(SELECT COUNT(case when B.requestSort = "CONFIRM" then 1 end) userCount FROM EDVIR_VirtualLabClasses_VirtualLabUsers A INNER JOIN EDVIR_VirtualLabUser B ON A.virtualLabUserId = B.virtualLabUserId WHERE classId = E.classId) userCount
+			FROM
+		]]>
+	</sql>
+
+	<sql id="org.kisti.edison.service.persistence.Survey.getSurveyResultListFrom" >
+		<![CDATA[
+			(
+			SELECT
+				C.*
+			FROM
+				(
+				SELECT
+					A.*,
+					fnGetCdNm(A.virtualLabUniversityField, #languageId#) AS virtualLabUniversityFieldSearchField,
+					ExtractValue(A.virtualLabTitle, 'root/VirtualLabTitle[@language-id="@@languageId@@"]') AS virtualLabTitleSearchField,
+					ExtractValue(A.virtualLabPersonName, 'root/VirtualLabPersonName[@language-id="@@languageId@@"]') AS virtualLabPersonNameSearchField,
+					(SELECT COUNT(*) FROM EDVIR_VirtualLabs_VirtualLabClasses B WHERE B.virtualLabId = A.virtualLabId) AS classCount
+				FROM
+					EDVIR_VirtualLab A
+				WHERE
+					A.virtualLabUseYn = 'Y'
+				) AS C
+				WHERE
+					1=1
+					AND
+					C.classCount > 0
+					<isNotEmpty property="groupId">
+					AND
+					C.groupId = #groupId#
+					</isNotEmpty>
+					AND 
+					C.virtualLabStatus = 1401002
+					<isNotEmpty property="searchField">
+					AND (
+						C.virtualLabTitleSearchField like "%@@searchField@@%"
+						OR	C.virtualLabPersonNameSearchField like "%@@searchField@@%" 
+						OR	C.virtualLabUniversityFieldSearchField like "%@@searchField@@%"
+						)
+					</isNotEmpty>
+				ORDER BY
+					C.virtualLabConfirmDt DESC,
+					C.virtualLabId DESC
+				<isNotEmpty property="begin">
+				LIMIT
+					#begin#, #end#
+				</isNotEmpty>
+				) AA
+				INNER JOIN EDVIR_VirtualLabs_VirtualLabClasses D ON D.virtualLabId = AA.virtualLabId
+				INNER JOIN EDVIR_VirtualLabClass E ON E.classId = D.classId
+				LEFT JOIN
+					(
+					SELECT
+						A.surveyTitle,
+						A.surveyStatus,
+						A.surveySeqNo,
+						A.surveyCreateDate,
+						A.surveyStartDate,
+						A.surveyEndDate,
+						A.surveyUseYn,
+						E.classId,
+						COUNT(DISTINCT E.userId) answerCount,
+						MIN(answerDate) voteStartDate,
+						MAX(answerDate) voteEndDate
+					FROM
+						EDVIR_Survey A
+						INNER JOIN EDVIR_Surveys_SurveyQuestions B ON A.surveySeqNo = B.surveySeqNo
+						INNER JOIN EDVIR_SurveyQuestion C ON B.questionSeqNo = C.questionSeqNo
+						INNER JOIN EDVIR_SurveyQuestions_SurveyAnswers D ON C.questionSeqNo = D.questionSeqNo
+						INNER JOIN EDVIR_SurveyAnswer E ON D.SurveyAnswerId = E.SurveyAnswerId
+					WHERE
+						A.surveySeqNo = #surveySeqNo#
+						AND
+							A.surveyUseYn = 'Y'
+					GROUP BY
+						E.virtualLabId,
+						E.classId,
+						A.surveySeqNo
+					) G ON E.classId = G.classId
+				WHERE
+					E.classUseYn = 'Y'
+				ORDER BY
+					AA.virtualLabConfirmDt DESC,
+					AA.virtualLabId DESC
+		]]>
+	</sql>
+
+	<sql id="org.kisti.edison.service.persistence.Survey.getExcelResult" >
+		<![CDATA[
+			SELECT
+				'' AS classId,
+				GROUP_CONCAT(IF(A.questionDivCd ='SVY_02_001', EXTRACTVALUE(A.questionTitle,'root/QuestionTitle[@language-id="@@languageId@@"]'), null)ORDER BY A.questionSeqNo) AS row1, 
+				GROUP_CONCAT(IF(A.questionDivCd ='SVY_02_002', EXTRACTVALUE(A.questionTitle,'root/QuestionTitle[@language-id="@@languageId@@"]'), null)ORDER BY A.questionSeqNo) AS row2
+			FROM
+				EDVIR_SurveyQuestion A
+				INNER JOIN EDVIR_Surveys_SurveyQuestions B ON A.questionSeqNo = B.questionSeqNo
+			WHERE
+				B.surveySeqNo = #surveySeqNo#
+			UNION ALL
+			SELECT	
+				D.classId AS classId,
+				GROUP_CONCAT(IF(A.questionDivCd ='SVY_02_001',D.objecttivityAnswer, null) ORDER BY B.questionSeqNo) AS row1,
+				GROUP_CONCAT(IF(A.questionDivCd ='SVY_02_002',D.subjectivityAnswer, null) ORDER BY B.questionSeqNo) AS row2
+			FROM
+				EDVIR_SurveyQuestion A
+				INNER JOIN EDVIR_Surveys_SurveyQuestions B ON A.questionSeqNo = B.questionSeqNo
+				INNER JOIN EDVIR_SurveyQuestions_SurveyAnswers C ON A.questionSeqNo = C.questionSeqNo
+				INNER JOIN EDVIR_SurveyAnswer D ON C.surveyAnswerId = D.surveyAnswerId 
+				INNER JOIN EDVIR_VirtualLab F ON D.virtualLabId = F.virtualLabId
+			WHERE
+				A.questionSeqNo = B.questionSeqNo
+				AND
+				B.surveySeqNo = #surveySeqNo#
+				<isNotEmpty property="virtualLabId">
+				AND
+				D.virtualLabId = #virtualLabId#
+				</isNotEmpty>
+				<isNotEmpty property="classId">
+				AND
+				D.classId = #classId#
+				</isNotEmpty>
+				<isNotEmpty property="groupId">
+				AND
+				F.groupId = #groupId#
+				</isNotEmpty>
+			GROUP BY D.userId
+		]]>
+	</sql>
+
+	<sql id="org.kisti.edison.service.persistence.Survey.getCountAnswerResult" >
+		<![CDATA[
+			SELECT
+				COUNT(*) AS answerCnt
+			FROM
+				EDVIR_Surveys_SurveyQuestions A
+				INNER JOIN EDVIR_SurveyQuestion B ON A.questionSeqNo = B.questionSeqNo
+				INNER JOIN EDVIR_SurveyQuestions_SurveyAnswers C ON C.questionSeqNo = B.questionSeqNo 
+				INNER JOIN EDVIR_SurveyAnswer D ON C.SurveyAnswerId = D.SurveyAnswerId
+			WHERE
+				A.surveySeqNo = #surveySeqNo#
+				<isNotEmpty property="virtualLabId">
+				AND
+				D.virtualLabId = #virtualLabId#
+				</isNotEmpty>
+				<isNotEmpty property="classId">
+				AND
+				D.classId = #classId#
+				</isNotEmpty>
+		]]>
+	</sql>
+
+	<sql id="org.kisti.edison.service.persistence.Survey.getCountSurveyCheck" >
+		<![CDATA[
+			SELECT
+				COUNT(*) AS surveyCheck
+			FROM 
+				EDVIR_Surveys_SurveyQuestions AA
+				INNER JOIN EDVIR_SurveyQuestions_SurveyAnswers C ON AA.questionSeqNo = C.questionSeqNo
+				INNER JOIN EDVIR_SurveyAnswer D ON D.surveyAnswerId = C.surveyAnswerId
+			WHERE
+				D.userId = #userId#
+				AND
+				AA.surveySeqNo = #surveySeqNo#
+				<isNotEmpty property="classId">
+				AND
+				D.classId = #classId#
+				</isNotEmpty>
+		]]>
+	</sql>
+
+	<sql id="org.kisti.edison.service.persistence.Survey.getQuestionSeqList" >
+		<![CDATA[
+			SELECT
+				A.questionSeqNo
+			FROM
+				EDVIR_Surveys_SurveyQuestions A
+				INNER JOIN EDVIR_SurveyQuestion B ON A.questionSeqNo = B.questionSeqNo
+			WHERE
+				A.surveySeqNo = #surveySeqNo#
+		]]>
+	</sql>
+
+	<sql id="org.kisti.edison.service.persistence.Survey.getMaxQuestionSeq" >
+		<![CDATA[
+			SELECT
+				IFNULL(MAX(B.questionSeqNo),0) AS questionSeqNo
+			FROM
+				EDVIR_VirtualLabs_Surveys A
+				INNER JOIN EDVIR_Surveys_SurveyQuestions B ON A.surveySeqNo = B.surveySeqNo
+			WHERE
+				A.virtualLabId = #virtualLabId#
+		]]>
+	</sql>
+
+</custom-sql>

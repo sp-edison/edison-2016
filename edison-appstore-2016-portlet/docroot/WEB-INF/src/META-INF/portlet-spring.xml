@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<bean id="org.kisti.edison.science.service.CommonLibLocalService" class="org.kisti.edison.science.service.impl.CommonLibLocalServiceImpl" />
+	<bean id="org.kisti.edison.science.service.CommonLibService" class="org.kisti.edison.science.service.impl.CommonLibServiceImpl" />
+	<bean id="org.kisti.edison.science.service.persistence.CommonLibPersistence" class="org.kisti.edison.science.service.persistence.CommonLibPersistenceImpl" parent="basePersistence" />
+	<bean id="org.kisti.edison.science.service.persistence.CommonLibFinder" class="org.kisti.edison.science.service.persistence.CommonLibFinderImpl" parent="basePersistence" />
+	<bean id="org.kisti.edison.science.service.CommonModuleLocalService" class="org.kisti.edison.science.service.impl.CommonModuleLocalServiceImpl" />
+	<bean id="org.kisti.edison.science.service.CommonModuleService" class="org.kisti.edison.science.service.impl.CommonModuleServiceImpl" />
+	<bean id="org.kisti.edison.science.service.persistence.CommonModulePersistence" class="org.kisti.edison.science.service.persistence.CommonModulePersistenceImpl" parent="basePersistence" />
+	<bean id="org.kisti.edison.science.service.DeveloperInfoLocalService" class="org.kisti.edison.science.service.impl.DeveloperInfoLocalServiceImpl" />
+	<bean id="org.kisti.edison.science.service.DeveloperInfoService" class="org.kisti.edison.science.service.impl.DeveloperInfoServiceImpl" />
+	<bean id="org.kisti.edison.science.service.persistence.DeveloperInfoPersistence" class="org.kisti.edison.science.service.persistence.DeveloperInfoPersistenceImpl" parent="basePersistence" />
+	<bean id="org.kisti.edison.science.service.persistence.DeveloperInfoFinder" class="org.kisti.edison.science.service.persistence.DeveloperInfoFinderImpl" parent="basePersistence" />
+	<bean id="org.kisti.edison.science.service.DeveloperIpLocalService" class="org.kisti.edison.science.service.impl.DeveloperIpLocalServiceImpl" />
+	<bean id="org.kisti.edison.science.service.DeveloperIpService" class="org.kisti.edison.science.service.impl.DeveloperIpServiceImpl" />
+	<bean id="org.kisti.edison.science.service.persistence.DeveloperIpPersistence" class="org.kisti.edison.science.service.persistence.DeveloperIpPersistenceImpl" parent="basePersistence" />
+	<bean id="org.kisti.edison.science.service.DeveloperRequestLocalService" class="org.kisti.edison.science.service.impl.DeveloperRequestLocalServiceImpl" />
+	<bean id="org.kisti.edison.science.service.DeveloperRequestService" class="org.kisti.edison.science.service.impl.DeveloperRequestServiceImpl" />
+	<bean id="org.kisti.edison.science.service.persistence.DeveloperRequestPersistence" class="org.kisti.edison.science.service.persistence.DeveloperRequestPersistenceImpl" parent="basePersistence" />
+	<bean id="org.kisti.edison.science.service.PortTypeLocalService" class="org.kisti.edison.science.service.impl.PortTypeLocalServiceImpl" />
+	<bean id="org.kisti.edison.science.service.PortTypeService" class="org.kisti.edison.science.service.impl.PortTypeServiceImpl" />
+	<bean id="org.kisti.edison.science.service.persistence.PortTypePersistence" class="org.kisti.edison.science.service.persistence.PortTypePersistenceImpl" parent="basePersistence" />
+	<bean id="org.kisti.edison.science.service.persistence.PortTypeFinder" class="org.kisti.edison.science.service.persistence.PortTypeFinderImpl" parent="basePersistence" />
+	<bean id="org.kisti.edison.science.service.PortTypeAnalyzerLinkLocalService" class="org.kisti.edison.science.service.impl.PortTypeAnalyzerLinkLocalServiceImpl" />
+	<bean id="org.kisti.edison.science.service.PortTypeAnalyzerLinkService" class="org.kisti.edison.science.service.impl.PortTypeAnalyzerLinkServiceImpl" />
+	<bean id="org.kisti.edison.science.service.persistence.PortTypeAnalyzerLinkPersistence" class="org.kisti.edison.science.service.persistence.PortTypeAnalyzerLinkPersistenceImpl" parent="basePersistence" />
+	<bean id="org.kisti.edison.science.service.persistence.PortTypeAnalyzerLinkFinder" class="org.kisti.edison.science.service.persistence.PortTypeAnalyzerLinkFinderImpl" parent="basePersistence" />
+	<bean id="org.kisti.edison.science.service.PortTypeEditorLinkLocalService" class="org.kisti.edison.science.service.impl.PortTypeEditorLinkLocalServiceImpl" />
+	<bean id="org.kisti.edison.science.service.PortTypeEditorLinkService" class="org.kisti.edison.science.service.impl.PortTypeEditorLinkServiceImpl" />
+	<bean id="org.kisti.edison.science.service.persistence.PortTypeEditorLinkPersistence" class="org.kisti.edison.science.service.persistence.PortTypeEditorLinkPersistenceImpl" parent="basePersistence" />
+	<bean id="org.kisti.edison.science.service.persistence.PortTypeEditorLinkFinder" class="org.kisti.edison.science.service.persistence.PortTypeEditorLinkFinderImpl" parent="basePersistence" />
+	<bean id="org.kisti.edison.science.service.PortTypeInputdeckFormLocalService" class="org.kisti.edison.science.service.impl.PortTypeInputdeckFormLocalServiceImpl" />
+	<bean id="org.kisti.edison.science.service.persistence.PortTypeInputdeckFormPersistence" class="org.kisti.edison.science.service.persistence.PortTypeInputdeckFormPersistenceImpl" parent="basePersistence" />
+	<bean id="org.kisti.edison.science.service.RequiredLibLocalService" class="org.kisti.edison.science.service.impl.RequiredLibLocalServiceImpl" />
+	<bean id="org.kisti.edison.science.service.RequiredLibService" class="org.kisti.edison.science.service.impl.RequiredLibServiceImpl" />
+	<bean id="org.kisti.edison.science.service.persistence.RequiredLibPersistence" class="org.kisti.edison.science.service.persistence.RequiredLibPersistenceImpl" parent="basePersistence" />
+	<bean id="org.kisti.edison.science.service.persistence.RequiredLibFinder" class="org.kisti.edison.science.service.persistence.RequiredLibFinderImpl" parent="basePersistence" />
+	<bean id="org.kisti.edison.science.service.RequiredLibConfirmLocalService" class="org.kisti.edison.science.service.impl.RequiredLibConfirmLocalServiceImpl" />
+	<bean id="org.kisti.edison.science.service.RequiredLibConfirmService" class="org.kisti.edison.science.service.impl.RequiredLibConfirmServiceImpl" />
+	<bean id="org.kisti.edison.science.service.persistence.RequiredLibConfirmPersistence" class="org.kisti.edison.science.service.persistence.RequiredLibConfirmPersistenceImpl" parent="basePersistence" />
+	<bean id="org.kisti.edison.science.service.RequiredModuleLocalService" class="org.kisti.edison.science.service.impl.RequiredModuleLocalServiceImpl" />
+	<bean id="org.kisti.edison.science.service.RequiredModuleService" class="org.kisti.edison.science.service.impl.RequiredModuleServiceImpl" />
+	<bean id="org.kisti.edison.science.service.persistence.RequiredModulePersistence" class="org.kisti.edison.science.service.persistence.RequiredModulePersistenceImpl" parent="basePersistence" />
+	<bean id="org.kisti.edison.science.service.ScienceAppLocalService" class="org.kisti.edison.science.service.impl.ScienceAppLocalServiceImpl" />
+	<bean id="org.kisti.edison.science.service.ScienceAppService" class="org.kisti.edison.science.service.impl.ScienceAppServiceImpl" />
+	<bean id="org.kisti.edison.science.service.persistence.ScienceAppPersistence" class="org.kisti.edison.science.service.persistence.ScienceAppPersistenceImpl" parent="basePersistence" />
+	<bean id="org.kisti.edison.science.service.persistence.ScienceAppFinder" class="org.kisti.edison.science.service.persistence.ScienceAppFinderImpl" parent="basePersistence" />
+	<bean id="org.kisti.edison.science.service.ScienceAppCategoryLinkLocalService" class="org.kisti.edison.science.service.impl.ScienceAppCategoryLinkLocalServiceImpl" />
+	<bean id="org.kisti.edison.science.service.ScienceAppCategoryLinkService" class="org.kisti.edison.science.service.impl.ScienceAppCategoryLinkServiceImpl" />
+	<bean id="org.kisti.edison.science.service.persistence.ScienceAppCategoryLinkPersistence" class="org.kisti.edison.science.service.persistence.ScienceAppCategoryLinkPersistenceImpl" parent="basePersistence" />
+	<bean id="org.kisti.edison.science.service.ScienceAppDescriptionLocalService" class="org.kisti.edison.science.service.impl.ScienceAppDescriptionLocalServiceImpl" />
+	<bean id="org.kisti.edison.science.service.ScienceAppDescriptionService" class="org.kisti.edison.science.service.impl.ScienceAppDescriptionServiceImpl" />
+	<bean id="org.kisti.edison.science.service.persistence.ScienceAppDescriptionPersistence" class="org.kisti.edison.science.service.persistence.ScienceAppDescriptionPersistenceImpl" parent="basePersistence" />
+	<bean id="org.kisti.edison.science.service.ScienceAppFavoriteLocalService" class="org.kisti.edison.science.service.impl.ScienceAppFavoriteLocalServiceImpl" />
+	<bean id="org.kisti.edison.science.service.ScienceAppFavoriteService" class="org.kisti.edison.science.service.impl.ScienceAppFavoriteServiceImpl" />
+	<bean id="org.kisti.edison.science.service.persistence.ScienceAppFavoritePersistence" class="org.kisti.edison.science.service.persistence.ScienceAppFavoritePersistenceImpl" parent="basePersistence" />
+	<bean id="org.kisti.edison.science.service.ScienceAppInputPortsLocalService" class="org.kisti.edison.science.service.impl.ScienceAppInputPortsLocalServiceImpl" />
+	<bean id="org.kisti.edison.science.service.persistence.ScienceAppInputPortsPersistence" class="org.kisti.edison.science.service.persistence.ScienceAppInputPortsPersistenceImpl" parent="basePersistence" />
+	<bean id="org.kisti.edison.science.service.ScienceAppManagerLocalService" class="org.kisti.edison.science.service.impl.ScienceAppManagerLocalServiceImpl" />
+	<bean id="org.kisti.edison.science.service.ScienceAppManagerService" class="org.kisti.edison.science.service.impl.ScienceAppManagerServiceImpl" />
+	<bean id="org.kisti.edison.science.service.persistence.ScienceAppManagerPersistence" class="org.kisti.edison.science.service.persistence.ScienceAppManagerPersistenceImpl" parent="basePersistence" />
+	<bean id="org.kisti.edison.science.service.persistence.ScienceAppManagerFinder" class="org.kisti.edison.science.service.persistence.ScienceAppManagerFinderImpl" parent="basePersistence" />
+	<bean id="org.kisti.edison.science.service.ScienceAppOutputPortsLocalService" class="org.kisti.edison.science.service.impl.ScienceAppOutputPortsLocalServiceImpl" />
+	<bean id="org.kisti.edison.science.service.persistence.ScienceAppOutputPortsPersistence" class="org.kisti.edison.science.service.persistence.ScienceAppOutputPortsPersistenceImpl" parent="basePersistence" />
+</beans>

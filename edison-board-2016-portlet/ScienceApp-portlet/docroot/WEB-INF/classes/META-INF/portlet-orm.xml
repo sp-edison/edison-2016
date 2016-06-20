@@ -1,0 +1,309 @@
+<?xml version="1.0"?>
+
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd">
+	<persistence-unit-metadata>
+		<xml-mapping-metadata-complete/>
+		<persistence-unit-defaults>
+			<access>PROPERTY</access>
+		</persistence-unit-defaults>
+	</persistence-unit-metadata>
+	<mapped-superclass class="com.kisti.science.platform.app.model.impl.CommonLibraryModelImpl">
+		<id-class class="com.kisti.science.platform.app.service.persistence.CommonLibraryPK" />
+		<attributes>
+			<id name="libName" />
+			<id name="libPath" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="cLibVer" />
+			<basic name="sysArch" />
+			<basic name="kernelVer" />
+			<transient name="CLibVer" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.kisti.science.platform.app.model.impl.CommonModuleModelImpl">
+		<attributes>
+			<id name="moduleName" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="moduleRootDir" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.kisti.science.platform.app.model.impl.CommonPackageModelImpl">
+		<id-class class="com.kisti.science.platform.app.service.persistence.CommonPackagePK" />
+		<attributes>
+			<id name="pkgName" />
+			<id name="pkgVersion" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="sysArch" />
+			<basic name="installMethod" />
+			<basic name="installPath" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.kisti.science.platform.app.model.impl.PortTypeModelImpl">
+		<attributes>
+			<id name="portTypeId" />
+			<basic name="uuid">
+				<column name="UUID_" />
+			</basic>
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="defaultEditorId" />
+			<basic name="defaultAnalyzerId" />
+			<basic name="name" />
+			<basic name="dataType" />
+			<basic name="sampleFilePath" />
+			<basic name="targetLanguage" />
+			<basic name="status" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.kisti.science.platform.app.model.impl.PortTypeAnalyzerLinkModelImpl">
+		<attributes>
+			<id name="portTypeAnalyzerLinkId" />
+			<basic name="uuid">
+				<column name="UUID_" />
+			</basic>
+			<basic name="companyId" />
+			<basic name="portTypeId" />
+			<basic name="analyzerId" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.kisti.science.platform.app.model.impl.PortTypeEditorLinkModelImpl">
+		<attributes>
+			<id name="portTypeEditorLinkId" />
+			<basic name="uuid">
+				<column name="UUID_" />
+			</basic>
+			<basic name="companyId" />
+			<basic name="portTypeId" />
+			<basic name="editorId" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.kisti.science.platform.app.model.impl.PortTypeInputdeckFormModelImpl">
+		<attributes>
+			<id name="portTypeId" />
+			<basic name="inputdeckForm" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.kisti.science.platform.app.model.impl.PortTypeInputdeckUserFormModelImpl">
+		<attributes>
+			<id name="inputdeckId" />
+			<basic name="portTypeId" />
+			<basic name="inputdeckUserForm" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.kisti.science.platform.app.model.impl.ScienceAppModelImpl">
+		<attributes>
+			<id name="scienceAppId" />
+			<basic name="uuid">
+				<column name="UUID_" />
+			</basic>
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="name" />
+			<basic name="version" />
+			<basic name="title" />
+			<basic name="descriptionId" />
+			<basic name="previousVersionId" />
+			<basic name="iconId" />
+			<basic name="manualId" />
+			<basic name="exeFileName" />
+			<basic name="appType" />
+			<basic name="runType" />
+			<basic name="authorId" />
+			<basic name="stage" />
+			<basic name="status" />
+			<basic name="recentModifierId" />
+			<basic name="parallelModule" />
+			<basic name="maxCpus" />
+			<basic name="defaultCpus" />
+			<basic name="statusDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="openLevel" />
+			<basic name="license" />
+			<basic name="srcFileName" />
+			<basic name="targetLanguage" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="titleCurrentLanguageId" />
+			<transient name="titleMap" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.kisti.science.platform.app.model.impl.ScienceAppCategoryLinkModelImpl">
+		<attributes>
+			<id name="scienceAppCategoryLinkId" />
+			<basic name="uuid">
+				<column name="UUID_" />
+			</basic>
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="categoryId" />
+			<basic name="scienceAppId" />
+			<basic name="parentCategoryId" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.kisti.science.platform.app.model.impl.ScienceAppInputPortsModelImpl">
+		<attributes>
+			<id name="scienceAppId" />
+			<basic name="inputPorts" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.kisti.science.platform.app.model.impl.ScienceAppManagerModelImpl">
+		<attributes>
+			<id name="scienceAppManagerId" />
+			<basic name="userId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="scienceAppId" />
+			<basic name="managerId" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.kisti.science.platform.app.model.impl.ScienceAppOutputPortsModelImpl">
+		<attributes>
+			<id name="scienceAppId" />
+			<basic name="outputPorts" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<entity class="com.kisti.science.platform.app.model.impl.CommonLibraryImpl" name="CommonLibrary">
+		<table name="ScienceApp_CommonLibrary" />
+		<attributes />
+	</entity>
+	<entity class="com.kisti.science.platform.app.model.impl.CommonModuleImpl" name="CommonModule">
+		<table name="ScienceApp_CommonModule" />
+		<attributes />
+	</entity>
+	<entity class="com.kisti.science.platform.app.model.impl.CommonPackageImpl" name="CommonPackage">
+		<table name="ScienceApp_CommonPackage" />
+		<attributes />
+	</entity>
+	<entity class="com.kisti.science.platform.app.model.impl.PortTypeImpl" name="PortType">
+		<table name="ScienceApp_PortType" />
+		<attributes />
+	</entity>
+	<entity class="com.kisti.science.platform.app.model.impl.PortTypeAnalyzerLinkImpl" name="PortTypeAnalyzerLink">
+		<table name="ScienceApp_PortTypeAnalyzerLink" />
+		<attributes />
+	</entity>
+	<entity class="com.kisti.science.platform.app.model.impl.PortTypeEditorLinkImpl" name="PortTypeEditorLink">
+		<table name="ScienceApp_PortTypeEditorLink" />
+		<attributes />
+	</entity>
+	<entity class="com.kisti.science.platform.app.model.impl.PortTypeInputdeckFormImpl" name="PortTypeInputdeckForm">
+		<table name="ScienceApp_PortTypeInputdeckForm" />
+		<attributes />
+	</entity>
+	<entity class="com.kisti.science.platform.app.model.impl.PortTypeInputdeckUserFormImpl" name="PortTypeInputdeckUserForm">
+		<table name="ScienceApp_PortTypeInputdeckUserForm" />
+		<attributes />
+	</entity>
+	<entity class="com.kisti.science.platform.app.model.impl.ScienceAppImpl" name="ScienceApp">
+		<table name="ScienceApp_ScienceApp" />
+		<attributes />
+	</entity>
+	<entity class="com.kisti.science.platform.app.model.impl.ScienceAppCategoryLinkImpl" name="ScienceAppCategoryLink">
+		<table name="ScienceApp_ScienceAppCategoryLink" />
+		<attributes />
+	</entity>
+	<entity class="com.kisti.science.platform.app.model.impl.ScienceAppInputPortsImpl" name="ScienceAppInputPorts">
+		<table name="ScienceApp_ScienceAppInputPorts" />
+		<attributes />
+	</entity>
+	<entity class="com.kisti.science.platform.app.model.impl.ScienceAppManagerImpl" name="ScienceAppManager">
+		<table name="ScienceApp_ScienceAppManager" />
+		<attributes />
+	</entity>
+	<entity class="com.kisti.science.platform.app.model.impl.ScienceAppOutputPortsImpl" name="ScienceAppOutputPorts">
+		<table name="ScienceApp_ScienceAppOutputPorts" />
+		<attributes />
+	</entity>
+</entity-mappings>

@@ -1,0 +1,776 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
+<service-builder package-path="org.kisti.edison.science">
+	<author>EDISON</author>
+	<namespace>EDAPP</namespace>
+
+	
+	<entity name="ScienceApp" local-service="true" uuid="true"  remote-service="true">
+
+		<!-- PK fields -->
+
+		<!-- Group instance -->
+        <column name="scienceAppId" type="long" primary="true"></column>
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+		
+		<!-- Information Fields -->
+		
+		<!--
+			Name of the science app. Limited to 32 characters. 
+		 -->
+        <column name="name" type="String" ></column>
+
+		<!--
+			Version of the science app. It should be composed in 3 sections distinguished by comma.
+			Values of each section are integers. 
+			 Major section number may be increased when the structure of the science app changed.
+			 Minor section number may be increased when functions of the science app changed or upgraded.
+			 Fix section number may be increased when errors of the science app fixed.
+			 All section numbers cannot be decreased.
+		 -->
+        <column name="version" type="String" ></column>
+        
+        <!--
+        	Short description for the science app. Limited to 128*4 bytes in UTF-8 encoding.  
+         -->
+        <column name="title" type="String" localized="true"></column>
+
+		<!--
+			Stored web content id which describes the science app
+		 -->        
+        <column name="descriptionId" type="long" ></column>
+        
+        <!--
+			Stored web content id which describes the version history of the science app.
+		 -->        
+        <column name="previousVersionId" type="long" ></column>
+
+		<!--
+			Stored icon id representing the science app. 
+		 -->        
+        <column name="iconId" type="long"></column>
+
+		<!--
+			Stored manual id of the science app. - update gplus
+		 -->        
+        <column name="manualId" type="String" localized="true"></column>
+        
+        <!--
+        	Binary file name to run the science app.
+        	Full path is generated automatically in ScienceAppLocalService. 
+         -->
+        <column name="exeFileName" type="String"></column>
+        
+        <!--
+        	Science app type. Should be one of the followings:
+        	SOLVER, CONVERTER, EDITOR, ANALYZER,
+        	DYNAMIC_SOLVER(for the future), DYNAMIC_CONVERTER(for the future)
+         -->
+        <column name="appType" type="String"></column>
+        
+        <!--
+        	Science app running type. Should be one of the following:
+        	SOLVER_SEQUENTIAL, SOLVER_PARALLEL, CONVERTER_SEQUENTIAL 
+         -->
+        <column name="runType" type="String"></column>
+        
+        <!--
+        	Main author id of the science app. 
+         -->
+        <column name="authorId" type="long"></column>
+        
+        <!--
+        	Science app stage. Should be one of the folowings:
+        		GENERAL_INFO_READY, INPUT_PORT_READY, OUTPUT_PORT_READY, EXECUTION_INFO_READY, TEST_OK, REQUEST_TO_SERVICE, IN_SERVICE, DEACTIVATED 
+         -->
+        <column name="stage" type="String"></column>
+        
+        <!--
+        	Status for Asset Publisher 
+         -->
+        <column name="status" type="int"></column>
+        
+        <!--
+        	The user id who modified the science app recently. 
+         -->
+        <column name="recentModifierId" type="long"></column>
+        
+        <!--
+        	Parallel module name when runType is SOLVER_PARALLEL 
+         -->
+        <column name="parallelModule" type="String"></column><!-- OpenMP, MPICH1, MPICH2... -->
+        <column name="maxCpus" type="int"></column>
+        <column name="defaultCpus" type="int"></column>
+        
+        <!--
+        	Status change date for Asset Publisher. 
+         -->
+		<column name="statusDate" type="Date" />
+		
+        <column name="openLevel" type="String"></column>
+        <column name="license" type="String"></column>
+        <column name="srcFileName" type="String"></column>
+        <column name= "targetLanguage" type="String"></column>
+        
+        <!--
+        	ADD gplus
+         -->
+        <column name= "developers" type="String" localized="true"></column>
+        <column name= "editorType" type="String"></column>
+        <column name= "swTest" type="boolean"></column>
+        <column name= "projectCategoryId" type="long"></column>
+        
+        
+        
+        <!-- Finders -->
+       <order by="desc">
+            <order-column name="createDate" order-by="desc"></order-column>
+            <order-column name="version" order-by="desc"></order-column>
+        </order>
+        <finder name="Name" return-type="Collection" unique="false">
+            <finder-column name="name"></finder-column>
+        </finder>
+        <finder name="AppType" return-type="Collection">
+            <finder-column name="appType"></finder-column>
+        </finder>
+        <finder name="AppRunType" return-type="Collection">
+            <finder-column name="appType"></finder-column>
+            <finder-column name="runType"></finder-column>
+        </finder>
+        <finder name="AuthorId" return-type="Collection">
+            <finder-column name="authorId"></finder-column>
+        </finder>
+        <finder name="Stage" return-type="Collection">
+            <finder-column name="stage"></finder-column>
+        </finder>
+        <finder name="Status" return-type="Collection">
+            <finder-column name="status"></finder-column>
+        </finder>
+        <finder name="Title" return-type="Collection">
+            <finder-column name="title" comparator="LIKE"></finder-column>
+        </finder>
+        <finder name="NameVersion" return-type="ScienceApp">
+            <finder-column name="name"></finder-column>
+            <finder-column name="version"></finder-column>
+        </finder>
+        <finder name="AuthorIdAppType" return-type="Collection">
+            <finder-column name="authorId"></finder-column>
+            <finder-column name="appType"></finder-column>
+        </finder>
+        <finder name="AuthorIdStatus" return-type="Collection">
+            <finder-column name="authorId"></finder-column>
+            <finder-column name="status"></finder-column>
+        </finder>
+        <finder name="OpenLevel" return-type="Collection">
+            <finder-column name="openLevel"></finder-column>
+        </finder>
+        
+        <finder name="NameWithTarget" return-type="Collection">
+            <finder-column name="name"></finder-column>
+            <finder-column name="targetLanguage"></finder-column>
+        </finder>
+        <finder name="AppTypeWithTarget" return-type="Collection">
+            <finder-column name="appType"></finder-column>
+            <finder-column name="targetLanguage"></finder-column>
+        </finder>
+        <finder name="AppRunTypeWithTarget" return-type="Collection">
+            <finder-column name="appType"></finder-column>
+            <finder-column name="runType"></finder-column>
+            <finder-column name="targetLanguage"></finder-column>
+        </finder>
+        <finder name="AuthorIdWithTarget" return-type="Collection">
+            <finder-column name="authorId"></finder-column>
+            <finder-column name="targetLanguage"></finder-column>
+        </finder>
+        <finder name="StageWithTarget" return-type="Collection">
+            <finder-column name="stage"></finder-column>
+            <finder-column name="targetLanguage"></finder-column>
+        </finder>
+        <finder name="StatusWithTarget" return-type="Collection">
+            <finder-column name="status"></finder-column>
+            <finder-column name="targetLanguage"></finder-column>
+        </finder>
+        <finder name="TitleWithTarget" return-type="Collection">
+            <finder-column name="title" comparator="LIKE"></finder-column>
+            <finder-column name="targetLanguage"></finder-column>
+        </finder>
+        <finder name="AuthorIdAppTypeWithTarget" return-type="Collection">
+            <finder-column name="authorId"></finder-column>
+            <finder-column name="appType"></finder-column>
+            <finder-column name="targetLanguage"></finder-column>
+        </finder>
+        <finder name="AuthorIdStatusWithTarget" return-type="Collection">
+            <finder-column name="authorId"></finder-column>
+            <finder-column name="status"></finder-column>
+            <finder-column name="targetLanguage"></finder-column>
+        </finder>
+        <finder name="OpenLevelWithTarget" return-type="Collection">
+            <finder-column name="openLevel"></finder-column>
+            <finder-column name="targetLanguage"></finder-column>
+        </finder>
+                
+        <!-- references for Asset -->
+        <finder name="NameTitleWithTarget" return-type="Collection">
+            <finder-column name="name" comparator="LIKE" arrayable-operator="OR"></finder-column>
+            <finder-column name="title" comparator="LIKE" arrayable-operator="OR"></finder-column>
+            <finder-column name="targetLanguage" comparator="=" arrayable-operator="AND"></finder-column>
+        </finder>
+        
+        
+        <reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
+		<reference package-path="com.liferay.portlet.asset" entity="AssetLink" />
+        
+	</entity>
+	
+	<entity name="ScienceAppInputPorts" local-service="true" remote-service="false">
+		<column name="scienceAppId" type="long" primary="true"></column>
+		 <column name="inputPorts" type="String"></column>
+        <!--
+        	{
+        		{#port-name} : {
+	        		name:{#port-name},
+	        		mandatory:{#true-or-false},
+	        		port-type-id:{#port-type-id},
+	        		default-editor-id:{#editor-id},
+	        		order:{#order} //deprecated
+        		},
+        		............
+        	} 
+         -->
+	</entity>
+	
+	<entity name="ScienceAppOutputPorts" local-service="true" remote-service="false">
+		<column name="scienceAppId" type="long" primary="true"></column>
+		<column name="outputPorts" type="String"></column>
+        <!--
+        	{
+        		{#port-name} : {
+	        		name:{#port-name},
+	        		mandatory:{#true-or-false},
+	        		file-name:{#file-name},
+        			port-type-id:{#port-type-id},
+        			default-analyzer-id:{#analyzer-id}
+        		},
+        		............
+        	} 
+         -->
+	</entity>
+	
+	<entity name="PortType" local-service="true" uuid="true"  remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="portTypeId" type="long" primary="true"></column>
+
+		<!-- Group instance -->
+
+		<!-- Audit fields -->
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="createDate" type="Date"></column>
+		
+		<!-- 
+			These are actually science app ids.
+			Default values are text viewer portlet.
+		 -->
+		<column name="defaultEditorId" type="long"></column><!-- FILE_INPUTDECK, FILE_CREATE, FILE_USER_SELECT, FILE_SERVER_SELECT, FILE_GROUP_EXT -->
+		<column name="defaultAnalyzerId" type="long"></column>
+		
+		<column name="name" type="String"></column>
+		<column name="dataType" type="String"></column><!-- DATA_TYPE_FILE, DATA_TYPE_FOLDER, DATA_TYPE_EXT, DATA_TYPE_STRING -->
+		
+		
+		
+		<column name="sampleFilePath" type="String"></column>
+		<column name= "targetLanguage" type="String"></column>
+        <column name="status" type="String"></column>
+
+        <finder name="Name" return-type="PortType" unique="true">
+            <finder-column name="name"></finder-column>
+        </finder>
+	</entity>
+	
+	<entity name="PortTypeInputdeckForm" local-service="true" remote-service="false">
+		<column name="portTypeId" type="long" primary="true"></column>
+		<column name="inputdeckForm" type="String"></column>
+		<!--
+			{
+				vector-form:{
+					brace-char:#{brace-char},
+					space: #{true-or-not},//deprecated
+					delimiter:#{delimiter-char},
+					sample:#{sample-string}
+				},
+				line-form:{
+					value-delimiter: #{delimiter-char},
+					space: #{true-or-not}, //deprecated
+					line-delimiter:#{delimiter-char},
+					comment-char:#{comment-char}
+				},
+				available-language-ids:[
+					language-id, ......
+				],
+				default-language-id:{#language-id},
+				variable-map:{
+					{#variable-name}: {
+						name:{#name},
+						name-text-map:{
+							map:{
+								{#language-id} : {#text},
+								......
+							}
+						},
+						type:{#variable-type} // string, numeric, vector, list, group, file(deprecated)
+						activate-condition-container:{
+							container : [
+								{
+									{#variable-name} : {
+										variable-name : {#variable-name},
+										list-item-value : {#list-item-value},
+										domain : {
+											lower-limit : {#min},
+											upper-limit : {#max},
+											operand : {#operand}
+										}
+									},
+								},
+								......
+							]
+						},
+						value:{#value},
+						value-domain:{
+							lower-limit: "value", //default: -
+							upper-limit: "value", //default: -
+							operand: "<>" 
+						},
+						unit : {#unit},
+						list-map:{
+							map : {
+								{#list-item-value} : {
+									value : {#list-item-value},
+									localized-text-map : {
+										map:{
+											{#language-id} : {#text},
+											......
+										}
+									},
+									activate-condition-container:{
+										container : [
+											{
+												{#variable-name} : {
+													variable-name : {#variable-name},
+													list-item-value : {#list-item-value},
+													domain : {
+														lower-limit : {#min},
+														upper-limit : {#max},
+														operand : {#operand}
+													}
+												},
+											},
+											......
+										]
+									}
+								},
+								.......
+							}
+						},
+						sweep-domain:{
+								lower-limit: "value", //default: -
+								upper-limit: "value", //default: -
+								operand: "<>" 
+						},
+						order:{#order}, //deprecated
+						description-map: {
+							map:{
+								{#language-id} : {#text},
+								......
+							}
+						},
+						dimension:{#vector-dimension} //default = 1
+					},
+					.....
+				}
+			} 
+		 -->
+	</entity>
+	
+	<entity name="PortTypeEditorLink" local-service="true" uuid="true" remote-service="true">
+		<!-- PK fields -->
+
+		<column name="portTypeEditorLinkId" type="long" primary="true"></column>
+		
+		<column name="companyId"  type="long"></column>
+
+		<!-- Foreign keys -->
+		<column name="portTypeId"  type="long"></column>
+		
+		<!-- Actually this is a science app id which type is EDITOR -->
+		<column name="editorId" type="long"></column>
+		
+        <finder name="PortTypeId"  return-type="Collection">
+            <finder-column name="portTypeId"></finder-column>
+        </finder>
+	</entity>
+
+	<entity name="PortTypeAnalyzerLink" local-service="true" uuid="true" remote-service="true">
+		<!-- PK fields -->
+
+		<column name="portTypeAnalyzerLinkId" type="long" primary="true"></column>
+		
+		<column name="companyId" type="long"></column>
+
+		<!-- Foreign keys -->
+		<column name="portTypeId" type="long"></column>
+		
+		<!-- Actually this is a science app id which type is ANALYZER -->
+		<column name="analyzerId" type="long"></column>
+		
+        <finder name="PortTypeId" return-type="Collection">
+        	<finder-column name="companyId"></finder-column>
+            <finder-column name="portTypeId"></finder-column>
+        </finder>
+	</entity>
+	
+	<entity name="CommonLib" local-service="true">
+		<!-- PK fields -->
+		<column name="libName" type="String" primary="true"></column>
+		<column name="libPath" type="String" primary="true"></column>
+
+		<!-- Audit fields -->
+		<column name="libraryVersion" type="String"></column>
+        <column name="cLibVer" type="String"></column>
+        <column name="sysArch" type="String"></column>
+        <column name="kernelVer" type="String"></column>
+        
+		<finder name="LibName" return-type="Collection">
+            <finder-column name="libName" comparator="LIKE"></finder-column>
+        </finder>
+	</entity>
+	
+	<entity name="RequiredLib" local-service="true">
+
+    	<!-- PK fields -->
+
+    	<column name="requiredLibId" type="long" primary="true"></column>
+
+    	<!-- Group instance -->
+
+    	<column name="groupId" type="long"></column>
+
+    	<!-- Audit fields -->
+
+    	<column name="companyId" type="long"></column>
+    	<column name="userId" type="long"></column>
+    	<column name="createDate" type="Date"></column>
+    	<column name="modifiedDate" type="Date"></column>
+    	
+		<column name="libraryName" type="String"></column>
+		<column name="libraryVersion" type="String"></column>
+		<column name="libraryType" type="String"></column><!-- rpm or zip, tar -->
+		<column name="librarySrcPath" type="String"></column>
+		<column name="installScript" type="String"></column>   	
+    </entity>
+    
+    <entity name="CommonModule" local-service="true">
+
+    	<!-- PK fields -->
+
+    	<column name="commonModuleId" type="long" primary="true"></column>
+
+    	<!-- Group instance -->
+
+    	<column name="groupId" type="long"></column>
+
+    	<!-- Audit fields -->
+
+    	<column name="companyId" type="long"></column>
+    	<column name="userId" type="long"></column>
+    	<column name="createDate" type="Date"></column>
+    	<column name="modifiedDate" type="Date"></column>
+    	
+    	<column name="moduleName" type="String"></column>
+    	<column name="moduleVersion" type="String"></column>
+    	
+    </entity>
+    
+    <entity name="RequiredModule" local-service="true">
+
+    	<!-- PK fields -->
+
+    	<column name="requiredModuleId" type="long" primary="true"></column>
+
+    	<!-- Group instance -->
+
+    	<column name="groupId" type="long"></column>
+
+    	<!-- Audit fields -->
+
+    	<column name="companyId" type="long"></column>
+    	<column name="userId" type="long"></column>
+    	<column name="createDate" type="Date"></column>
+    	<column name="modifiedDate" type="Date"></column>
+    	
+    	<column name="moduleName" type="String"></column>
+    	<column name="moduleVersion" type="String"></column>
+    </entity>
+    
+    <entity name="ScienceAppManager" local-service="true">
+    	<!-- PK fields -->
+
+    	<column name="scienceAppManagerId" type="long" primary="true"></column>
+
+    	<!-- Group instance -->
+
+    	<!-- Audit fields -->
+    	<column name="userId" type="long"></column>
+    	<column name="createDate" type="Date"></column>
+    	
+    	<column name="scienceAppId"  type="long"></column>
+    	<column name="managerId" type="long"></column>
+        <finder name="AppIdManagerId" return-type="Collection">
+            <finder-column name="scienceAppId"></finder-column>
+            <finder-column name="managerId"></finder-column>
+        </finder>
+        <finder name="AppId" return-type="Collection">
+            <finder-column name="scienceAppId"></finder-column>
+        </finder>
+        <finder name="ManagerId" return-type="Collection">
+            <finder-column name="managerId"></finder-column>
+        </finder>
+        <finder name="AppIdAndUserId" return-type="Collection">
+        	<finder-column name="scienceAppId"></finder-column>
+            <finder-column name="userId"></finder-column>
+        </finder>
+        <finder name="UserId" return-type="Collection">
+            <finder-column name="userId"></finder-column>
+        </finder>
+    </entity>
+    
+    <entity name="ScienceAppCategoryLink" local-service="true" uuid="true">
+    	<column name="scienceAppCategoryLinkId" type="long" primary="true"></column>
+
+    	<!-- Group instance -->
+
+    	<column name="groupId" type="long"></column>
+
+    	<!-- Audit fields -->
+
+    	<column name="companyId" type="long"></column>
+    	<column name="userId" type="long"></column>
+    	<column name="createDate" type="Date"></column>
+    	<column name="modifiedDate" type="Date"></column>
+    	
+    	<column name="categoryId" type="long"></column>
+    	<column name="scienceAppId" type="long"></column>
+        <column name="parentCategoryId" type="long"></column>
+        <finder name="CategoryId" return-type="Collection">
+            <finder-column name="categoryId"></finder-column>
+        </finder>
+        <finder name="AppId" return-type="Collection">
+            <finder-column name="scienceAppId"></finder-column>
+        </finder>
+        <finder name="ParentCategoryId" return-type="Collection">
+            <finder-column name="parentCategoryId"></finder-column>
+        </finder>
+    	
+    	
+    </entity>
+    
+   	<entity name="ScienceAppDescription" local-service="true" >
+		<!-- PK fields -->
+		<column name="descriptionId" type="long" primary="true"></column>
+						
+		<!-- Localized fields -->
+		<column name="content" type="String" localized="true"/>
+		
+		<!-- Fields -->
+		<column name="insertId" type="long"/>
+		<column name="insertDt" type="Date"/>
+		<column name="updateId" type="long"/>
+		<column name="updateDt" type="Date"/>
+
+		<!-- Order -->
+		<order by="asc">
+			<order-column name="insertDt" />
+		</order>
+
+	</entity>
+    
+	<entity name="DeveloperRequest" local-service="true" >
+
+		<!-- Primary Key -->
+		<column name="requestSeq" type="long" primary="true"></column>
+		<column name="userId" type="long" primary="true"></column>
+		<column name="groupId" type="long" primary="true"></column>
+
+		<!-- Other Entity PK -->
+		
+		<!-- Other -->
+		<column name="requestSort" type="String"></column>
+		<column name="requestDate" type="Date"></column>
+		<column name="requestNote" type="String"  localized="true"></column>
+		<column name="requestStatus" type="String"></column>
+		<column name="processDate" type="Date"></column>
+		<column name="processNote" type="String" localized="true"></column>
+		<column name="insertId" type="long"></column>
+		<column name="insertDate" type="Date"></column>
+		<column name="updateId" type="long"></column>
+		<column name="updateDate" type="Date"></column>
+
+		<!-- Order By -->
+		<order by="desc">
+			<order-column name="insertDate" />
+		</order>
+		
+		<!-- Finder -->
+		<finder name="UserId" return-type="Collection">
+        	<finder-column name="userId" />
+        	<finder-column name="groupId" />
+        </finder>
+		
+		<finder name="UserIdAndRequsetSeq" return-type="Collection">
+        	<finder-column name="userId" />
+        	<finder-column name="requestSeq" />
+        </finder>
+        
+		<finder name="UserIdAndGroupId" return-type="Collection">
+        	<finder-column name="userId" />
+        	<finder-column name="groupId" />
+        </finder>
+		
+	</entity>
+	
+	<entity name="ScienceAppFavorite" local-service="true" >
+		<!-- Primary Key -->
+		<column name="scienceAppId" type="long" primary="true"></column>
+		<column name="userId" type="long" primary="true"></column>
+		<column name="groupId" type="long"></column>
+
+		<!-- Other Entity PK -->
+		
+		<!-- Other -->
+		<!-- Order By -->
+		<!-- Finder -->
+		<finder name="selectFavoriteList" return-type="Collection">
+			<finder-column name="scienceAppId"></finder-column>
+		</finder>
+		<finder return-type="ScienceAppFavorite" name="selectFavoriteObj">
+			<finder-column name="scienceAppId"></finder-column>
+		</finder>
+	</entity>
+	
+	<entity name="DeveloperIp" local-service="true" >
+
+		<!-- Primary Key -->
+		<column name="ipSeq" type="long" primary="true"></column>
+		<column name="userId" type="long" primary="true"></column>
+		<column name="groupId" type="long" primary="true"></column>
+
+		<!-- Other Entity PK -->
+		
+		<!-- Other -->
+		<column name="ip1" type="String"></column>
+		<column name="ip2" type="String"></column>
+		<column name="ip3" type="String"></column>
+		<column name="ip4" type="String"></column>
+		<column name="insertId" type="long"></column>
+		<column name="insertDate" type="Date"></column>
+		<column name="updateId" type="long"></column>
+		<column name="updateDate" type="Date"></column>
+
+		<!-- Order By -->
+		<order by="asc">
+			<order-column name="ipSeq" />
+		</order>
+		
+		<!-- Finder -->
+		<finder name="UserId" return-type="Collection">
+        	<finder-column name="userId" />
+        </finder>
+        
+        <finder name="GroupId" return-type="Collection">
+        	<finder-column name="userId" />
+        	<finder-column name="groupId" />
+        </finder>
+		
+	</entity>
+	
+	<entity name="DeveloperInfo" local-service="true" >
+
+		<!-- Primary Key -->
+		<column name="userId" type="long" primary="true"></column>
+		<column name="groupId" type="long" primary="true"></column>
+
+		<!-- Other Entity PK -->
+		
+		<!-- Other -->
+		<column name="screenName" type="String"></column>
+		<column name="firstName" type="String"></column>
+		<column name="emailAddress" type="String"></column>
+		<column name="universityField" type="String"></column>
+		<column name="majorField" type="String"></column>
+		<column name="useStart" type="String"></column>
+		<column name="useEnd" type="String"></column>
+		<column name="developerSort" type="String"></column>
+		<column name="languageFortran" type="boolean"></column>
+		<column name="languageCpp" type="boolean"></column>
+		<column name="languagePython" type="boolean"></column>
+		<column name="languageJava" type="boolean"></column>
+		<column name="languageOther" type="boolean"></column>
+		<column name="languageOtherDescription" type="String"></column>
+		<column name="rem" type="String" localized="true"></column>
+		<column name="agreementYn" type="boolean"></column>
+		<column name="writtenOathLogical" type="String"></column>
+		<column name="writtenOathPhysical" type="String"></column>
+		<column name="detailIp" type="String"></column>
+		<column name="detailOs" type="String"></column>
+		<column name="detailCpu" type="String"></column>
+		<column name="detailStorate" type="String"></column>
+		<column name="detailLibrary" type="String"></column>
+		<column name="insertId" type="long"></column>
+		<column name="insertDate" type="Date"></column>
+		<column name="updateId" type="long"></column>
+		<column name="updateDate" type="Date"></column>
+		<column name="etc" type="String" localized="true"></column>
+		<column name="developerId" type="String"></column>
+		<column name="developerPassword" type="String"></column>
+
+		<!-- Order By -->
+		<!-- Finder -->
+        <finder name="UserId" return-type="Collection">
+        	<finder-column name="userId" />
+        </finder>
+		
+	</entity>
+	
+	<entity name="RequiredLibConfirm" local-service="true">
+
+    	<!-- PK fields -->
+
+    	<column name="requiredLibId" type="long" primary="true"></column>
+		<column name="scienceAppId" type="long" primary="true"></column>
+    	<!-- Audit fields -->
+
+    	<column name="companyId" type="long"></column>
+    	<column name="userId" type="long"></column>
+    	<column name="requiredDate" type="Date"></column>
+    	<column name="confirmDate" type="Date"></column>
+    	
+		<column name="libraryName" type="String"></column>
+		<column name="libraryVersion" type="String"></column>
+		<column name="requiredContent" type="String"></column>
+		<column name="requiredState" type="String"></column>
+		<column name="confirmContent" type="String"></column>
+		
+		<finder name="ScienceAppId" return-type="Collection">
+        	<finder-column name="scienceAppId" />
+        </finder>
+        
+    </entity>    
+</service-builder>

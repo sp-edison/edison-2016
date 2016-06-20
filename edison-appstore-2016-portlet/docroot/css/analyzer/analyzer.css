@@ -1,0 +1,49 @@
+.analyzerWrapper {
+    border: 3px solid #00c7e5;
+    overflow: hidden;
+    margin:0 auto;
+    width : 995px;
+}
+
+.analyzerFileList{
+	width : 220px;
+	height : 700px;
+	float: left;
+	border-right: 5px solid #dbdbdb ;
+	overflow-x:hidden; 
+ 	overflow-y:auto; 
+}
+
+.analyzerContent{
+	float: left;
+}
+.analyzerViewer{
+	width: 760px;
+	height: 700px;
+	position:relative;
+}
+
+/*좌측 jstree*/
+.mflefttree {
+	width:95%;
+	min-width: 200px;
+	min-height: 605px;
+	float: left;
+	padding: 5px 5px 5px 0px;
+}
+
+.mflefttree span {
+	font-size: 15px;
+	color: #666;
+}
+
+.mflefttree .bold {
+	font-size: 15px;
+	color: #000;
+	font-weight: 600;
+}
+
+.mflefttree ul, .mflefttree ol {
+    margin: 0 0 10px 5px;
+    padding: 0;
+}

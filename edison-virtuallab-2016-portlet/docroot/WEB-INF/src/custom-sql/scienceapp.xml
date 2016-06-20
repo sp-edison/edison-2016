@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom-sql>
+	<sql id="org.kisti.edison.service.persistence.VirtualLabClassScienceApp.getVirtualLabClassScienceAppList" >
+		<![CDATA[
+		SELECT
+			BB.scienceAppId,
+			BB.name,
+			BB.title,
+			BB.version,
+			BB.userId,
+			BB.universityNm,
+			B.scienceAppSeqNo
+		FROM
+			EDVIR_VirtualLabClasses_VirtualLabClassScienceApps A
+			INNER JOIN EDVIR_VirtualLabClassScienceApp B ON A.scienceAppSeqNo = B.scienceAppSeqNo
+			INNER JOIN 
+		  ( 
+		  SELECT 
+		      BB.scienceAppId,
+			  BB.name,
+			  BB.title,
+			  BB.version,
+			  BB.userId,
+		      BB.universityId universityId,
+		      fnGetCdNm(BB.universityId, #languageId#) AS universityNm 
+		  FROM 
+		    (SELECT
+		      E.version,  E.uuid_,  E.userId,  E.title,  E.targetLanguage,  E.statusDate,
+		      E.status,  E.stage,  E.srcFileName,  E.scienceAppId,  E.runType,  E.recentModifierId,
+		      E.projectCategoryId,  E.previousVersionId,  E.parallelModule,  E.openLevel,  E.name,
+		      E.modifiedDate,  E.manualId,  E.license,  E.iconId,  E.groupId,  E.exeFileName,
+		      E.developers,  E.descriptionId,  E.createDate,  E.companyId,  E.authorId,
+		      E.appType,  E.swTest,  F.data_ universityId
+		    FROM
+		      EDAPP_ScienceAppCategoryLink D
+		      INNER JOIN(
+		        SELECT 
+		          C.categoryId
+		        FROM
+		          AssetEntries_AssetCategories C
+		          INNER JOIN AssetCategory B ON C.categoryId = B.categoryId
+		        WHERE
+		          C.entryId = #entryId#
+		          AND
+		          B.vocabularyId = #vocabularyId#
+		          AND
+		          B.parentCategoryId != 0
+		      ) AS BC ON D.categoryId = BC.categoryId
+		      INNER JOIN EDAPP_ScienceApp E ON D.scienceAppId = E.scienceAppId
+		      INNER JOIN (SELECT F.data_, F.classPK FROM ExpandoValue F WHERE F.columnId = #columnId#) AS F ON E.userId = F.classPK
+		    WHERE
+		      E.status = 1901004
+		    <isNotEmpty property="universityId">
+		      AND  F.data_ = #universityId#
+		    </isNotEmpty>
+		    GROUP BY
+		      D.scienceAppId ) BB
+		    ) BB ON B.scienceAppId = BB.scienceAppId
+			<isNotEmpty property="classId">
+		WHERE
+			A.classId = #classId#
+			</isNotEmpty>
+		]]>
+	</sql>
+	
+	<sql id="org.kisti.edison.service.persistence.VirtualLabClassScienceApp.getScienceAppList" >
+		<![CDATA[
+			 SELECT 
+			  A.scienceAppId,
+			  A.name, 
+			  A.version, 
+			  A.userId,
+			  A.scienceAppTitleSearchField scienceAppTitleSearchField,
+			  (SELECT COUNT(*) FROM EDVIR_VirtualLabClasses_VirtualLabClassScienceApps B INNER JOIN EDVIR_VirtualLabClassScienceApp C ON B.scienceAppSeqNo = C.scienceAppSeqNo WHERE B.classId = #classId# AND C.scienceAppId = A.scienceAppId) AS scienceAppCheck 
+			FROM 
+			    ( 
+			    SELECT 
+			      ExtractValue(BB.title, 'root/Title[@language-id="ko_KR"]') AS scienceAppTitleSearchField,
+			      BB.*, 
+			      fnGetCdNm(BB.universityId, #languageId#) AS universityNm 
+			    FROM 
+			      (
+			      SELECT 
+			        E.version,  E.uuid_,  E.userId,  E.title,  E.targetLanguage,  E.statusDate, E.status,
+			        E.stage,  E.srcFileName,  E.scienceAppId,  E.runType,  E.recentModifierId, E.projectCategoryId,
+			        E.previousVersionId,  E.parallelModule,  E.openLevel,  E.name, E.modifiedDate,  E.manualId,  E.license,
+			        E.iconId,  E.groupId,  E.exeFileName, E.developers,  E.descriptionId,  E.createDate,  E.companyId,
+			        E.authorId, E.appType,  E.swTest,  F.data_ universityId 
+			      FROM 
+			        EDAPP_ScienceAppCategoryLink D 
+			        INNER JOIN( SELECT C.categoryId FROM AssetEntries_AssetCategories C INNER JOIN AssetCategory B ON C.categoryId = B.categoryId WHERE C.entryId = #entryId# AND B.vocabularyId = #vocabularyId# AND B.parentCategoryId != 0 ) AS BC ON D.categoryId = BC.categoryId 
+			        INNER JOIN EDAPP_ScienceApp E ON D.scienceAppId = E.scienceAppId INNER JOIN (SELECT F.data_, F.classPK FROM ExpandoValue F WHERE F.columnId = #columnId#) AS F ON E.userId = F.classPK 
+			      WHERE
+			        E.status = 1901004 
+			      GROUP BY
+			        D.scienceAppId ) BB ) A
+			        
+	          <isNotEmpty property="searchField">
+	          WHERE
+	         	 A.scienceAppTitleSearchField like '%@@searchField@@%'
+	          </isNotEmpty>
+			  ORDER BY A.scienceAppTitleSearchField ASC   
+  		]]>
+	</sql>
+	
+</custom-sql>

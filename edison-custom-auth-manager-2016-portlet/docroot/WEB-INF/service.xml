@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
+<service-builder package-path="org.kisti.edison.customauthmanager">
+	<author>EDISON</author>
+	<namespace>EDAUT</namespace>
+
+	<entity name="UserGroupRoleCustom" local-service="true" remote-service="true">
+		
+		<!-- PK fields -->
+
+		<column name="userId" type="long" primary="true" />
+		<column name="groupId" type="long" primary="true" />
+		<column name="roleId" type="long" primary="true" />
+		<column name="customId" type="long" primary="true" />
+		<column name="createDate" type="Date"/>
+		
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+		
+		<!-- Finder -->
+		<finder name="GroupIdRoleId" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="roleId" />
+		</finder>
+		
+		<finder name="UserIdGroupIdRoleId" return-type="Collection">
+			<finder-column name="userId" />
+			<finder-column name="groupId" />
+			<finder-column name="roleId" />
+		</finder>
+		
+		<finder name="GroupIdRoleIdCustomId" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="roleId" />
+			<finder-column name="customId" />
+		</finder>
+		
+		<finder name="UserIdGroupId" return-type="Collection">
+			<finder-column name="userId" />
+			<finder-column name="groupId" />
+		</finder>
+	</entity>
+</service-builder>

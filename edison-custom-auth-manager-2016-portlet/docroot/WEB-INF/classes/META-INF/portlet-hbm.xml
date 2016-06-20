@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-lazy="false" auto-import="false">
+	<import class="org.kisti.edison.customauthmanager.model.UserGroupRoleCustom" />
+	<class name="org.kisti.edison.customauthmanager.model.impl.UserGroupRoleCustomImpl" table="EDAUT_UserGroupRoleCustom">
+		<cache usage="read-write" />
+		<composite-id name="primaryKey" class="org.kisti.edison.customauthmanager.service.persistence.UserGroupRoleCustomPK">
+			<key-property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="roleId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="customId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		</composite-id>
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+	</class>
+</hibernate-mapping>

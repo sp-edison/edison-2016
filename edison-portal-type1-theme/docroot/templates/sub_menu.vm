@@ -1,0 +1,74 @@
+#foreach($nav_item in $nav_items)
+	#if ($htmlUtil.escape($nav_item.getName())=='HOME')
+	#else
+		#if ($nav_item.hasChildren())
+			#if ($dock_show)
+				#set ($smenu_dock_class = "smenu_dock_top")
+			#else
+				#set ($smenu_dock_class = "")
+			#end
+		
+		
+			<div id="$nav_item.getLayout().getAncestorPlid()_sub_menu" class="smenu $smenu_dock_class">
+				<div>
+					#foreach ($nav_child in $nav_item.getChildren())
+						#if ($nav_child.isSelected())
+							#set ($onChildClass = "menu-on")
+						#else
+							#set ($onChildClass = "")
+						#end
+						
+						#if ($stringUtil.toUpperCase($nav_child.getLayout().getType()) =="URL")
+							#set ($custom-menu-url=$nav_child.getLayout().getExpandoBridge().getAttribute($languageUtil.format($locale, "edison-menu-link-custom-field","")))
+							#if($custom-menu-url=="")
+								<a href="$nav_child.getURL()" class="$onChildClass" $nav_child.getTarget() target="_blank">
+									$nav_child.getName()
+								</a>
+							#else
+								<a href="$custom-menu-url" class="$onChildClass" $nav_child.getTarget() target="_blank">
+									$nav_child.getName()
+								</a>
+							#end
+						#else
+							<a href="$nav_child.getURL()" class="$onChildClass" $nav_child.getTarget()>
+								$nav_child.getName() 
+							</a>
+						#end
+						
+					#end
+				</div>
+			</div>
+			
+			
+		#end
+	#end
+#end
+#if (!$is_signed_in)
+	<div id="user-sub-menu" class="smenu $smenu_dock_class">
+		<div>
+			<a href="$termOfUseURL"> 
+				$languageUtil.format($locale, "Register-edison","") 
+			</a>
+		</div>
+	</div>
+#else
+	<div id="user-sub-menu" class="smenu $smenu_dock_class">
+		<div>
+			#foreach($site in $sortTool.sort($user.MySiteGroups,'groupId:asc'))
+				#if ($site.hasPublicLayouts())
+					#if ($site.groupId==$themeDisplay.getScopeGroupId())
+						#set ($siteOnClass = "menu-on")
+					#else
+						#set ($siteOnClass = "")
+					#end
+					<a href="/web${site.friendlyURL}" class="$siteOnClass">
+						$languageUtil.format($locale, $stringUtil.trim($stringUtil.toUpperCase($site.descriptiveName)),"")
+					</a>
+				#end
+			#end
+			#if(!$temp_user)
+				<a class="edison-use-dialog" data-controlpanelcategory="my" title="Manage My Account" href="$httpUtil.addParameter($my_account_url,"edison_myaccount","go")">My Account</a>
+			#end
+		</div>
+	</div>
+#end

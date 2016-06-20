@@ -1,0 +1,25 @@
+<nav>
+	<ul>
+		#set($menu_index = 0)
+		#foreach($nav_item in $nav_items)
+			#if ($htmlUtil.escape($nav_item.getName())=='HOME')
+			#else
+				#if ($nav_item.isSelected())
+					#set ($onClass = "menu-on")
+				#else
+					#set ($onClass = "")
+				#end
+				#if ($nav_item.hasChildren())
+					<li class="class-toggle-off-click" data-target-node="#$nav_item.getLayout().getAncestorPlid()_sub_menu" menu-index=$menu_index children-cnt=$nav_item.getChildren().size()>
+						<a href="javascript:;" class="$onClass">$htmlUtil.escape($nav_item.getName())</a>
+					</li>
+				#else
+					<li>
+						<a href="$nav_item.getURL()" class="$onClass">$htmlUtil.escape($nav_item.getName())</a>
+					</li>
+				#end
+			#end
+			#set($menu_index = $menu_index+1)
+		#end
+	</ul>
+</nav>

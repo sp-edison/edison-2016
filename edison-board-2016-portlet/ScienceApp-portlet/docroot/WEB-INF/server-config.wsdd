@@ -1,0 +1,183 @@
+<?xml version="1.0"?>
+
+<deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+	<globalConfiguration>
+		<parameter name="adminPassword" value="admin" />
+		<parameter name="attachments.implementation" value="org.apache.axis.attachments.AttachmentsImpl" />
+		<parameter name="sendXsiTypes" value="true" />
+		<parameter name="sendMultiRefs" value="true" />
+		<parameter name="sendXMLDeclaration" value="true" />
+		<parameter name="axis.sendMinimizedElements" value="true" />
+		<requestFlow>
+			<handler type="java:org.apache.axis.handlers.JWSHandler">
+				<parameter name="scope" value="session" />
+			</handler>
+			<handler type="java:org.apache.axis.handlers.JWSHandler">
+				<parameter name="scope" value="request" />
+				<parameter name="extension" value=".jwr" />
+			</handler>
+		</requestFlow>
+	</globalConfiguration>
+	<handler name="LocalResponder" type="java:org.apache.axis.transport.local.LocalResponder" />
+	<handler name="URLMapper" type="java:org.apache.axis.handlers.http.URLMapper" />
+	<handler name="Authenticate" type="java:org.apache.axis.handlers.SimpleAuthenticationHandler" />
+	<transport name="http">
+		<requestFlow>
+			<handler type="URLMapper" />
+			<handler type="java:org.apache.axis.handlers.http.HTTPAuthHandler" />
+		</requestFlow>
+	</transport>
+	<transport name="local">
+		<responseFlow>
+			<handler type="LocalResponder" />
+		</responseFlow>
+	</transport>
+	<service name="Plugin_ScienceApp_AppPortService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="com.kisti.science.platform.app.service.http.AppPortServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="AppPortServiceSoap" />
+		<parameter name="wsdlServiceElement" value="AppPortServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_ScienceApp_AppPortService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.app.platform.science.kisti.com" />
+	</service>
+	<service name="Plugin_ScienceApp_AppTestHistoryService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="com.kisti.science.platform.app.service.http.AppTestHistoryServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="AppTestHistoryServiceSoap" />
+		<parameter name="wsdlServiceElement" value="AppTestHistoryServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_ScienceApp_AppTestHistoryService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.app.platform.science.kisti.com" />
+	</service>
+	<service name="Plugin_ScienceApp_CommonLibService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="com.kisti.science.platform.app.service.http.CommonLibServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="CommonLibServiceSoap" />
+		<parameter name="wsdlServiceElement" value="CommonLibServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_ScienceApp_CommonLibService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.app.platform.science.kisti.com" />
+	</service>
+	<service name="Plugin_ScienceApp_CommonModuleService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="com.kisti.science.platform.app.service.http.CommonModuleServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="CommonModuleServiceSoap" />
+		<parameter name="wsdlServiceElement" value="CommonModuleServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_ScienceApp_CommonModuleService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.app.platform.science.kisti.com" />
+	</service>
+	<service name="Plugin_ScienceApp_InputdeckParameterService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="com.kisti.science.platform.app.service.http.InputdeckParameterServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="InputdeckParameterServiceSoap" />
+		<parameter name="wsdlServiceElement" value="InputdeckParameterServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_ScienceApp_InputdeckParameterService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.app.platform.science.kisti.com" />
+	</service>
+	<service name="Plugin_ScienceApp_PortAnalyzerLinkService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="com.kisti.science.platform.app.service.http.PortAnalyzerLinkServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="PortAnalyzerLinkServiceSoap" />
+		<parameter name="wsdlServiceElement" value="PortAnalyzerLinkServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_ScienceApp_PortAnalyzerLinkService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.app.platform.science.kisti.com" />
+	</service>
+	<service name="Plugin_ScienceApp_PortEditorLinkService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="com.kisti.science.platform.app.service.http.PortEditorLinkServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="PortEditorLinkServiceSoap" />
+		<parameter name="wsdlServiceElement" value="PortEditorLinkServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_ScienceApp_PortEditorLinkService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.app.platform.science.kisti.com" />
+	</service>
+	<service name="Plugin_ScienceApp_PortTypeAnalyzerLinkService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="com.kisti.science.platform.app.service.http.PortTypeAnalyzerLinkServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="PortTypeAnalyzerLinkServiceSoap" />
+		<parameter name="wsdlServiceElement" value="PortTypeAnalyzerLinkServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_ScienceApp_PortTypeAnalyzerLinkService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.app.platform.science.kisti.com" />
+	</service>
+	<service name="Plugin_ScienceApp_PortTypeEditorLinkService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="com.kisti.science.platform.app.service.http.PortTypeEditorLinkServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="PortTypeEditorLinkServiceSoap" />
+		<parameter name="wsdlServiceElement" value="PortTypeEditorLinkServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_ScienceApp_PortTypeEditorLinkService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.app.platform.science.kisti.com" />
+	</service>
+	<service name="Plugin_ScienceApp_PortTypeService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="com.kisti.science.platform.app.service.http.PortTypeServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="PortTypeServiceSoap" />
+		<parameter name="wsdlServiceElement" value="PortTypeServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_ScienceApp_PortTypeService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.app.platform.science.kisti.com" />
+	</service>
+	<service name="Plugin_ScienceApp_RequiredLibService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="com.kisti.science.platform.app.service.http.RequiredLibServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="RequiredLibServiceSoap" />
+		<parameter name="wsdlServiceElement" value="RequiredLibServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_ScienceApp_RequiredLibService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.app.platform.science.kisti.com" />
+	</service>
+	<service name="Plugin_ScienceApp_RequiredModuleService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="com.kisti.science.platform.app.service.http.RequiredModuleServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="RequiredModuleServiceSoap" />
+		<parameter name="wsdlServiceElement" value="RequiredModuleServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_ScienceApp_RequiredModuleService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.app.platform.science.kisti.com" />
+	</service>
+	<service name="Plugin_ScienceApp_ScienceAppManagerService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="com.kisti.science.platform.app.service.http.ScienceAppManagerServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="ScienceAppManagerServiceSoap" />
+		<parameter name="wsdlServiceElement" value="ScienceAppManagerServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_ScienceApp_ScienceAppManagerService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.app.platform.science.kisti.com" />
+	</service>
+	<service name="Plugin_ScienceApp_ScienceAppService" provider="java:RPC" style="rpc" use="encoded">
+		<arrayMapping xmlns:ns="urn:http.service.app.platform.science.kisti.com" xmlns:cmp-ns="http://model.app.platform.science.kisti.com" qname="ns:ArrayOf_tns2_ScienceAppSoap" type="java:com.kisti.science.platform.app.model.ScienceAppSoap[]" innerType="cmp-ns:ScienceAppSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
+		<typeMapping xmlns:ns="http://model.app.platform.science.kisti.com" qname="ns:ScienceAppSoap" type="java:com.kisti.science.platform.app.model.ScienceAppSoap" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
+		<operation xmlns:operNS="urn:http.service.app.platform.science.kisti.com" xmlns:rtns="urn:http.service.app.platform.science.kisti.com" xmlns:tns2="http://model.app.platform.science.kisti.com" name="getScienceAppByAppType" qname="operNS:getScienceAppByAppType" returnQName="getScienceAppByAppTypeReturn" returnType="rtns:ArrayOf_tns2_ScienceAppSoap" returnItemType="tns2:ScienceAppSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="authorId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="appType" type="tns:string"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.app.platform.science.kisti.com" xmlns:rtns="urn:http.service.app.platform.science.kisti.com" xmlns:tns2="http://model.app.platform.science.kisti.com" name="getScienceAppByAppType" qname="operNS:getScienceAppByAppType" returnQName="getScienceAppByAppTypeReturn" returnType="rtns:ArrayOf_tns2_ScienceAppSoap" returnItemType="tns2:ScienceAppSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="authorId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="appType" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="start" type="tns:int"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="end" type="tns:int"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.app.platform.science.kisti.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getScienceAppsCount" qname="operNS:getScienceAppsCount" returnQName="getScienceAppsCountReturn" returnType="rtns:int" soapAction=""> </operation>
+		<operation xmlns:operNS="urn:http.service.app.platform.science.kisti.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getScienceAppsCount" qname="operNS:getScienceAppsCount" returnQName="getScienceAppsCountReturn" returnType="rtns:int" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="authorId" type="tns:long"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.app.platform.science.kisti.com" xmlns:rtns="urn:http.service.app.platform.science.kisti.com" xmlns:tns2="http://model.app.platform.science.kisti.com" name="getScienceApps" qname="operNS:getScienceApps" returnQName="getScienceAppsReturn" returnType="rtns:ArrayOf_tns2_ScienceAppSoap" returnItemType="tns2:ScienceAppSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="authorId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="start" type="tns:int"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="end" type="tns:int"></parameter>
+		</operation>
+		<parameter name="allowedMethods" value="getScienceAppByAppType getScienceApps getScienceAppsCount" />
+		<parameter name="className" value="com.kisti.science.platform.app.service.http.ScienceAppServiceSoap" />
+		<parameter name="schemaUnqualified" value="http://model.app.platform.science.kisti.com,urn:http.service.app.platform.science.kisti.com" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="ScienceAppServiceSoap" />
+		<parameter name="wsdlServiceElement" value="ScienceAppServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_ScienceApp_ScienceAppService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.app.platform.science.kisti.com" />
+	</service>
+</deployment>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+#parse ($init)
+
+<html class="$root_css_class" dir="#language ("lang.dir")" lang="$w3c_language_id">
+
+<head>
+	<title>$theme.getSetting("content-title")</title>
+
+	<meta content="initial-scale=1.0, width=device-width, maximum-scale=1.0, user-scalable=no" name="viewport" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	
+	
+	$theme.include($top_head_include)
+	<script type="text/javascript">
+		var agent = navigator.userAgent.toLowerCase();
+		if(agent.indexOf("msie")!=-1){
+			var trident = navigator.userAgent.match(/Trident\/(\d.\d)/i);
+			var tridentVer = trident[1];
+			if(tridentVer!="7.0"&&tridentVer!="6.0"){
+				alert("$browserErrorMsg");
+			}else{
+				var ieVer = getInternetExplorerVersion()
+				if(ieVer<11)
+					alert("$browserErrorCompMsg"+ieVer);
+			}
+		}
+		
+		function getInternetExplorerVersion() {    
+			var rv = -1; // Return value assumes failure.    
+			if (navigator.appName == 'Microsoft Internet Explorer') {        
+				var ua = navigator.userAgent;        
+				var re = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");        
+				if (re.exec(ua) != null)            
+					rv = parseFloat(RegExp.$1);    
+				}
+			return rv; 
+		} 
+	</script>
+</head>
+<body class="$css_class">
+	#if ($dock_show)
+		#dockbar()
+	#end
+	
+	$theme.include($body_top_include)
+	<div id="wrap">
+		<header id="banner">
+			<div class="mainmenu" id="mainmenu">
+				<div class="logo">
+					<a href="$company_url" title="#language("go-to") $theme.getSetting("content-title")">
+						<img alt="$logo_description" height="$site_logo_height" src="$site_logo" width="$site_logo_width" />
+					</a>
+				</div>
+				#parse ("$full_templates_path/top_link.vm")
+			
+				#parse ("$full_templates_path/edison_menu.vm")
+			</div>
+				#parse ("$full_templates_path/sub_menu.vm")
+		</header>
+		
+		#if($show_breadcrumbs)
+			<nav id="breadcrumbs">
+				<div class="subvisualwrap">
+					<div class="subnaviwrap">
+						#breadcrumbs()
+					</div>
+				</div>
+			</nav>
+		#end
+		<div class="$content_class">
+			#if ($selectable)
+				$theme.include($content_include)
+			#else
+				$portletDisplay.recycle()
+	
+				$portletDisplay.setTitle($the_title)
+	
+				$theme.wrapPortlet("portlet.vm", $content_include)
+			#end
+			
+		</div>
+		
+		<footer class="footerwrap">
+			#parse ("$full_templates_path/footer.vm")
+		</footer>
+	</div>
+
+$theme.include($body_bottom_include)
+
+$theme.include($bottom_include)
+
+</body>
+
+</html>

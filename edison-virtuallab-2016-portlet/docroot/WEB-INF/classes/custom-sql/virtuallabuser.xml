@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<custom-sql>
+
+	<sql id="org.kisti.edison.service.persistence.virtualLabUser.getListVirtualClassStudentList" >
+		<![CDATA[
+			SELECT
+				B.*,
+				(SELECT COUNT(*)
+					FROM   EDVIR_SurveyQuestions_SurveyAnswers C, EDVIR_SurveyAnswer D
+					WHERE  C.questionSeqNo = #questionSeqNo# AND C.SurveyAnswerId = D.SurveyAnswerId AND D.userId = B.userId AND D.classId = #classId# AND D.virtualLabId = #virtualLabId#)
+				AS surveyCheck,
+				(SELECT IFNULL(CONCAT(COUNT(*), '(', SUM(if(AA.jobStatus = 1701011, 1, 0)), '/', SUM(if(AA.jobStatus = 1701012, 1, 0)), ')'), '0(0/0)')
+					FROM   EDSIM_SimulationJob AA INNER JOIN EDSIM_Simulation BB ON AA.simulationUuid = BB.simulationUuid
+					WHERE  BB.userId = B.userId AND AA.jobPhase = 1301003 AND AA.groupId = #groupId# AND AA.testYn != "Y")
+				AS executeCount
+			FROM
+				EDVIR_VirtualLabClasses_VirtualLabUsers A
+				INNER JOIN EDVIR_VirtualLabUser B ON A.virtualLabUserId = B.virtualLabUserId
+				LEFT JOIN User_ C ON B.userId = C.userId
+			WHERE
+				1=1
+			<isNotEmpty property="classId">
+				AND
+				A.classId = #classId#
+			</isNotEmpty>
+			<isNotEmpty property="search_parameter">
+				AND
+				(
+				C.screenName like '%@@search_parameter@@%'
+				OR
+				C.firstName like '%@@search_parameter@@%'
+				)
+			</isNotEmpty>
+			ORDER BY
+				B.userStudentNumber DESC
+		]]>
+	</sql>
+
+	<sql id="org.kisti.edison.service.persistence.virtualLabUser.getCountVirtualClassRegisterUserList" >
+		<![CDATA[
+			SELECT
+				COUNT(case when B.requestSort = "TEMP" then 1 end) tempUserCount,
+				COUNT(case when B.requestSort = "CONFIRM" then 1 end) userCount
+			FROM
+				EDVIR_VirtualLabClasses_VirtualLabUsers A
+			INNER JOIN
+				EDVIR_VirtualLabUser B ON A.virtualLabUserId = B.virtualLabUserId
+			<isNotEmpty property="classId">
+			WHERE
+				classId = #classId#
+			</isNotEmpty>
+		]]>
+	</sql>
+
+	<sql id="org.kisti.edison.service.persistence.virtualLabUser.getVirtualLabUserInfo" >
+		<![CDATA[
+			SELECT
+				A.*
+			FROM
+				EDVIR_VirtualLabUser A
+				INNER JOIN EDVIR_VirtualLabClasses_VirtualLabUsers B ON A.virtualLabUserId = B.virtualLabUserId
+			WHERE
+				1=1
+				<isNotEmpty property="userId">
+				AND
+				A.userId = #userId#
+				</isNotEmpty>
+				<isNotEmpty property="classId">
+				AND
+				B.classId = #classId#
+				</isNotEmpty>
+		]]>
+	</sql>
+
+	<sql id="org.kisti.edison.service.persistence.virtualLabUser.getStudentCount" >
+		<![CDATA[
+			SELECT
+				COUNT(*) AS studentCount
+			FROM
+				EDVIR_VirtualLab A
+				INNER JOIN EDVIR_VirtualLabs_VirtualLabClasses B ON A.virtualLabId = B.virtualLabId
+				INNER JOIN EDVIR_VirtualLabClass C ON B.classId = C.classId
+				INNER JOIN EDVIR_VirtualLabClasses_VirtualLabUsers D ON C.classId = D.classId
+				INNER JOIN EDVIR_VirtualLabUser E ON E.virtualLabUserId = D.virtualLabUserId
+			WHERE
+				(
+				requestSort = 'CONFIRM'
+				OR requestSort = 'TEMP'
+				)
+				<isNotEmpty property="virtualLabId">
+				AND
+				A.virtualLabId = #virtualLabId#
+				</isNotEmpty>
+				<isNotEmpty property="classId">
+				AND
+				C.classId = #classId#
+				</isNotEmpty>
+		]]>
+	</sql>
+	
+	<sql id="org.kisti.edison.service.persistence.virtualLabUser.getUserGroupClassUser" >
+		<![CDATA[
+			SELECT 
+				labUser.virtualLabUserId,
+				lab.groupId,
+				class.classId,
+				labUser.userId
+			FROM 
+				EDVIR_VirtualLabUser labUser
+				INNER JOIN EDVIR_VirtualLabClasses_VirtualLabUsers classLabUserMapping ON labUser.virtualLabUserId = classLabUserMapping.virtualLabUserId
+				INNER JOIN EDVIR_VirtualLabClass class ON classLabUserMapping.classId = class.classId
+				INNER JOIN EDVIR_VirtualLabs_VirtualLabClasses labClassMapping ON class.classId = labClassMapping.classId
+				INNER JOIN EDVIR_VirtualLab lab ON labClassMapping.virtualLabId = lab.virtualLabId
+			WHERE labUser.userId = #userId# AND lab.groupId = #groupId#
+		]]>
+	</sql>
+	
+</custom-sql>

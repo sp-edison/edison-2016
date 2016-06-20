@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
+<service-builder package-path="org.kisti.edison.virtuallaboratory">
+	<author>EDISON</author>
+	<namespace>EDVIR</namespace>
+	
+	<entity name="VirtualLab" local-service="true" >
+		
+		<!-- Primary Key -->
+		<column name="virtualLabId" type="long" primary="true"></column>
+		
+		<!-- Mapping Table -->
+		<column name="virtualLabClasses" type="Collection" entity="VirtualLabClass" mapping-table="VirtualLabs_VirtualLabClasses"/>
+		<column name="surveys" type="Collection" entity="Survey" mapping-table="VirtualLabs_Surveys"/>
+		
+		<!-- Other -->
+		<column name="groupId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="virtualLabPersonName" type="String" localized="true"></column>
+		<column name="virtualLabRequestDt" type="Date"></column>
+		<column name="virtualLabConfirmDt" type="Date"></column>
+		<column name="virtualLabConfirmDescription" type="String"></column>
+		<column name="virtualLabStatus" type="String"></column>
+		<column name="virtualLabTitle" type="String" localized="true"></column>
+		<column name="virtualLabDescription" type="String" localized="true"></column>
+		<column name="virtualLabUseYn" type="String"></column>
+		<column name="virtualLabUniversityField" type="String"></column>
+		
+		<!-- Order By -->
+		<order by="desc">
+			<order-column name="virtualLabConfirmDt"></order-column>
+		</order>
+	</entity>
+	
+	<entity name="VirtualLabClass" local-service="true">
+		
+		<!-- Primary Key -->
+		<column name="classId" type="long" primary="true"></column>
+		
+		<!-- Mapping Table -->
+		<column name="virtualLabs" type="Collection" entity="VirtualLab" mapping-table="VirtualLabs_VirtualLabClasses"/>
+		<column name="virtualLabClassScienceApps" type="Collection" entity="VirtualLabClassScienceApp" mapping-table="VirtualLabClasses_VirtualLabClassScienceApps"/>
+		<column name="virtualLabUsers" type="Collection" entity="VirtualLabUser" mapping-table="VirtualLabClasses_VirtualLabUsers"/>
+
+		<!-- Other -->
+		<column name="classTitle" type="String" localized="true"></column>
+		<column name="classStartDt" type="String"></column>
+		<column name="classEndDt" type="String"></column>
+		<column name="classUseYn" type="String"></column>
+		<column name="classDescription" type="String" localized="true"></column>
+		<column name="classPersonnel" type="int"></column>
+		<column name="classCreateDt" type="Date"></column>
+		<column name="classUpdateDt" type="Date"></column>
+		<column name="virtualClassCd" type="String"></column>
+
+		<!-- Order By -->
+		<order by="desc">
+			<order-column name="classCreateDt"></order-column>
+		</order>
+		
+		<!-- Finder -->
+	</entity>
+	
+	<entity name="VirtualLabUser" local-service="true" >
+
+		<!-- Primary Key -->
+		<column name="virtualLabUserId" type="long" primary="true"></column>
+		
+		<!-- Mapping Table -->
+		<column name="virtualLabClasses" type="Collection" entity="VirtualLabClass" mapping-table="VirtualLabClasses_VirtualLabUsers"/>
+		
+		<!-- Other Entity PK -->
+		
+		<!-- Other -->
+		<column name="userId" type="long" ></column>
+		<column name="userStudentNumber" type="String"></column>
+		<column name="authRole" type="String"></column>
+		<column name="userUseYn" type="String"></column>
+		<column name="requestSort" type="String"></column>
+		<column name="processNote" type="String"></column>
+		<column name="processDate" type="Date"></column>
+		<column name="createDt" type="Date"></column>
+		<column name="updateDt" type="Date"></column>
+		
+		<!-- Order By -->
+		<order by="desc">
+			<order-column name="createDt"></order-column>
+		</order>
+		
+	</entity>
+	
+	<entity name="VirtualLabUserTemp" local-service="true" >
+
+		<!-- Primary Key -->
+		<column name="seqNo" type="long" primary="true"></column>
+		<column name="virtualLabId" type="long" primary="true"></column>
+		<column name="classId" type="long" primary="true"></column>
+		
+		<!-- Other Entity PK -->
+		
+		<!-- Other -->
+		<column name="userStudentNumber" type="String"></column>
+		<column name="userName" type="String"></column>
+		<column name="status" type="boolean"></column>
+
+		<!-- Order By -->
+		<order by="desc">
+			<order-column name="userName"></order-column>
+		</order>
+		
+		<finder name="getListTempUser" return-type="Collection">
+			<finder-column name="virtualLabId" />
+			<finder-column name="classId" />
+		</finder>
+	</entity>
+		
+	<!-- VirtualLabClassSolver 변경 VirtualLabClassScienceApp -->
+	<entity name="VirtualLabClassScienceApp" local-service="true" >
+
+		<!-- Primary Key -->
+		<column name="scienceAppSeqNo" type="long" primary="true"></column>
+
+		<!-- Mapping Table -->
+		<column name="virtualLabClasses" type="Collection" entity="VirtualLabClass" mapping-table="VirtualLabClasses_VirtualLabClassScienceApps"/>
+
+		<!-- Other -->
+		<column name="scienceAppId" type="long"></column>
+		<column name="createDate" type="Date"></column>
+		<!-- Order By -->
+		<!-- Finder -->
+		
+	</entity>
+		
+	<entity name="Survey" local-service="true" >
+
+		<!-- Primary Key -->
+		<column name="surveySeqNo" type="long" primary="true"></column>
+		<!-- Other Entity PK -->
+		
+		<!-- Mapping Table -->
+		<column name="virtualLabs" type="Collection" entity="VirtualLab" mapping-table="VirtualLabs_Surveys"/>
+		<column name="surveyQuestions" type="Collection" entity="SurveyQuestion" mapping-table="Surveys_SurveyQuestions"/>
+		
+		<!-- Other -->
+		<column name="surveyUseYn" type="String"></column>
+		<column name="surveyTitle" type="String" localized="true"></column>
+		<column name="surveyStartDate" type="String"></column>
+		<column name="surveyEndDate" type="String"></column>
+		<column name="surveyStatus" type="String"></column>
+		<column name="surveyCreateDate" type="Date"></column>
+
+		<!-- Order By -->
+		<order by="desc">
+			<order-column name="surveyCreateDate"></order-column>
+		</order>
+		
+		<!-- Finder -->
+		
+	</entity>
+	
+	<entity name="SurveyQuestion" local-service="true" >
+
+		<!-- Primary Key -->
+		<column name="questionSeqNo" type="long" primary="true"></column>
+
+		<!-- Mapping Table -->
+		<column name="surveys" type="Collection" entity="Survey" mapping-table="Surveys_SurveyQuestions"/>
+		<column name="surveyAnswers" type="Collection" entity="SurveyAnswer" mapping-table="SurveyQuestions_SurveyAnswers"/>
+		
+		<!-- Other -->
+		<column name="questionDivCd" type="String"></column>
+		<column name="questionTitle" type="String" localized="true"></column>
+		<column name="question1" type="String" localized="true"></column>
+		<column name="question2" type="String" localized="true"></column>
+		<column name="question3" type="String" localized="true"></column>
+		<column name="question4" type="String" localized="true"></column>
+		<column name="question5" type="String" localized="true"></column>
+		<column name="question6" type="String" localized="true"></column>
+		<column name="question7" type="String" localized="true"></column>
+		<column name="question8" type="String" localized="true"></column>
+		<column name="question9" type="String" localized="true"></column>
+		<column name="question10" type="String" localized="true"></column>
+
+		<!-- Order By -->
+		<order by="desc">
+			<order-column name="questionSeqNo"></order-column>
+		</order>
+		
+		<!-- Finder -->
+		
+	</entity>
+	
+	<entity name="SurveyAnswer" local-service="true" >
+		
+		<!-- Primary Key -->
+		<column name="SurveyAnswerId" type="long" primary="true"></column>
+		
+		<!-- Mapping Table -->
+		<column name="surveyQuestions" type="Collection" entity="SurveyQuestion" mapping-table="SurveyQuestions_SurveyAnswers"/>
+		
+		<!-- Other -->
+		<column name="userId" type="long"></column>
+		<column name="virtualLabId" type="long"></column>
+		<column name="classId" type="long"></column>
+		<column name="subjectivityAnswer" type="String" localized="true"></column>
+		<column name="objecttivityAnswer" type="String"></column>
+		<column name="answerDate" type="Date"></column>
+		
+		<!-- Order By -->
+		<!-- Finder -->
+		
+	</entity>
+	
+</service-builder>

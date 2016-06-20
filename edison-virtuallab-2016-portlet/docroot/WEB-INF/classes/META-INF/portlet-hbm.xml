@@ -1,0 +1,121 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-lazy="false" auto-import="false">
+	<import class="org.kisti.edison.virtuallaboratory.model.Survey" />
+	<import class="org.kisti.edison.virtuallaboratory.model.SurveyAnswer" />
+	<import class="org.kisti.edison.virtuallaboratory.model.SurveyQuestion" />
+	<import class="org.kisti.edison.virtuallaboratory.model.VirtualLab" />
+	<import class="org.kisti.edison.virtuallaboratory.model.VirtualLabClass" />
+	<import class="org.kisti.edison.virtuallaboratory.model.VirtualLabClassScienceApp" />
+	<import class="org.kisti.edison.virtuallaboratory.model.VirtualLabUser" />
+	<import class="org.kisti.edison.virtuallaboratory.model.VirtualLabUserTemp" />
+	<class name="org.kisti.edison.virtuallaboratory.model.impl.SurveyImpl" table="EDVIR_Survey">
+		<cache usage="read-write" />
+		<id name="surveySeqNo" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="surveyUseYn" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="surveyTitle" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="surveyStartDate" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="surveyEndDate" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="surveyStatus" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="surveyCreateDate" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class name="org.kisti.edison.virtuallaboratory.model.impl.SurveyAnswerImpl" table="EDVIR_SurveyAnswer">
+		<cache usage="read-write" />
+		<id name="SurveyAnswerId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="virtualLabId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="classId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="subjectivityAnswer" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="objecttivityAnswer" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="answerDate" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class name="org.kisti.edison.virtuallaboratory.model.impl.SurveyQuestionImpl" table="EDVIR_SurveyQuestion">
+		<cache usage="read-write" />
+		<id name="questionSeqNo" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="questionDivCd" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="questionTitle" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="question1" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="question2" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="question3" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="question4" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="question5" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="question6" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="question7" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="question8" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="question9" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="question10" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="org.kisti.edison.virtuallaboratory.model.impl.VirtualLabImpl" table="EDVIR_VirtualLab">
+		<cache usage="read-write" />
+		<id name="virtualLabId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="virtualLabPersonName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="virtualLabRequestDt" type="org.hibernate.type.TimestampType" />
+		<property name="virtualLabConfirmDt" type="org.hibernate.type.TimestampType" />
+		<property name="virtualLabConfirmDescription" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="virtualLabStatus" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="virtualLabTitle" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="virtualLabDescription" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="virtualLabUseYn" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="virtualLabUniversityField" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="org.kisti.edison.virtuallaboratory.model.impl.VirtualLabClassImpl" table="EDVIR_VirtualLabClass">
+		<cache usage="read-write" />
+		<id name="classId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="classTitle" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="classStartDt" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="classEndDt" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="classUseYn" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="classDescription" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="classPersonnel" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="classCreateDt" type="org.hibernate.type.TimestampType" />
+		<property name="classUpdateDt" type="org.hibernate.type.TimestampType" />
+		<property name="virtualClassCd" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="org.kisti.edison.virtuallaboratory.model.impl.VirtualLabClassScienceAppImpl" table="EDVIR_VirtualLabClassScienceApp">
+		<cache usage="read-write" />
+		<id name="scienceAppSeqNo" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="scienceAppId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class name="org.kisti.edison.virtuallaboratory.model.impl.VirtualLabUserImpl" table="EDVIR_VirtualLabUser">
+		<cache usage="read-write" />
+		<id name="virtualLabUserId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userStudentNumber" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="authRole" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="userUseYn" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="requestSort" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="processNote" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="processDate" type="org.hibernate.type.TimestampType" />
+		<property name="createDt" type="org.hibernate.type.TimestampType" />
+		<property name="updateDt" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class name="org.kisti.edison.virtuallaboratory.model.impl.VirtualLabUserTempImpl" table="EDVIR_VirtualLabUserTemp">
+		<cache usage="read-write" />
+		<composite-id name="primaryKey" class="org.kisti.edison.virtuallaboratory.service.persistence.VirtualLabUserTempPK">
+			<key-property name="seqNo" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="virtualLabId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="classId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		</composite-id>
+		<property name="userStudentNumber" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="status" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+	</class>
+</hibernate-mapping>

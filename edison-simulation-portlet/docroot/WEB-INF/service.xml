@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
+<service-builder package-path="org.kisti.edison.bestsimulation" auto-namespace-tables="true">
+	<author>EDISON</author>
+	<namespace>EDSIM</namespace>
+
+    <entity name="Simulation" local-service="true" remote-service="true" cache-enabled="false" tx-manager="true" >
+		<!-- PK -->
+        <column name="simulationUuid" type="String" primary="true" />
+        <column name="groupId" type="long" primary="true" />
+
+		<!-- GENERAL -->
+        <column name="userId" type="long"/>
+        <column name="simulationTitle" type="String" localized="true"/>
+        <column name="simulationDescription" type="String" localized="true"/>
+        <column name="scienceAppId" type="String"/> <!-- solverId 수정 scienceAppId -->
+        <column name="scienceAppName" type="String" localized="true"/> <!-- solverName 수정 scienceAppName -->
+        <column name="simulationCreateDt" type="Date"/>
+        <column name="cluster" type="String"/>
+        <column name="testYn" type="String"/>
+
+		<!-- ORDER -->
+		<order by="desc">
+			<order-column name="simulationCreateDt" />
+		</order>
+    </entity>
+    
+	<entity name="SimulationJob" local-service="true" remote-service="true" cache-enabled="false" tx-manager="true">
+		<!-- PK fields -->
+		<column name="jobSeqNo" type="long" primary="true"></column>
+		<column name="simulationUuid" type="String" primary="true"></column>
+		<column name="groupId" type="long" primary="true"></column>
+		
+		<!-- Fields -->
+		<column name="jobUuid" type="String"/>
+		<column name="jobStatus" type="long"/>
+		<column name="jobStartDt" type="Date"/>
+		<column name="jobEndDt" type="Date"/>
+		<column name="jobTitle" type="String" localized="true"/>
+		<column name="jobExecPath" type="String" localized="true"/>
+		<column name="jobPhase" type="long"/>
+		<column name="jobSubmitDt" type="Date"/>
+		<column name="jobPostProcessor" type="String"/>
+		<column name="jobUniversityField" type="long"/>
+		<column name="jobVirtualLabId" type="long"/>
+		<column name="jobClassId" type="long"/>
+		<column name="jobInputDeckYn" type="boolean"/>
+		<column name="jobInputDeckName" type="String"/>
+		<column name="resultSize" type="int"/>
+		<column name="testYn" type="String"/>
+
+		<!-- Order -->
+		<order by="asc">
+			<order-column name="jobStatus" />
+		</order>
+		
+		<!-- Finder -->
+		<finder name="simulationUuid" return-type="Collection">
+			<finder-column name="simulationUuid"/>
+			<finder-column name="groupId"/>
+		</finder>
+		
+		<!-- Finder -->
+		<finder name="jobClassId" return-type="Collection">
+			<finder-column name="groupId"/>
+			<finder-column name="jobClassId"/>
+			<finder-column name="jobPhase"/>
+		</finder>
+
+	</entity>
+	
+   
+	<entity name="SimulationJobStatus" local-service="true" remote-service="true" cache-enabled="false" tx-manager="true">
+		<!-- PK fields -->
+        <column name="statusSeq" type="long" primary="true" />
+		<column name="groupId" type="long" primary="true"></column>
+		<column name="simulationUuid" type="String" primary="true"></column>
+		<column name="jobUuid" type="String" primary="true"/>
+		
+		<!-- Fields -->
+		<column name="jobStatus" type="long"/>
+		<column name="jobStartDt" type="Date"/>
+		<column name="jobEndDt" type="Date"/>
+		<column name="writeDt" type="Date"/>
+		
+		<!-- Order By -->
+		<order by="desc">
+			<order-column name="statusSeq"/>
+		</order>
+		
+		<!-- Finder -->
+		<finder name="simulationUuid" return-type="Collection">
+			<finder-column name="groupId"/>
+			<finder-column name="simulationUuid"/>
+			<finder-column name="jobUuid"/>
+		</finder>
+		
+		
+	</entity>
+   
+	<entity name="SimulationJobData" local-service="true" remote-service="true" cache-enabled="false" tx-manager="true">
+		<!-- PK fields -->
+		<column name="jobUuid" type="String" primary="true"/>
+		
+		<!-- Fields -->
+		<column name="jobData" type="String" localized="true"/>
+	</entity>
+
+</service-builder>

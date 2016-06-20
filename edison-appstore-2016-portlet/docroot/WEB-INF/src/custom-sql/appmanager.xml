@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<custom-sql>
+	<sql id="org.kisti.edison.science.service.persistence.ScienceAppManagerFinder.getAppManagerList" >
+		<![CDATA[
+			SELECT 
+					manager.scienceAppManagerId,
+					manager.userId,  
+					manager.scienceAppId, 
+					app.groupId
+				FROM EDAPP_ScienceAppManager manager
+					INNER JOIN EDAPP_ScienceApp app on manager.scienceAppId = app.scienceAppId
+				where manager.userId = #userId# and app.groupId = #groupId#
+			]]>
+	</sql>
+</custom-sql>

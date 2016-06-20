@@ -1,0 +1,244 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="org.kisti.edison.science.model.CommonLib">
+		<field name="libName" type="String" />
+		<field name="libPath" type="String" />
+		<field name="libraryVersion" type="String" />
+		<field name="cLibVer" type="String" />
+		<field name="sysArch" type="String" />
+		<field name="kernelVer" type="String" />
+	</model>
+	<model name="org.kisti.edison.science.model.CommonModule">
+		<field name="commonModuleId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="moduleName" type="String" />
+		<field name="moduleVersion" type="String" />
+	</model>
+	<model name="org.kisti.edison.science.model.DeveloperInfo">
+		<field name="userId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="screenName" type="String" />
+		<field name="firstName" type="String" />
+		<field name="emailAddress" type="String" />
+		<field name="universityField" type="String" />
+		<field name="majorField" type="String" />
+		<field name="useStart" type="String" />
+		<field name="useEnd" type="String" />
+		<field name="developerSort" type="String" />
+		<field name="languageFortran" type="boolean" />
+		<field name="languageCpp" type="boolean" />
+		<field name="languagePython" type="boolean" />
+		<field name="languageJava" type="boolean" />
+		<field name="languageOther" type="boolean" />
+		<field name="languageOtherDescription" type="String" />
+		<field name="rem" type="String" localized="true" />
+		<field name="agreementYn" type="boolean" />
+		<field name="writtenOathLogical" type="String" />
+		<field name="writtenOathPhysical" type="String" />
+		<field name="detailIp" type="String" />
+		<field name="detailOs" type="String" />
+		<field name="detailCpu" type="String" />
+		<field name="detailStorate" type="String" />
+		<field name="detailLibrary" type="String" />
+		<field name="insertId" type="long" />
+		<field name="insertDate" type="Date" />
+		<field name="updateId" type="long" />
+		<field name="updateDate" type="Date" />
+		<field name="etc" type="String" localized="true" />
+		<field name="developerId" type="String" />
+		<field name="developerPassword" type="String" />
+	</model>
+	<model name="org.kisti.edison.science.model.DeveloperIp">
+		<field name="ipSeq" type="long" />
+		<field name="userId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="ip1" type="String" />
+		<field name="ip2" type="String" />
+		<field name="ip3" type="String" />
+		<field name="ip4" type="String" />
+		<field name="insertId" type="long" />
+		<field name="insertDate" type="Date" />
+		<field name="updateId" type="long" />
+		<field name="updateDate" type="Date" />
+	</model>
+	<model name="org.kisti.edison.science.model.DeveloperRequest">
+		<field name="requestSeq" type="long" />
+		<field name="userId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="requestSort" type="String" />
+		<field name="requestDate" type="Date" />
+		<field name="requestNote" type="String" localized="true" />
+		<field name="requestStatus" type="String" />
+		<field name="processDate" type="Date" />
+		<field name="processNote" type="String" localized="true" />
+		<field name="insertId" type="long" />
+		<field name="insertDate" type="Date" />
+		<field name="updateId" type="long" />
+		<field name="updateDate" type="Date" />
+	</model>
+	<model name="org.kisti.edison.science.model.PortType">
+		<field name="uuid" type="String" />
+		<field name="portTypeId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="defaultEditorId" type="long" />
+		<field name="defaultAnalyzerId" type="long" />
+		<field name="name" type="String" />
+		<field name="dataType" type="String" />
+		<field name="sampleFilePath" type="String" />
+		<field name="targetLanguage" type="String" />
+		<field name="status" type="String" />
+	</model>
+	<model name="org.kisti.edison.science.model.PortTypeAnalyzerLink">
+		<field name="uuid" type="String" />
+		<field name="portTypeAnalyzerLinkId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="portTypeId" type="long" />
+		<field name="analyzerId" type="long" />
+	</model>
+	<model name="org.kisti.edison.science.model.PortTypeEditorLink">
+		<field name="uuid" type="String" />
+		<field name="portTypeEditorLinkId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="portTypeId" type="long" />
+		<field name="editorId" type="long" />
+	</model>
+	<model name="org.kisti.edison.science.model.PortTypeInputdeckForm">
+		<field name="portTypeId" type="long" />
+		<field name="inputdeckForm" type="String">
+			<hint name="max-length">4096</hint>
+		</field>
+	</model>
+	<model name="org.kisti.edison.science.model.RequiredLib">
+		<field name="requiredLibId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="libraryName" type="String">
+			<hint name="max-length">256</hint>
+		</field>
+		<field name="libraryVersion" type="String" />
+		<field name="libraryType" type="String" />
+		<field name="librarySrcPath" type="String" />
+		<field name="installScript" type="String">
+			<hint name="max-length">4096</hint>
+		</field>
+	</model>
+	<model name="org.kisti.edison.science.model.RequiredLibConfirm">
+		<field name="requiredLibId" type="long" />
+		<field name="scienceAppId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="requiredDate" type="Date" />
+		<field name="confirmDate" type="Date" />
+		<field name="libraryName" type="String" />
+		<field name="libraryVersion" type="String" />
+		<field name="requiredContent" type="String" />
+		<field name="requiredState" type="String" />
+		<field name="confirmContent" type="String" />
+	</model>
+	<model name="org.kisti.edison.science.model.RequiredModule">
+		<field name="requiredModuleId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="moduleName" type="String" />
+		<field name="moduleVersion" type="String" />
+	</model>
+	<model name="org.kisti.edison.science.model.ScienceApp">
+		<field name="uuid" type="String" />
+		<field name="scienceAppId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="name" type="String" />
+		<field name="version" type="String" />
+		<field name="title" type="String" localized="true">
+			<hint name="display-width">800</hint>
+			<hint name="max-length">512</hint>
+		</field>
+		<field name="descriptionId" type="long" />
+		<field name="previousVersionId" type="long" />
+		<field name="iconId" type="long" />
+		<field name="manualId" type="String" localized="true" />
+		<field name="exeFileName" type="String">
+			<hint name="max-length">256</hint>
+		</field>
+		<field name="appType" type="String" />
+		<field name="runType" type="String" />
+		<field name="authorId" type="long" />
+		<field name="stage" type="String" />
+		<field name="status" type="int" />
+		<field name="recentModifierId" type="long" />
+		<field name="parallelModule" type="String" />
+		<field name="maxCpus" type="int" />
+		<field name="defaultCpus" type="int" />
+		<field name="statusDate" type="Date" />
+		<field name="openLevel" type="String" />
+		<field name="license" type="String" />
+		<field name="srcFileName" type="String">
+			<hint name="max-length">256</hint>
+		</field>
+		<field name="targetLanguage" type="String" />
+		<field name="developers" type="String" localized="true" />
+		<field name="editorType" type="String" />
+		<field name="swTest" type="boolean" />
+		<field name="projectCategoryId" type="long" />
+	</model>
+	<model name="org.kisti.edison.science.model.ScienceAppCategoryLink">
+		<field name="uuid" type="String" />
+		<field name="scienceAppCategoryLinkId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="categoryId" type="long" />
+		<field name="scienceAppId" type="long" />
+		<field name="parentCategoryId" type="long" />
+	</model>
+	<model name="org.kisti.edison.science.model.ScienceAppDescription">
+		<field name="descriptionId" type="long" />
+		<field name="content" type="String" localized="true" />
+		<field name="insertId" type="long" />
+		<field name="insertDt" type="Date" />
+		<field name="updateId" type="long" />
+		<field name="updateDt" type="Date" />
+	</model>
+	<model name="org.kisti.edison.science.model.ScienceAppFavorite">
+		<field name="scienceAppId" type="long" />
+		<field name="userId" type="long" />
+		<field name="groupId" type="long" />
+	</model>
+	<model name="org.kisti.edison.science.model.ScienceAppInputPorts">
+		<field name="scienceAppId" type="long" />
+		<field name="inputPorts" type="String">
+			<hint name="max-length">4096</hint>
+		</field>
+	</model>
+	<model name="org.kisti.edison.science.model.ScienceAppManager">
+		<field name="scienceAppManagerId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="scienceAppId" type="long" />
+		<field name="managerId" type="long" />
+	</model>
+	<model name="org.kisti.edison.science.model.ScienceAppOutputPorts">
+		<field name="scienceAppId" type="long" />
+		<field name="outputPorts" type="String">
+			<hint name="max-length">4096</hint>
+		</field>
+	</model>
+</model-hints>

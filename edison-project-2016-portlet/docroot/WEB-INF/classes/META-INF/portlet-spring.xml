@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<bean id="org.kisti.edison.project.service.HistoryAppSimulationLocalService" class="org.kisti.edison.project.service.impl.HistoryAppSimulationLocalServiceImpl" />
+	<bean id="org.kisti.edison.project.service.HistoryAppSimulationService" class="org.kisti.edison.project.service.impl.HistoryAppSimulationServiceImpl" />
+	<bean id="org.kisti.edison.project.service.persistence.HistoryAppSimulationPersistence" class="org.kisti.edison.project.service.persistence.HistoryAppSimulationPersistenceImpl" parent="basePersistence" />
+	<bean id="org.kisti.edison.project.service.HistoryContentLocalService" class="org.kisti.edison.project.service.impl.HistoryContentLocalServiceImpl" />
+	<bean id="org.kisti.edison.project.service.HistoryContentService" class="org.kisti.edison.project.service.impl.HistoryContentServiceImpl" />
+	<bean id="org.kisti.edison.project.service.persistence.HistoryContentPersistence" class="org.kisti.edison.project.service.persistence.HistoryContentPersistenceImpl" parent="basePersistence" />
+	<bean id="org.kisti.edison.project.service.persistence.HistoryContentFinder" class="org.kisti.edison.project.service.persistence.HistoryContentFinderImpl" parent="basePersistence" />
+	<bean id="org.kisti.edison.project.service.HistoryScienceAppLocalService" class="org.kisti.edison.project.service.impl.HistoryScienceAppLocalServiceImpl" />
+	<bean id="org.kisti.edison.project.service.HistoryScienceAppService" class="org.kisti.edison.project.service.impl.HistoryScienceAppServiceImpl" />
+	<bean id="org.kisti.edison.project.service.persistence.HistoryScienceAppPersistence" class="org.kisti.edison.project.service.persistence.HistoryScienceAppPersistenceImpl" parent="basePersistence" />
+	<bean id="org.kisti.edison.project.service.persistence.HistoryScienceAppFinder" class="org.kisti.edison.project.service.persistence.HistoryScienceAppFinderImpl" parent="basePersistence" />
+</beans>

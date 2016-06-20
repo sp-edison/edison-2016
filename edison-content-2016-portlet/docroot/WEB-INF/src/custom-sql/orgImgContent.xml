@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<custom-sql>
+	<sql id="org.kisti.edison.content.service.persistence.getListOrderOrgImgContent" >
+		<![CDATA[
+		SELECT
+			orgImgSeq,		groupId,	order_,		orgNm,		orgLink,
+			fileEntryId,	insertId,	insertDate,	updateId,	updateDate
+		FROM
+			EDMED_OrgImgContent
+		WHERE
+			groupId = #groupId#
+		AND
+			order_ > #order#
+		]]>
+	</sql>
+</custom-sql>

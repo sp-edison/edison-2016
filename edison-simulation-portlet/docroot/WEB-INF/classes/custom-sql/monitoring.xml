@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<custom-sql>
+
+	<sql id="org.kisti.edison.bestsimulation.service.persistence.Monitoring.getCountMonitoringHeader">
+		<![CDATA[
+		SELECT
+			COUNT(*) AS totalCnt
+		]]>
+	</sql>
+	
+	<sql id="org.kisti.edison.bestsimulation.service.persistence.Monitoring.getListMonitoringHeader">
+		<![CDATA[
+		SELECT
+			A.simulationUuid,			A.groupId,				A.userId,			A.simulationTitle,
+			A.simulationDescription,	A.scienceAppId,			A.scienceAppName,	A.testYn,
+			A.simulationCreateDt,		A.cluster,				B.jobSeqNo,			B.resultSize,
+			B.jobUuid,					B.jobStatus,			B.jobStartDt,		B.jobEndDt,
+			B.jobTitle,					B.jobExecPath,			B.jobPhase,			B.jobSubmitDt,
+			B.jobPostProcessor,			B.jobUniversityField,	B.jobVirtualLabId,	B.jobClassId,
+			B.jobInputDeckYn,			B.jobInputDeckName,		B.testYn,
+			IFNULL(SEC_TO_TIME(unix_timestamp(B.jobStartDt)-unix_timestamp(B.jobSubmitDt)),'')as stayDt,
+			IFNULL(SEC_TO_TIME(unix_timestamp(B.jobEndDt)-unix_timestamp(B.jobStartDt)),'')as executeDt,
+			<isNotEmpty property="groupList">
+				if( COUNT(*) > 1, 'Y', 'N' )  AS jobCnt
+			</isNotEmpty>
+			
+			<isNotEmpty property="jobListSearch">
+				'N' AS jobCnt
+			</isNotEmpty>
+		]]>
+	</sql>
+	
+	
+	<sql id="org.kisti.edison.bestsimulation.service.persistence.Monitoring.getMonitoringBody" >
+		<![CDATA[
+		FROM
+			EDSIM_Simulation A,EDSIM_SimulationJob B,  User_ C
+		WHERE
+			A.simulationUuid = B.simulationUuid
+		AND
+			B.jobStatus > 1701004 
+		AND 
+			B.jobPhase = 1301003
+		AND
+			A.groupId = #groupId#
+		AND 
+			B.jobUuid IS NOT NULL
+		AND 
+			 A.userId = C.userId
+		AND 
+			 B.testYn != "Y"
+		<isNotEmpty property="simulationUuid">
+			AND
+				A.simulationUuid = #simulationUuid#
+		</isNotEmpty>
+		<isNotEmpty property="jobSeqNo">
+			AND
+				B.jobSeqNo = #jobSeqNo#
+		</isNotEmpty>
+		<isNotEmpty property="userId">
+			AND
+				A.userId = #userId#
+		</isNotEmpty>
+		<isNotEmpty property="jobVirtualLabId">
+			AND
+				B.jobVirtualLabId = #jobVirtualLabId#
+			AND
+				B.jobClassId = #jobClassId#
+		</isNotEmpty>
+			
+		<isNotEmpty property="searchValue">
+			AND
+				(A.scienceAppName LIKE '%@@searchValue@@%'
+				OR
+				B.jobTitle LIKE '%@@searchValue@@%')
+		</isNotEmpty>
+		
+		<isNotEmpty property="searchValueAndUserId">
+			AND
+				(A.scienceAppName LIKE '%@@searchValueAndUserId@@%'
+				OR
+				B.jobTitle LIKE '%@@searchValueAndUserId@@%'
+				OR
+				C.screenName LIKE '%@@searchValueAndUserId@@%')
+		</isNotEmpty>
+		
+		<isNotEmpty property="jobStatus">
+			AND
+				B.jobStatus = #jobStatus#
+		</isNotEmpty>
+		<isNotEmpty property="groupList">
+			GROUP BY A.simulationUuid
+		</isNotEmpty>
+		ORDER BY A.simulationCreateDt DESC
+		<isNotEmpty property="begin">
+			Limit #begin#, #end#
+		</isNotEmpty>
+		]]>
+	</sql>
+</custom-sql>

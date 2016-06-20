@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<custom-sql>
+	<sql id="org.kisti.edison.science.service.persistence.RequiredLibFinder.getCountRequiredLib.header" >
+	<![CDATA[
+		SELECT COUNT(*) AS totalCount
+		FROM
+		  EDAPP_RequiredLibConfirm A, EDAPP_ScienceApp B
+	]]>		
+	</sql>
+	
+	<sql id="org.kisti.edison.science.service.persistence.RequiredLibFinder.getRequiredLib.header" >
+	<![CDATA[
+		SELECT A.*, B.name
+		FROM
+		  EDAPP_RequiredLibConfirm A, EDAPP_ScienceApp B
+	]]>		
+	</sql>
+	
+	<sql id="org.kisti.edison.science.service.persistence.RequiredLibFinder.requiredLib.where" >
+	<![CDATA[
+		WHERE  
+		  A.scienceAppId = B.scienceAppId
+		  <isNotEmpty property="searchAppName">
+		  	  AND
+		  	  	B.name Like '%@@searchAppName@@%'
+		  </isNotEmpty>
+		  <isNotEmpty property="searchState">
+		  	  AND
+		  	  	A.requiredState = #searchState#
+		  </isNotEmpty>
+		  <isNotEmpty property="requiredLibId">
+		  	  AND
+		  	  	A.requiredLibId = #requiredLibId#
+		  </isNotEmpty>
+		  <isNotEmpty property="scienceAppId">
+		  	  AND
+		  	  	A.scienceAppId = #scienceAppId#
+		  </isNotEmpty>
+	  ORDER BY A.requiredDate DESC
+	]]>		
+	</sql>
+	
+	<sql id="org.kisti.edison.science.service.persistence.RequiredLibFinder.requiredLib.limit" >
+	<![CDATA[
+	<isNotEmpty property="begin">
+	  LIMIT
+		#begin#, #end#
+	</isNotEmpty>	
+	]]>		
+	</sql>
+</custom-sql>

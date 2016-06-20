@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom-sql>
+	<sql id="org.kisti.edison.service.persistence.WorkflowFinder.countWorkflowInstances.header" >
+      <![CDATA[
+      SELECT 
+        COUNT(*) AS totalCnt
+      FROM EDWF_WorkflowInstance WI
+      LEFT OUTER JOIN User_ U
+      ON WI.userId = U.userId
+      LEFT OUTER JOIN EDWF_Workflow W
+      ON W.workflowId = WI.workflowId
+	  ]]>
+	</sql>
+  <!-- ExtractValue(W.title, 'root/Title[@language-id="@@locale@@"]') AS workflowTitle, -->
+	<sql id="org.kisti.edison.service.persistence.WorkflowFinder.retrieveWorkflowInstances.header" >
+      <![CDATA[
+      SELECT 
+        WI.*,  
+        W.title AS workflowTitle,
+        U.screenName
+      FROM EDWF_WorkflowInstance WI
+      LEFT OUTER JOIN EDWF_Workflow W
+      ON W.workflowId = WI.workflowId
+      LEFT OUTER JOIN User_ U
+      ON WI.userId = U.userId
+      ]]>
+	</sql>
+  
+	<sql id="org.kisti.edison.service.persistence.WorkflowFinder.retrieveWorkflowInstances.where" >
+		<![CDATA[
+		WHERE 1 = 1
+		<isNotEmpty property="workflowId">
+		AND
+		  W.workflowId = #workflowId#
+		</isNotEmpty>
+		<isNotEmpty property="companyId">
+		AND
+		  WI.companyId = #companyId#
+		</isNotEmpty>
+		<isNotEmpty property="status">
+		AND
+		  WI.status = #status#
+		</isNotEmpty>
+		<isNotEmpty property="userId">
+		AND
+		  U.userId = #userId#
+		</isNotEmpty>
+		<isNotEmpty property="title">
+		AND
+		  WI.title LIKE '%@@title@@%'
+		</isNotEmpty>
+        ORDER BY WI.workflowInstanceId DESC
+		<isNotEmpty property="begin">
+			LIMIT
+				#begin#, #end#
+		</isNotEmpty>
+		]]>
+	</sql>
+  
+	<sql id="org.kisti.edison.service.persistence.WorkflowFinder.retrieveWorkflows.header" >
+		<![CDATA[
+		SELECT A.*, B.title AS parentTitle, B.isPublic AS parentIsPublic, B.userId AS parentUserId, U.screenName AS screenName 
+        FROM EDWF_Workflow A
+        LEFT OUTER JOIN EDWF_Workflow B
+        ON A.parentWorkflowId = B.workflowId
+        LEFT OUTER JOIN User_ U
+        ON A.userId = U.userId
+		]]>
+	</sql>
+	
+	<sql id="org.kisti.edison.service.persistence.WorkflowFinder.retrieveWorkflows.where" >
+		<![CDATA[
+		WHERE
+		<isNotEmpty property="companyId">
+			A.companyId = #companyId#
+		</isNotEmpty>
+		<isNotEmpty property="targetLanguage">
+		AND
+			A.targetLanguage LIKE '%@@targetLanguage@@%'
+		</isNotEmpty>
+		<isNotEmpty property="title">
+		AND
+			A.title LIKE '%@@title@@%'
+		</isNotEmpty>
+		<isNotEmpty property="userId">
+		AND
+			A.userId = #userId#
+		</isNotEmpty>
+		<isNotEmpty property="isPublic">
+		AND
+			A.isPublic = #isPublic#
+		</isNotEmpty>
+		ORDER BY A.createDate DESC
+		<isNotEmpty property="begin">
+			LIMIT
+				#begin#, #end#
+		</isNotEmpty>
+		]]>
+	</sql>
+</custom-sql>

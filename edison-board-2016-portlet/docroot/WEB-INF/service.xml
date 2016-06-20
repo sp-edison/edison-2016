@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
+<service-builder package-path="org.kisti.edison.multiboard" auto-namespace-tables="true">
+	<author>mhkang</author>
+	<namespace>EDCON</namespace>
+
+    <entity name="BoardDiv" local-service="true" remote-service="true" cache-enabled="false" tx-manager="true" >
+		<!-- PK fields -->
+        <column name="divCd" type="long" primary="true"></column>
+
+		<!-- Mapping fields -->
+		<column name="boards" type="Collection" entity="Board" mapping-table="BoardDiv_Board" />
+
+		<!-- Localized fields -->
+        <column name="titleNm" type="String" localized="true"></column>
+        <column name="ContentNm" type="String" localized="true"></column>
+		
+        <column name="divNm" type="String"></column>
+        <column name="fileUpLoadUseYn" type="boolean"></column>
+        <column name="popupYn" type="boolean"></column>
+        <column name="replyYn" type="boolean"></column>
+
+		<!-- Order -->
+		<order by="asc">
+			<order-column name="divCd" />
+		</order>
+
+		<!-- Finder methods -->
+        <finder name="PopupYn" return-type="Collection">
+			<finder-column name="popupYn" />
+		</finder>
+        <finder name="FileUpLoadUseYn" return-type="Collection">
+			<finder-column name="fileUpLoadUseYn" />
+		</finder>
+    </entity>
+    
+	<entity name="Board" local-service="true" remote-service="true" cache-enabled="false" tx-manager="true">
+		<!-- PK fields -->
+		<column name="boardSeq" type="long" primary="true"></column>
+		
+		<!-- FK fields -->
+		<column name="divs" type="Collection" entity="BoardDiv" mapping-table="BoardDiv_Board" />
+		
+		<!-- Localized fields -->
+		<column name="title" type="String" localized="true"/>
+		<column name="content" type="String" localized="true"/>
+
+		<!-- Fields -->
+        <column name="groupId" type="long"></column>
+        <column name="customId" type="String"></column>
+
+		<!-- Fields -->
+		<column name="writerId" type="long"/>
+		<column name="writerDate" type="Date"/>
+		<column name="readCnt" type="int"/>
+		
+		<column name="groupBoardSeq" type="int"/>
+		<column name="groupBoardTurn" type="int"/>
+		<column name="replyDepth" type="int"/>
+
+		<column name="siteGroup" type="String"></column>
+		<column name="popupYn" type="boolean"/>
+		<column name="popupStartDt" type="Date"/>
+		<column name="popupEndDt" type="Date"/>
+		<column name="insertId" type="long"/>
+		<column name="insertDt" type="Date"/>
+		<column name="updateId" type="long"/>
+		<column name="updateDt" type="Date"/>
+
+		<!-- Order -->
+		<order by="asc">
+			<order-column name="writerDate" />
+		</order>
+
+	</entity>	
+	
+</service-builder>

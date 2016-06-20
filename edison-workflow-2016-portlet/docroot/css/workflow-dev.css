@@ -1,0 +1,133 @@
+/* top menu */
+.wftitlebox001 > h2{color: #fff !important; font-size: 18px !important; font-weight: 600 !important; padding-top: 5px !important;}
+.workflow-name-h2{white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width:70%;}
+
+/* left menu*/
+.wf-container{width: 100%; height: 750px;}
+.wf-container .lefttabm{position: absolute; left: 10px;}
+.lefttreemenu1.wf-jstree {padding-top:45px;}
+.lefttreemenu1.wf-jstree > ul{height: 700px; overflow-y: auto;}
+.lefttreemenu1.jstree > ul{height: 700px; overflow-y: auto;}
+.lefttreemenu1.wf-jstree ul{margin:0; padding:0;}
+.lefttreemenu1.wf-jstree ul li{list-style:none; font-size:15px; color:#666; background:url(../images/jstree/myfile/myfile-icon02.png)no-repeat 0 3px; line-height:30px;}
+.lefttreemenu1.wf-jstree ul li.jstree-open{background:url(../images/jstree/myfile/myfile-icon01.png)no-repeat 0 3px;}
+.lefttreemenu1.wf-jstree ul li.jstree-close{background:url(../images/jstree/myfile/myfile-icon02.png)no-repeat 0 3px;}
+.lefttreemenu1.wf-jstree ul li a:link{color:#666;}
+.lefttreemenu1.wf-jstree ul li  a:hover{text-decoration:underline;}
+.lefttreemenu1.wf-jstree ul li ul{margin:0; padding:0;}
+.lefttreemenu1.wf-jstree ul li ul li{font-size:15px; font-weight:normal; list-style:none; background:url(../images/jstree/myfile/myfile-icon03.png) no-repeat 0 3px; line-height:30px;}
+.lefttreemenu1.wf-jstree ul li ul li.jstree-open{background:url(../images/jstree/myfile/myfile-icon04.png)no-repeat 0 3px;}
+.lefttreemenu1.wf-jstree ul li ul li.jstree-close{background:url(../images/jstree/myfile/myfile-icon03.png)no-repeat 0 3px;}
+.lefttreemenu1.wf-jstree ul li ul li a:link{color:000;}
+.lefttreemenu1.wf-jstree ul li ul li a:hover{text-decoration:underline;}
+.lefttreemenu1.wf-jstree ul li ul li ul li{background:url(../images/Workflow/file_icon.png)no-repeat 0 3px;}
+
+.selected-jstree a{color: #416EC5 !important; font-weight: bold !important;}
+
+.leftwrap{height: 100%;}
+.rightwrap{height:100%;}
+.wfconwrap{height:100%; margin-bottom: 30px; float: left;}
+.lefttreemenu{height: 99%;}
+.leftlistbox{height: 99%;}
+.lefttablemenu{height: 99%; clear: both;}
+
+.wf-container > .alert{ width: 786px; left: 380px; position: absolute; display: none;}
+
+.apparea{position: relative; padding:0px; min-height:670px; height: 100%;}
+.lefttabm ul li.on {font-size: 14px;}
+.lefttabm > ul > li{cursor: pointer;}
+.endpointDrag{cursor: pointer;}
+.input-port.dragActive { border:2px dotted orange; }
+/* .dropHover { border:1px dotted red; } */
+
+.openslidearrow{width: 32px; height: 51px;}
+
+.jstree *,.jsplumb-drag-select *{
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;    
+}
+
+/* workflow science app box */
+.wf-box{padding: 30px 5px 5px 15px; width: 100px !important; height:110px !important; position: absolute; cursor: move;}
+.wf-box .wf-app-title, .jstree-leaf{white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+.wf-box .wf-app-title{font-size: 15px; font-weight: 500; color: #fff;}
+.wf-box .wf-app-status{position: relative; top: 25px;}
+.waitingbox .wf-app-title{ color: #114a69; border-color: #5492ba; }
+.pausebox{width:150px; height:165px; border-radius:3px; border:solid 1px #CA412B; background-color:#fb6e50;}
+.wf-box .addIp { font-weight: 500; text-decoration: none; text-indent: 0px; 
+	line-height: 0px; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; 
+	text-align: center; vertical-align: middle; display: inline-block; font-size: 12px; 
+	color: #fff; padding: 10px; text-shadow: #ade6ff 0px 0px 0px; border-width: 1px; border-style: solid; }
+.waitingbox .addIp{ background: #6ba0c3; border-color: #3371a8; }
+.runningbox .addIp{ background: #3a81c0; border-color: #3371a8; padding-right: 25px !important; background-position: 60px; background-repeat:no-repeat; background-image: url(../images/Workflow/ajax-loader.gif);}
+.failbox .addIp{ background: #c84444; border-color: #b73535; }
+.pausebox .addIp{ background: #4E5A68; border-color: #4E5A68; }
+.donebox .addIp{ background: #32a993; border-color: #2e9886; }
+.wf-app-status-icon{ top: 25px; left: 10px; position: relative;}
+
+.hidden{display: none;}
+.jsplumb-endpoint:hover{cursor: pointer; z-index: 9999;}
+
+.wftitlebox001 > input[type="text"]{width: 55%; margin-bottom: 2px;}
+.wftitlebox001 > span > input[type="button"]{margin-right: 5px;}
+.wftitlebox001 > h2 {float: left;}
+
+.lefttablemenu{width:98%; border:solid 1px #00c7e5; min-height:589px; clear:both; position:relative; top:-5px; padding:15px 10px 10px 10px;}
+.lefttablemenu > .searchbox {float:right !important; margin-top:-5px; margin-right:20px;}
+.slideclosearrow{position: absolute; right:0; top: -1px; z-index:100;}
+
+.tablemf_list table{ width: 100%; border-collapse:collapse;} 
+.tablemf_list table td{border:none; outline:none;} 
+
+.ui-selectable-helper { position: absolute; z-index: 100; border:1px dotted black; }
+.ui-selected{border: solid 1px #555555; box-shadow: 3px 3px 7px #c6c6c6;}
+.ui-selecting{background-color: rgba( 30, 30, 30,0.4 ); box-shadow: 3px 3px 7px #c6c6c6; border: solid 1px #000;}
+
+.wrap{margin-top: 40px;}
+
+.date > span{margin-right: 10px;}
+
+/* workflow list */
+.edison .tabletopwf.line-per-page{ right:538px !important;}
+.edison .tabletopwf.status{ right:395px !important;}
+.tablemf_list tr.on{ background-color: #D2D1D1;}
+.titleTd{cursor: pointer;}
+.tablemf_list{max-height: 620px; overflow-y: auto;}
+.myfilebox .tablemf_list{overflow-y: hidden;}
+
+.listbox{cursor: pointer; width:300px;}
+.listbox.on{width:300px; margin:0 auto; padding:7px 15px; background-color:#8db9e5; border-radius:3px; margin-bottom:12px; border:solid 1px #8db9e5;}
+.listbox.on ul{margin:0; padding:0;}
+.listbox.on ul li{list-style:none; font-size:15px; font-weight:600; color:#fff; line-height:2.0em;}
+.listbox.on ul li a{color:#fff !important; }
+.listbox.on ul li a:link{color:#fff !important; }
+.listbox.on ul li a:hover{text-decoration:underline;}
+.listbox.on ul li.date{list-style:none; font-size:15px; font-weight:500; color:#000; line-height:1.5em;}
+.listbox.on ul li.date span{color:#f4fd02;}
+.listbox.navigation:hover{background-color:#8db9e5;}
+.listbox.navigation ul li{text-align: center;}
+.listbox.navigation ul li a{text-decoration: none;}
+.listbox.navigation ul li a:hover{color:#fff !important;}
+
+.workflow-list-div{overflow-y: auto; height: 700px;}
+
+/* form validation*/
+.form-validation-error{border-color: #b50303 !important; -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075) !important; -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075) !important; box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075) !important;}
+.form-validation-error::-webkit-input-placeholder { /* Chrome */ color: #b50303 !important;}
+.form-validation-error:-ms-input-placeholder { /* IE 10+ */ color: #b50303 !important;}
+.form-validation-error::-moz-placeholder { /* Firefox 19+ */ color: #b50303 !important;}
+.form-validation-error:-moz-placeholder { /* Firefox 4 - 18 */ color: #b50303 !important;}
+
+/*context menu*/
+.context-menu-item.context-menu-input > label{font-size: 12px !important; color: #2f2f2f !important;}
+
+/* workflow run log */
+#running-workflow-log{position: absolute; top: 871px; left: 380px; width: 839px; height: 74px; overflow-y: scroll; padding-top: 10px;}
+#running-workflow-log .ui-resizable-n{ margin-left: 0px; background: #dbdbdb; height: 15px !important; }
+
+/* workflow result log*/
+.newWcont01{word-wrap: break-word;}

@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd">
+	<persistence-unit-metadata>
+		<xml-mapping-metadata-complete/>
+		<persistence-unit-defaults>
+			<access>PROPERTY</access>
+		</persistence-unit-defaults>
+	</persistence-unit-metadata>
+	<mapped-superclass class="org.kisti.edison.project.model.impl.HistoryAppSimulationModelImpl">
+		<id-class class="org.kisti.edison.project.service.persistence.HistoryAppSimulationPK" />
+		<attributes>
+			<id name="scienceAppId" />
+			<id name="groupId" />
+			<id name="projectCategoryId" />
+			<basic name="title" />
+			<basic name="version" />
+			<basic name="name" />
+			<basic name="affiliation_id" />
+			<basic name="AppStatus" />
+			<basic name="userId" />
+			<basic name="runtime" />
+			<basic name="executeCount" />
+			<basic name="averageRuntime" />
+			<basic name="userCount" />
+			<basic name="insertDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="nameCurrentLanguageId" />
+			<transient name="nameMap" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="titleCurrentLanguageId" />
+			<transient name="titleMap" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.kisti.edison.project.model.impl.HistoryContentModelImpl">
+		<id-class class="org.kisti.edison.project.service.persistence.HistoryContentPK" />
+		<attributes>
+			<id name="contentSeq" />
+			<id name="groupId" />
+			<id name="projectCategoryId" />
+			<basic name="contentDiv" />
+			<basic name="title" />
+			<basic name="insertId" />
+			<basic name="insertDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="updateId" />
+			<basic name="updateDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="titleCurrentLanguageId" />
+			<transient name="titleMap" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.kisti.edison.project.model.impl.HistoryScienceAppModelImpl">
+		<id-class class="org.kisti.edison.project.service.persistence.HistoryScienceAppPK" />
+		<attributes>
+			<id name="scienceAppId" />
+			<id name="groupId" />
+			<id name="projectCategoryId" />
+			<basic name="title" />
+			<basic name="version" />
+			<basic name="name" />
+			<basic name="affiliation_id" />
+			<basic name="AppStatus" />
+			<basic name="userId" />
+			<basic name="insertDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="nameCurrentLanguageId" />
+			<transient name="nameMap" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="titleCurrentLanguageId" />
+			<transient name="titleMap" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<entity class="org.kisti.edison.project.model.impl.HistoryAppSimulationImpl" name="HistoryAppSimulation">
+		<table name="EDPRJ_HistoryAppSimulation" />
+		<attributes />
+	</entity>
+	<entity class="org.kisti.edison.project.model.impl.HistoryContentImpl" name="HistoryContent">
+		<table name="EDPRJ_HistoryContent" />
+		<attributes />
+	</entity>
+	<entity class="org.kisti.edison.project.model.impl.HistoryScienceAppImpl" name="HistoryScienceApp">
+		<table name="EDPRJ_HistoryScienceApp" />
+		<attributes />
+	</entity>
+</entity-mappings>

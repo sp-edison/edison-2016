@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="edison-default-2016-portlet">
+        <wb-resource deploy-path="/" source-path="/docroot" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/docroot/WEB-INF/src"/>
+        <dependent-module archiveName="edison-custom-auth-manager-2016-portlet-service.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/edison-custom-auth-manager-2016-portlet/docroot/WEB-INF/lib/edison-custom-auth-manager-2016-portlet-service.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="edison-appstore-2016-portlet-service.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/edison-appstore-2016-portlet/docroot/WEB-INF/lib/edison-appstore-2016-portlet-service.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="edison-virtuallab-2016-portlet-service.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/edison-virtuallab-2016-portlet/docroot/WEB-INF/lib/edison-virtuallab-2016-portlet-service.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <property name="context-root" value="edison-default-2016-portlet"/>
+        <property name="java-output-path" value="/edison-default-2016-portlet/docroot/WEB-INF/classes"/>
+    </wb-module>
+</project-modules>

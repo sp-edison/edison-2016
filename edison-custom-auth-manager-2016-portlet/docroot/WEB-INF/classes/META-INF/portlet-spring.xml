@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<bean id="org.kisti.edison.customauthmanager.service.UserGroupRoleCustomLocalService" class="org.kisti.edison.customauthmanager.service.impl.UserGroupRoleCustomLocalServiceImpl" />
+	<bean id="org.kisti.edison.customauthmanager.service.UserGroupRoleCustomService" class="org.kisti.edison.customauthmanager.service.impl.UserGroupRoleCustomServiceImpl" />
+	<bean id="org.kisti.edison.customauthmanager.service.persistence.UserGroupRoleCustomPersistence" class="org.kisti.edison.customauthmanager.service.persistence.UserGroupRoleCustomPersistenceImpl" parent="basePersistence" />
+	<bean id="org.kisti.edison.customauthmanager.service.persistence.UserGroupRoleCustomFinder" class="org.kisti.edison.customauthmanager.service.persistence.UserGroupRoleCustomFinderImpl" parent="basePersistence" />
+</beans>

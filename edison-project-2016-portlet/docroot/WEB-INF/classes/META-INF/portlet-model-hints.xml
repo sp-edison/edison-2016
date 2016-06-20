@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="org.kisti.edison.project.model.HistoryAppSimulation">
+		<field name="scienceAppId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="projectCategoryId" type="long" />
+		<field name="title" type="String" localized="true" />
+		<field name="version" type="String" />
+		<field name="name" type="String" localized="true" />
+		<field name="affiliation_id" type="String" />
+		<field name="AppStatus" type="String" />
+		<field name="userId" type="long" />
+		<field name="runtime" type="long" />
+		<field name="executeCount" type="long" />
+		<field name="averageRuntime" type="long" />
+		<field name="userCount" type="long" />
+		<field name="insertDate" type="Date" />
+	</model>
+	<model name="org.kisti.edison.project.model.HistoryContent">
+		<field name="contentSeq" type="long" />
+		<field name="groupId" type="long" />
+		<field name="projectCategoryId" type="long" />
+		<field name="contentDiv" type="long" />
+		<field name="title" type="String" localized="true" />
+		<field name="insertId" type="long" />
+		<field name="insertDate" type="Date" />
+		<field name="updateId" type="long" />
+		<field name="updateDate" type="Date" />
+	</model>
+	<model name="org.kisti.edison.project.model.HistoryScienceApp">
+		<field name="scienceAppId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="projectCategoryId" type="long" />
+		<field name="title" type="String" localized="true" />
+		<field name="version" type="String" />
+		<field name="name" type="String" localized="true" />
+		<field name="affiliation_id" type="String" />
+		<field name="AppStatus" type="String" />
+		<field name="userId" type="long" />
+		<field name="insertDate" type="Date" />
+	</model>
+</model-hints>

@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd">
+	<persistence-unit-metadata>
+		<xml-mapping-metadata-complete/>
+		<persistence-unit-defaults>
+			<access>PROPERTY</access>
+		</persistence-unit-defaults>
+	</persistence-unit-metadata>
+	<mapped-superclass class="org.kisti.edison.bestsimulation.model.impl.SimulationModelImpl">
+		<id-class class="org.kisti.edison.bestsimulation.service.persistence.SimulationPK" />
+		<attributes>
+			<id name="simulationUuid" />
+			<id name="groupId" />
+			<basic name="userId" />
+			<basic name="simulationTitle" />
+			<basic name="simulationDescription" />
+			<basic name="scienceAppId" />
+			<basic name="scienceAppName" />
+			<basic name="simulationCreateDt">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="cluster" />
+			<basic name="testYn" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="scienceAppNameCurrentLanguageId" />
+			<transient name="scienceAppNameMap" />
+			<transient name="simulationDescriptionCurrentLanguageId" />
+			<transient name="simulationDescriptionMap" />
+			<transient name="simulationTitleCurrentLanguageId" />
+			<transient name="simulationTitleMap" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.kisti.edison.bestsimulation.model.impl.SimulationJobModelImpl">
+		<id-class class="org.kisti.edison.bestsimulation.service.persistence.SimulationJobPK" />
+		<attributes>
+			<id name="jobSeqNo" />
+			<id name="simulationUuid" />
+			<id name="groupId" />
+			<basic name="jobUuid" />
+			<basic name="jobStatus" />
+			<basic name="jobStartDt">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="jobEndDt">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="jobTitle" />
+			<basic name="jobExecPath" />
+			<basic name="jobPhase" />
+			<basic name="jobSubmitDt">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="jobPostProcessor" />
+			<basic name="jobUniversityField" />
+			<basic name="jobVirtualLabId" />
+			<basic name="jobClassId" />
+			<basic name="jobInputDeckYn" />
+			<basic name="jobInputDeckName" />
+			<basic name="resultSize" />
+			<basic name="testYn" />
+			<transient name="jobExecPathCurrentLanguageId" />
+			<transient name="jobExecPathMap" />
+			<transient name="jobTitleCurrentLanguageId" />
+			<transient name="jobTitleMap" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.kisti.edison.bestsimulation.model.impl.SimulationJobDataModelImpl">
+		<attributes>
+			<id name="jobUuid" />
+			<basic name="jobData" />
+			<transient name="jobDataCurrentLanguageId" />
+			<transient name="jobDataMap" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.kisti.edison.bestsimulation.model.impl.SimulationJobStatusModelImpl">
+		<id-class class="org.kisti.edison.bestsimulation.service.persistence.SimulationJobStatusPK" />
+		<attributes>
+			<id name="statusSeq" />
+			<id name="groupId" />
+			<id name="simulationUuid" />
+			<id name="jobUuid" />
+			<basic name="jobStatus" />
+			<basic name="jobStartDt">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="jobEndDt">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="writeDt">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<entity class="org.kisti.edison.bestsimulation.model.impl.SimulationImpl" name="Simulation">
+		<table name="EDSIM_Simulation" />
+		<attributes />
+	</entity>
+	<entity class="org.kisti.edison.bestsimulation.model.impl.SimulationJobImpl" name="SimulationJob">
+		<table name="EDSIM_SimulationJob" />
+		<attributes />
+	</entity>
+	<entity class="org.kisti.edison.bestsimulation.model.impl.SimulationJobDataImpl" name="SimulationJobData">
+		<table name="EDSIM_SimulationJobData" />
+		<attributes />
+	</entity>
+	<entity class="org.kisti.edison.bestsimulation.model.impl.SimulationJobStatusImpl" name="SimulationJobStatus">
+		<table name="EDSIM_SimulationJobStatus" />
+		<attributes />
+	</entity>
+</entity-mappings>

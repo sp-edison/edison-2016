@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom-sql>
+
+	<sql id="org.kisti.edison.service.persistence.Board.getCustomListBoard">
+	<![CDATA[
+		SELECT 			
+			B.boardSeq,			B.title,			B.content,			B.groupId,			B.writerId,
+			B.writerDate,		B.readCnt,			B.groupBoardSeq,	B.groupBoardTurn,	B.replyDepth,
+			B.popupYn,			B.popupStartDt,		B.popupEndDt,		B.insertId,			B.insertDt,
+			B.updateId,			B.updateDt,			B.customId,			B.siteGroup,
+			C.divCd,			C.titleNm,			C.ContentNm,		C.divNm,			C.fileUpLoadUseYn,
+			C.popupYn,			C.replyYn,
+			(SELECT COUNT(*) AS replyCount FROM EDCON_Board F WHERE F.groupBoardSeq = B.boardSeq) AS replyCount
+	]]>
+	</sql>	
+
+	<sql id="org.kisti.edison.service.persistence.Board.getCustomCountBoard">
+	<![CDATA[
+		SELECT 
+			COUNT(*) AS totalCount
+	]]>
+	</sql>
+	<sql id="org.kisti.edison.service.persistence.Board.getBoardCommon">
+	<![CDATA[
+		FROM
+			EDCON_BoardDiv_Board A
+				INNER JOIN EDCON_Board B ON B.boardSeq = A.boardSeq
+				INNER JOIN EDCON_BoardDiv C ON C.divCd = A.divCd
+				INNER JOIN User_ D ON D.userId = B.writerId
+		WHERE
+			C.divCd = #divCd#
+			AND B.groupBoardSeq = #groupBoardSeq#
+		
+		<isNotEmpty property="customId">	
+			AND B.customId = #customId#
+		</isNotEmpty>
+			
+		<isNotEmpty property="boardSeq">
+			AND B.boardSeq = #boardSeq#
+		</isNotEmpty>
+		<isEqual property="popupYn" propertyValue="1">
+			AND B.popupYn > 0
+			AND now() BETWEEN B.popupStartDt and B.popupEndDt
+		</isEqual>
+		<isNotEmpty property="searchValue">
+			AND 
+				(
+					B.title like '%@@searchValue@@%' 
+				OR	B.content like '%@@searchValue@@%' 
+				OR	D.screenName like '%@@searchValue@@%'
+				)
+		</isNotEmpty>
+			AND 
+				(
+					B.groupId = #groupId#
+					<isNotEmpty property="siteGroup">
+						OR B.siteGroup like '%@@siteGroup@@%'
+					</isNotEmpty>
+				)				
+	]]> 
+	</sql>
+	
+	<sql id="org.kisti.edison.service.persistence.Board.getBoard.where">
+	<![CDATA[
+		FROM
+			EDCON_BoardDiv_Board A
+				INNER JOIN EDCON_Board B ON B.boardSeq = A.boardSeq
+				INNER JOIN EDCON_BoardDiv C ON C.divCd = A.divCd
+				INNER JOIN User_ D ON D.userId = B.writerId
+		WHERE
+			C.divCd = #divCd#
+			AND B.groupBoardSeq = #groupBoardSeq#
+		
+		<isNotEmpty property="customId">	
+			AND B.customId = #customId#
+		</isNotEmpty>
+			
+		<isNotEmpty property="boardSeq">
+			AND B.boardSeq = #boardSeq#
+		</isNotEmpty>
+	]]> 
+	</sql>
+
+	<sql id="org.kisti.edison.service.persistence.Board.getBoardLimit">
+	<![CDATA[
+		ORDER BY writerDate DESC
+		LIMIT #begin#, #end#
+	]]>
+	</sql>	
+
+</custom-sql>

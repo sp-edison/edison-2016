@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<custom-sql>
+	<sql id="org.kisti.edison.science.service.persistence.ScienceAppFinder.getScienceAppExeSts" >
+	<![CDATA[
+		SELECT 
+			MONTH_DATA.month,		MONTH_DATA.monthCnt,
+			(
+				SELECT
+					COUNT(*)
+				FROM
+					EDSIM_SimulationJob A, EDSIM_Simulation D
+				WHERE
+					D.groupId = #groupId#
+				AND 
+					D.scienceAppId = #scienceAppId#
+				AND 
+					A.simulationUuid = D.simulationUuid
+				AND (
+						DATE_FORMAT(jobStartDt, '%Y-%m') < MONTH_DATA.month 
+					OR 
+						DATE_FORMAT(jobEndDt, '%Y-%m') < MONTH_DATA.month
+					)
+				AND A.testYn != "Y"
+			)AS preMonthCnt
+		FROM
+			(
+				SELECT
+					DATE_FORMAT(jobStartDt, '%Y-%m') AS month,		COUNT(*) AS monthCnt
+				FROM
+					EDSIM_SimulationJob A, EDSIM_Simulation D
+				WHERE
+					D.groupId = #groupId#
+				AND 
+					D.scienceAppId = #scienceAppId#
+				AND 
+					A.simulationUuid = D.simulationUuid
+				AND (
+				 		DATE_FORMAT(jobStartDt,'%Y-%m-%d') BETWEEN DATE_FORMAT(SUBDATE(NOW(),INTERVAL 12 MONTH),'%Y-%m-%d') AND DATE_FORMAT(NOW(),'%Y-%m-%d')
+					OR 
+						DATE_FORMAT(jobStartDt,'%Y-%m-%d') BETWEEN DATE_FORMAT(SUBDATE(NOW(),INTERVAL 12 MONTH), '%Y-%m-%d') AND DATE_FORMAT(NOW(), '%Y-%m-%d')
+					)
+				AND A.testYn != "Y"
+				GROUP BY DATE_FORMAT(jobStartDt, '%Y-%m')
+				ORDER BY jobStartDt
+			)AS MONTH_DATA
+	]]>		
+	</sql>
+
+</custom-sql>

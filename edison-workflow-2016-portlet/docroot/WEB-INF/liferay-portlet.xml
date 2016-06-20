@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!DOCTYPE liferay-portlet-app PUBLIC "-//Liferay//DTD Portlet Application 6.2.0//EN" "http://www.liferay.com/dtd/liferay-portlet-app_6_2_0.dtd">
+
+<liferay-portlet-app>
+  <portlet>
+    <portlet-name>edison-workflow</portlet-name>
+    <icon>/icon.png</icon>
+    <header-portlet-css>/css/workflow.css</header-portlet-css>
+    <header-portlet-css>/css/workflow-dev.css</header-portlet-css>
+    <header-portlet-css>/css/jquery/jquery-ui.min.css</header-portlet-css>
+	<header-portlet-css>/css/jquery/jquery-ui.theme.min.css</header-portlet-css>
+    <header-portlet-css>/css/jstree.css</header-portlet-css>
+    <header-portlet-css>/css/jquery.contextMenu.css</header-portlet-css>
+    <header-portlet-javascript>/js/lib/jquery.js</header-portlet-javascript>
+    <header-portlet-javascript>/js/lib/jstree.js</header-portlet-javascript>
+    <header-portlet-javascript>/js/lib/jsPlumb.js</header-portlet-javascript>
+    <header-portlet-javascript>/js/lib/jquery-ui.js</header-portlet-javascript>
+    <header-portlet-javascript>/js/lib/jquery-dateFormat.js</header-portlet-javascript>
+    <header-portlet-javascript>/js/lib/jquery.contextMenu.js</header-portlet-javascript>
+    <header-portlet-javascript>/js/lib/util.js</header-portlet-javascript>
+    <header-portlet-javascript>/js/lib/in_out_ports.js</header-portlet-javascript>
+    <footer-portlet-javascript>/js/main.js</footer-portlet-javascript>
+    <css-class-wrapper>edison-workflow-2016-portlet</css-class-wrapper>
+  </portlet>
+  <role-mapper>
+    <role-name>administrator</role-name>
+    <role-link>Administrator</role-link>
+  </role-mapper>
+  <role-mapper>
+    <role-name>guest</role-name>
+    <role-link>Guest</role-link>
+  </role-mapper>
+  <role-mapper>
+    <role-name>power-user</role-name>
+    <role-link>Power User</role-link>
+  </role-mapper>
+  <role-mapper>
+    <role-name>user</role-name>
+    <role-link>User</role-link>
+  </role-mapper>
+</liferay-portlet-app>

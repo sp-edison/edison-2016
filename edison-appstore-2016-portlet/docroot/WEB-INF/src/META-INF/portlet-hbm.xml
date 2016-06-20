@@ -1,0 +1,304 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-lazy="false" auto-import="false">
+	<import class="org.kisti.edison.science.model.CommonLib" />
+	<import class="org.kisti.edison.science.model.CommonModule" />
+	<import class="org.kisti.edison.science.model.DeveloperInfo" />
+	<import class="org.kisti.edison.science.model.DeveloperIp" />
+	<import class="org.kisti.edison.science.model.DeveloperRequest" />
+	<import class="org.kisti.edison.science.model.PortType" />
+	<import class="org.kisti.edison.science.model.PortTypeAnalyzerLink" />
+	<import class="org.kisti.edison.science.model.PortTypeEditorLink" />
+	<import class="org.kisti.edison.science.model.PortTypeInputdeckForm" />
+	<import class="org.kisti.edison.science.model.RequiredLib" />
+	<import class="org.kisti.edison.science.model.RequiredLibConfirm" />
+	<import class="org.kisti.edison.science.model.RequiredModule" />
+	<import class="org.kisti.edison.science.model.ScienceApp" />
+	<import class="org.kisti.edison.science.model.ScienceAppCategoryLink" />
+	<import class="org.kisti.edison.science.model.ScienceAppDescription" />
+	<import class="org.kisti.edison.science.model.ScienceAppFavorite" />
+	<import class="org.kisti.edison.science.model.ScienceAppInputPorts" />
+	<import class="org.kisti.edison.science.model.ScienceAppManager" />
+	<import class="org.kisti.edison.science.model.ScienceAppOutputPorts" />
+	<class name="org.kisti.edison.science.model.impl.CommonLibImpl" table="EDAPP_CommonLib">
+		<cache usage="read-write" />
+		<composite-id name="primaryKey" class="org.kisti.edison.science.service.persistence.CommonLibPK">
+			<key-property name="libName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+			<key-property name="libPath" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		</composite-id>
+		<property name="libraryVersion" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="cLibVer" access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="sysArch" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="kernelVer" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="org.kisti.edison.science.model.impl.CommonModuleImpl" table="EDAPP_CommonModule">
+		<cache usage="read-write" />
+		<id name="commonModuleId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="moduleName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="moduleVersion" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="org.kisti.edison.science.model.impl.DeveloperInfoImpl" table="EDAPP_DeveloperInfo">
+		<cache usage="read-write" />
+		<composite-id name="primaryKey" class="org.kisti.edison.science.service.persistence.DeveloperInfoPK">
+			<key-property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		</composite-id>
+		<property name="screenName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="firstName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="emailAddress" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="universityField" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="majorField" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="useStart" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="useEnd" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="developerSort" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="languageFortran" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="languageCpp" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="languagePython" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="languageJava" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="languageOther" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="languageOtherDescription" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="rem" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="agreementYn" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="writtenOathLogical" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="writtenOathPhysical" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="detailIp" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="detailOs" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="detailCpu" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="detailStorate" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="detailLibrary" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="insertId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="insertDate" type="org.hibernate.type.TimestampType" />
+		<property name="updateId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="updateDate" type="org.hibernate.type.TimestampType" />
+		<property name="etc" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="developerId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="developerPassword" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="org.kisti.edison.science.model.impl.DeveloperIpImpl" table="EDAPP_DeveloperIp">
+		<cache usage="read-write" />
+		<composite-id name="primaryKey" class="org.kisti.edison.science.service.persistence.DeveloperIpPK">
+			<key-property name="ipSeq" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		</composite-id>
+		<property name="ip1" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="ip2" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="ip3" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="ip4" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="insertId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="insertDate" type="org.hibernate.type.TimestampType" />
+		<property name="updateId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="updateDate" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class name="org.kisti.edison.science.model.impl.DeveloperRequestImpl" table="EDAPP_DeveloperRequest">
+		<cache usage="read-write" />
+		<composite-id name="primaryKey" class="org.kisti.edison.science.service.persistence.DeveloperRequestPK">
+			<key-property name="requestSeq" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		</composite-id>
+		<property name="requestSort" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="requestDate" type="org.hibernate.type.TimestampType" />
+		<property name="requestNote" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="requestStatus" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="processDate" type="org.hibernate.type.TimestampType" />
+		<property name="processNote" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="insertId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="insertDate" type="org.hibernate.type.TimestampType" />
+		<property name="updateId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="updateDate" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class name="org.kisti.edison.science.model.impl.PortTypeImpl" table="EDAPP_PortType">
+		<cache usage="read-write" />
+		<id name="portTypeId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="defaultEditorId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="defaultAnalyzerId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="dataType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="sampleFilePath" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="targetLanguage" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="status" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="org.kisti.edison.science.model.impl.PortTypeAnalyzerLinkImpl" table="EDAPP_PortTypeAnalyzerLink">
+		<cache usage="read-write" />
+		<id name="portTypeAnalyzerLinkId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="portTypeId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="analyzerId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+	<class name="org.kisti.edison.science.model.impl.PortTypeEditorLinkImpl" table="EDAPP_PortTypeEditorLink">
+		<cache usage="read-write" />
+		<id name="portTypeEditorLinkId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="portTypeId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="editorId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+	<class name="org.kisti.edison.science.model.impl.PortTypeInputdeckFormImpl" table="EDAPP_PortTypeInputdeckForm">
+		<cache usage="read-write" />
+		<id name="portTypeId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="inputdeckForm" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="org.kisti.edison.science.model.impl.RequiredLibImpl" table="EDAPP_RequiredLib">
+		<cache usage="read-write" />
+		<id name="requiredLibId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="libraryName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="libraryVersion" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="libraryType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="librarySrcPath" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="installScript" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="org.kisti.edison.science.model.impl.RequiredLibConfirmImpl" table="EDAPP_RequiredLibConfirm">
+		<cache usage="read-write" />
+		<composite-id name="primaryKey" class="org.kisti.edison.science.service.persistence.RequiredLibConfirmPK">
+			<key-property name="requiredLibId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="scienceAppId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		</composite-id>
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="requiredDate" type="org.hibernate.type.TimestampType" />
+		<property name="confirmDate" type="org.hibernate.type.TimestampType" />
+		<property name="libraryName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="libraryVersion" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="requiredContent" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="requiredState" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="confirmContent" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="org.kisti.edison.science.model.impl.RequiredModuleImpl" table="EDAPP_RequiredModule">
+		<cache usage="read-write" />
+		<id name="requiredModuleId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="moduleName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="moduleVersion" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="org.kisti.edison.science.model.impl.ScienceAppImpl" table="EDAPP_ScienceApp">
+		<cache usage="read-write" />
+		<id name="scienceAppId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="version" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="descriptionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="previousVersionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="iconId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="manualId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="exeFileName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="appType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="runType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="authorId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="stage" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="recentModifierId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="parallelModule" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="maxCpus" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="defaultCpus" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="statusDate" type="org.hibernate.type.TimestampType" />
+		<property name="openLevel" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="license" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="srcFileName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="targetLanguage" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="developers" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="editorType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="swTest" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="projectCategoryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+	<class name="org.kisti.edison.science.model.impl.ScienceAppCategoryLinkImpl" table="EDAPP_ScienceAppCategoryLink">
+		<cache usage="read-write" />
+		<id name="scienceAppCategoryLinkId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="categoryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="scienceAppId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="parentCategoryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+	<class name="org.kisti.edison.science.model.impl.ScienceAppDescriptionImpl" table="EDAPP_ScienceAppDescription">
+		<cache usage="read-write" />
+		<id name="descriptionId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="content" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="insertId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="insertDt" type="org.hibernate.type.TimestampType" />
+		<property name="updateId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="updateDt" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class name="org.kisti.edison.science.model.impl.ScienceAppFavoriteImpl" table="EDAPP_ScienceAppFavorite">
+		<cache usage="read-write" />
+		<composite-id name="primaryKey" class="org.kisti.edison.science.service.persistence.ScienceAppFavoritePK">
+			<key-property name="scienceAppId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		</composite-id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+	<class name="org.kisti.edison.science.model.impl.ScienceAppInputPortsImpl" table="EDAPP_ScienceAppInputPorts">
+		<cache usage="read-write" />
+		<id name="scienceAppId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="inputPorts" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="org.kisti.edison.science.model.impl.ScienceAppManagerImpl" table="EDAPP_ScienceAppManager">
+		<cache usage="read-write" />
+		<id name="scienceAppManagerId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="scienceAppId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="managerId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+	<class name="org.kisti.edison.science.model.impl.ScienceAppOutputPortsImpl" table="EDAPP_ScienceAppOutputPorts">
+		<cache usage="read-write" />
+		<id name="scienceAppId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="outputPorts" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd">
+	<persistence-unit-metadata>
+		<xml-mapping-metadata-complete/>
+		<persistence-unit-defaults>
+			<access>PROPERTY</access>
+		</persistence-unit-defaults>
+	</persistence-unit-metadata>
+	<mapped-superclass class="org.kisti.edison.multiboard.model.impl.BoardModelImpl">
+		<attributes>
+			<id name="boardSeq" />
+			<basic name="title" />
+			<basic name="content" />
+			<basic name="groupId" />
+			<basic name="customId" />
+			<basic name="writerId" />
+			<basic name="writerDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="readCnt" />
+			<basic name="groupBoardSeq" />
+			<basic name="groupBoardTurn" />
+			<basic name="replyDepth" />
+			<basic name="siteGroup" />
+			<basic name="popupYn" />
+			<basic name="popupStartDt">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="popupEndDt">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="insertId" />
+			<basic name="insertDt">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="updateId" />
+			<basic name="updateDt">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="contentCurrentLanguageId" />
+			<transient name="contentMap" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="titleCurrentLanguageId" />
+			<transient name="titleMap" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.kisti.edison.multiboard.model.impl.BoardDivModelImpl">
+		<attributes>
+			<id name="divCd" />
+			<basic name="titleNm" />
+			<basic name="ContentNm" />
+			<basic name="divNm" />
+			<basic name="fileUpLoadUseYn" />
+			<basic name="popupYn" />
+			<basic name="replyYn" />
+			<transient name="contentNmCurrentLanguageId" />
+			<transient name="contentNmMap" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="titleNmCurrentLanguageId" />
+			<transient name="titleNmMap" />
+		</attributes>
+	</mapped-superclass>
+	<entity class="org.kisti.edison.multiboard.model.impl.BoardImpl" name="Board">
+		<table name="EDCON_Board" />
+		<attributes />
+	</entity>
+	<entity class="org.kisti.edison.multiboard.model.impl.BoardDivImpl" name="BoardDiv">
+		<table name="EDCON_BoardDiv" />
+		<attributes />
+	</entity>
+</entity-mappings>

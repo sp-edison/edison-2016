@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-lazy="false" auto-import="false">
+	<import class="org.kisti.edison.multiboard.model.Board" />
+	<import class="org.kisti.edison.multiboard.model.BoardDiv" />
+	<class name="org.kisti.edison.multiboard.model.impl.BoardImpl" table="EDCON_Board">
+		<id name="boardSeq" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="content" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="customId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="writerId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="writerDate" type="org.hibernate.type.TimestampType" />
+		<property name="readCnt" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="groupBoardSeq" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="groupBoardTurn" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="replyDepth" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="siteGroup" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="popupYn" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="popupStartDt" type="org.hibernate.type.TimestampType" />
+		<property name="popupEndDt" type="org.hibernate.type.TimestampType" />
+		<property name="insertId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="insertDt" type="org.hibernate.type.TimestampType" />
+		<property name="updateId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="updateDt" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class name="org.kisti.edison.multiboard.model.impl.BoardDivImpl" table="EDCON_BoardDiv">
+		<id name="divCd" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="titleNm" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="ContentNm" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="divNm" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="fileUpLoadUseYn" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="popupYn" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="replyYn" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+	</class>
+</hibernate-mapping>

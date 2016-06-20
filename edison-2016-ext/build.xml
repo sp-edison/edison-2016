@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project name="edison-2016-ext" basedir="." default="deploy">
+	<import file="../build-common-ext.xml" />
+	<if>
+		<available file="docroot/WEB-INF/ext-web/docroot/WEB-INF/tld" type="dir"></available>
+		<then>
+			<copy todir="docroot/WEB-INF/ext-impl/classes/com/liferay/portal/deploy/dependencies/" verbose="${ant.copy.verbose}">
+				<fileset dir="docroot/WEB-INF/ext-web/docroot/WEB-INF/tld" includes="*.tld" />
+			</copy>
+		</then>
+	</if>
+</project>

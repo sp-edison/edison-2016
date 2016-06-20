@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd">
+	<persistence-unit-metadata>
+		<xml-mapping-metadata-complete/>
+		<persistence-unit-defaults>
+			<access>PROPERTY</access>
+		</persistence-unit-defaults>
+	</persistence-unit-metadata>
+	<mapped-superclass class="org.kisti.edison.content.model.impl.AdvancedContentModelImpl">
+		<id-class class="org.kisti.edison.content.service.persistence.AdvancedContentPK" />
+		<attributes>
+			<id name="contentSeq" />
+			<id name="groupId" />
+			<basic name="title" />
+			<basic name="resume" />
+			<basic name="contentFilePath" />
+			<basic name="contentFileNm" />
+			<basic name="contentStartFileNm" />
+			<basic name="serviceLanguage" />
+			<basic name="viewCnt" />
+			<basic name="insertId" />
+			<basic name="insertDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="updateId" />
+			<basic name="updateDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.kisti.edison.content.model.impl.GeneralContentModelImpl">
+		<id-class class="org.kisti.edison.content.service.persistence.GeneralContentPK" />
+		<attributes>
+			<id name="contentSeq" />
+			<id name="groupId" />
+			<basic name="contentDiv" />
+			<basic name="title" />
+			<basic name="downloadCnt" />
+			<basic name="serviceLanguage" />
+			<basic name="projectYn" />
+			<basic name="projectId" />
+			<basic name="insertId" />
+			<basic name="insertDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="updateId" />
+			<basic name="updateDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="titleCurrentLanguageId" />
+			<transient name="titleMap" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.kisti.edison.content.model.impl.OrgImgContentModelImpl">
+		<id-class class="org.kisti.edison.content.service.persistence.OrgImgContentPK" />
+		<attributes>
+			<id name="orgImgSeq" />
+			<id name="groupId" />
+			<basic name="order">
+				<column name="ORDER_" />
+			</basic>
+			<basic name="orgNm" />
+			<basic name="orgLink" />
+			<basic name="fileEntryId" />
+			<basic name="insertId" />
+			<basic name="insertDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="updateId" />
+			<basic name="updateDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<entity class="org.kisti.edison.content.model.impl.AdvancedContentImpl" name="AdvancedContent">
+		<table name="EDMED_AdvancedContent" />
+		<attributes />
+	</entity>
+	<entity class="org.kisti.edison.content.model.impl.GeneralContentImpl" name="GeneralContent">
+		<table name="EDMED_GeneralContent" />
+		<attributes />
+	</entity>
+	<entity class="org.kisti.edison.content.model.impl.OrgImgContentImpl" name="OrgImgContent">
+		<table name="EDMED_OrgImgContent" />
+		<attributes />
+	</entity>
+</entity-mappings>

@@ -1,0 +1,227 @@
+<?xml version="1.0"?>
+
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd">
+	<persistence-unit-metadata>
+		<xml-mapping-metadata-complete/>
+		<persistence-unit-defaults>
+			<access>PROPERTY</access>
+		</persistence-unit-defaults>
+	</persistence-unit-metadata>
+	<mapped-superclass class="org.kisti.edison.virtuallaboratory.model.impl.SurveyModelImpl">
+		<attributes>
+			<id name="surveySeqNo" />
+			<basic name="surveyUseYn" />
+			<basic name="surveyTitle" />
+			<basic name="surveyStartDate" />
+			<basic name="surveyEndDate" />
+			<basic name="surveyStatus" />
+			<basic name="surveyCreateDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="surveyTitleCurrentLanguageId" />
+			<transient name="surveyTitleMap" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.kisti.edison.virtuallaboratory.model.impl.SurveyAnswerModelImpl">
+		<attributes>
+			<id name="SurveyAnswerId" />
+			<basic name="userId" />
+			<basic name="virtualLabId" />
+			<basic name="classId" />
+			<basic name="subjectivityAnswer" />
+			<basic name="objecttivityAnswer" />
+			<basic name="answerDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="subjectivityAnswerCurrentLanguageId" />
+			<transient name="subjectivityAnswerMap" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.kisti.edison.virtuallaboratory.model.impl.SurveyQuestionModelImpl">
+		<attributes>
+			<id name="questionSeqNo" />
+			<basic name="questionDivCd" />
+			<basic name="questionTitle" />
+			<basic name="question1" />
+			<basic name="question2" />
+			<basic name="question3" />
+			<basic name="question4" />
+			<basic name="question5" />
+			<basic name="question6" />
+			<basic name="question7" />
+			<basic name="question8" />
+			<basic name="question9" />
+			<basic name="question10" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="question10CurrentLanguageId" />
+			<transient name="question10Map" />
+			<transient name="question1CurrentLanguageId" />
+			<transient name="question1Map" />
+			<transient name="question2CurrentLanguageId" />
+			<transient name="question2Map" />
+			<transient name="question3CurrentLanguageId" />
+			<transient name="question3Map" />
+			<transient name="question4CurrentLanguageId" />
+			<transient name="question4Map" />
+			<transient name="question5CurrentLanguageId" />
+			<transient name="question5Map" />
+			<transient name="question6CurrentLanguageId" />
+			<transient name="question6Map" />
+			<transient name="question7CurrentLanguageId" />
+			<transient name="question7Map" />
+			<transient name="question8CurrentLanguageId" />
+			<transient name="question8Map" />
+			<transient name="question9CurrentLanguageId" />
+			<transient name="question9Map" />
+			<transient name="questionTitleCurrentLanguageId" />
+			<transient name="questionTitleMap" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.kisti.edison.virtuallaboratory.model.impl.VirtualLabModelImpl">
+		<attributes>
+			<id name="virtualLabId" />
+			<basic name="groupId" />
+			<basic name="userId" />
+			<basic name="virtualLabPersonName" />
+			<basic name="virtualLabRequestDt">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="virtualLabConfirmDt">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="virtualLabConfirmDescription" />
+			<basic name="virtualLabStatus" />
+			<basic name="virtualLabTitle" />
+			<basic name="virtualLabDescription" />
+			<basic name="virtualLabUseYn" />
+			<basic name="virtualLabUniversityField" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+			<transient name="virtualLabDescriptionCurrentLanguageId" />
+			<transient name="virtualLabDescriptionMap" />
+			<transient name="virtualLabPersonNameCurrentLanguageId" />
+			<transient name="virtualLabPersonNameMap" />
+			<transient name="virtualLabTitleCurrentLanguageId" />
+			<transient name="virtualLabTitleMap" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.kisti.edison.virtuallaboratory.model.impl.VirtualLabClassModelImpl">
+		<attributes>
+			<id name="classId" />
+			<basic name="classTitle" />
+			<basic name="classStartDt" />
+			<basic name="classEndDt" />
+			<basic name="classUseYn" />
+			<basic name="classDescription" />
+			<basic name="classPersonnel" />
+			<basic name="classCreateDt">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="classUpdateDt">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="virtualClassCd" />
+			<transient name="classDescriptionCurrentLanguageId" />
+			<transient name="classDescriptionMap" />
+			<transient name="classTitleCurrentLanguageId" />
+			<transient name="classTitleMap" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.kisti.edison.virtuallaboratory.model.impl.VirtualLabClassScienceAppModelImpl">
+		<attributes>
+			<id name="scienceAppSeqNo" />
+			<basic name="scienceAppId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.kisti.edison.virtuallaboratory.model.impl.VirtualLabUserModelImpl">
+		<attributes>
+			<id name="virtualLabUserId" />
+			<basic name="userId" />
+			<basic name="userStudentNumber" />
+			<basic name="authRole" />
+			<basic name="userUseYn" />
+			<basic name="requestSort" />
+			<basic name="processNote" />
+			<basic name="processDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="createDt">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="updateDt">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+			<transient name="virtualLabUserUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.kisti.edison.virtuallaboratory.model.impl.VirtualLabUserTempModelImpl">
+		<id-class class="org.kisti.edison.virtuallaboratory.service.persistence.VirtualLabUserTempPK" />
+		<attributes>
+			<id name="seqNo" />
+			<id name="virtualLabId" />
+			<id name="classId" />
+			<basic name="userStudentNumber" />
+			<basic name="userName" />
+			<basic name="status" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<entity class="org.kisti.edison.virtuallaboratory.model.impl.SurveyImpl" name="Survey">
+		<table name="EDVIR_Survey" />
+		<attributes />
+	</entity>
+	<entity class="org.kisti.edison.virtuallaboratory.model.impl.SurveyAnswerImpl" name="SurveyAnswer">
+		<table name="EDVIR_SurveyAnswer" />
+		<attributes />
+	</entity>
+	<entity class="org.kisti.edison.virtuallaboratory.model.impl.SurveyQuestionImpl" name="SurveyQuestion">
+		<table name="EDVIR_SurveyQuestion" />
+		<attributes />
+	</entity>
+	<entity class="org.kisti.edison.virtuallaboratory.model.impl.VirtualLabImpl" name="VirtualLab">
+		<table name="EDVIR_VirtualLab" />
+		<attributes />
+	</entity>
+	<entity class="org.kisti.edison.virtuallaboratory.model.impl.VirtualLabClassImpl" name="VirtualLabClass">
+		<table name="EDVIR_VirtualLabClass" />
+		<attributes />
+	</entity>
+	<entity class="org.kisti.edison.virtuallaboratory.model.impl.VirtualLabClassScienceAppImpl" name="VirtualLabClassScienceApp">
+		<table name="EDVIR_VirtualLabClassScienceApp" />
+		<attributes />
+	</entity>
+	<entity class="org.kisti.edison.virtuallaboratory.model.impl.VirtualLabUserImpl" name="VirtualLabUser">
+		<table name="EDVIR_VirtualLabUser" />
+		<attributes />
+	</entity>
+	<entity class="org.kisti.edison.virtuallaboratory.model.impl.VirtualLabUserTempImpl" name="VirtualLabUserTemp">
+		<table name="EDVIR_VirtualLabUserTemp" />
+		<attributes />
+	</entity>
+</entity-mappings>

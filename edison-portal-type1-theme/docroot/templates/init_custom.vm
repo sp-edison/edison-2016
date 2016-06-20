@@ -1,0 +1,65 @@
+#*
+This file allows you to override and define new Velocity variables.
+*#
+#set ($css_class = "${css_class} edison ")
+
+#if($themeDisplay.getLanguageId()=="en_US")
+	#set ($infomation_text="Privacy Policy")
+#else
+	#set ($infomation_text="개인정보처리방침")
+#end
+
+
+#if($stringUtil.trim($stringUtil.toUpperCase($layout.getName('en_US')))=='HOME')
+	#set ($content_class ="content")
+	#set ($show_breadcrumbs = false)
+	
+	#set($singleValue = $paramUtil.getInteger($request,"p_p_id",0))
+	#if($singleValue=="58"||$singleValue=="1001"||$singleValue=="1004")
+		#set ($content_class ="content-sub")
+		#set ($show_breadcrumbs = true)
+	#end
+	
+	#set($ticketKey = $paramUtil.getString($request,"ticketKey",""))
+	#if($ticketKey!="")
+		#set ($content_class ="content-sub")
+		#set ($show_breadcrumbs = true)
+	#end
+#else
+	#set ($content_class ="content-sub")
+	#set ($show_breadcrumbs = true)
+#end
+
+#if ($is_signed_in)
+	#if(!$themeDisplay.getUser().isEmailAddressVerificationComplete())
+		#set ($content_class ="content-sub")
+		#set ($show_breadcrumbs = true)
+	#end
+	
+	#if($themeDisplay.getUser().isPasswordReset())
+		#set ($content_class ="content-sub")
+		#set ($show_breadcrumbs = true)
+	#end
+	
+	#foreach($role in $user.getRoles())
+		#if($role.getName() == "Temp User")
+			#set ($temp_user =true)
+		#end
+	#end
+#else	
+	#set($edisonLoginURL=$themeDisplay.getURLSignIn())
+#end
+
+
+#set ($browserErrorMsg = $languageUtil.format($locale, "edison-browser-not-support",""))
+#set ($browserErrorCompMsg = $languageUtil.format($locale, "edison-browser-not-support-compatibility",""))
+
+
+#if($permissionChecker.isOmniadmin()||$permissionChecker.isGroupAdmin($group_id))
+	#set ($dock_show=true)
+#else
+	#set ($dock_show=false)
+#end
+
+#set($privateInfoURL=$company_url+"/-/privateinfopolicy/view")
+#set($termOfUseURL=$company_url+"/-/termsofuse/view")

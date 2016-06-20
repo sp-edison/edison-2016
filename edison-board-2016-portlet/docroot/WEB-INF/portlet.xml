@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+
+<portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd" version="2.0">
+	<portlet>
+		<portlet-name>edison-multiboard</portlet-name>
+		<display-name>Edison Multi Board</display-name>
+		<portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+		<init-param>
+			<name>contextConfigLocation</name>
+			<value>/WEB-INF/src/org/kisti/edison/multiboard/controller/board/edison-board-portlet-portlet.xml</value>
+		</init-param>
+		<init-param>
+			<name>config-template</name>
+			<value>/WEB-INF/html/configuration.jsp</value>
+		</init-param>
+		<init-param>
+			<name>check-auth-token</name>
+			<value>false</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<portlet-info>
+			<title>Edison Multi Board</title>
+			<short-title>Edison Multi Board</short-title>
+			<keywords>Edison Multi Board</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	<portlet>
+		<portlet-name>edison-multitab</portlet-name>
+		<display-name>Edison Multi Tab</display-name>
+		<portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+		<init-param>
+			<name>contextConfigLocation</name>
+			<value>/WEB-INF/src/org/kisti/edison/multiboard/controller/multitab/edison-multi-tab-portlet.xml</value>
+		</init-param>
+		<init-param>
+			<name>config-template</name>
+			<value>/WEB-INF/html/multitab/configuration.jsp</value>
+		</init-param>
+		<init-param>
+			<name>check-auth-token</name>
+			<value>false</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<portlet-info>
+			<title>Edison Multi Tab</title>
+			<short-title>Edison Multi Tab</short-title>
+			<keywords>Edison Multi Tab</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+</portlet-app>

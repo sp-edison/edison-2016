@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="org.kisti.edison.model.SendMailContent">
+		<field name="sendMailId" type="long" />
+		<field name="userId" type="long" />
+		<field name="sendCount" type="int" />
+		<field name="successCount" type="int" />
+		<field name="failCount" type="int" />
+		<field name="sendDate" type="Date" />
+		<field name="siteGroup" type="String" />
+		<field name="userGroup" type="String" />
+		<field name="state" type="String" />
+		<field name="title" type="String" />
+		<field name="content" type="String" />
+	</model>
+</model-hints>

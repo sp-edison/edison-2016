@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<custom-sql>
+	<sql id="org.kisti.edison.service.persistence.DeveloperInfo.getListCustomDeveloperInfoSelect" >
+		<![CDATA[
+			SELECT 
+				C.*
+			FROM
+				(
+			]]>
+	</sql>
+
+	<sql id="org.kisti.edison.service.persistence.DeveloperInfo.getListCustomDeveloperInfoFrom" >
+		<![CDATA[
+			SELECT
+				A.userId,			
+				A.screenName,			
+				A.firstName,			
+				A.emailAddress,			
+				A.universityField,
+				A.majorField,		
+				A.useStart,				
+				A.useEnd,				
+				A.developerSort,		
+				A.languageFortran,
+				A.languageCpp,		
+				A.languagePython,		
+				A.languageJava,			
+				A.languageOther,		
+				A.languageOtherDescription,
+				A.rem,				
+				A.agreementYn,			
+				A.writtenOathLogical,	
+				A.writtenOathPhysical,	
+				A.detailIp,
+				A.detailOs,			
+				A.detailCpu,			
+				A.detailStorate,		
+				A.detailLibrary,
+				A.etc,
+				A.developerId,
+				A.developerPassword,
+				A.insertId,
+				A.insertDate,
+				A.updateId,
+				A.updateDate,
+				A.groupId,
+				B.requestSeq,		
+				B.requestSort,		
+				B.requestDate,			
+				B.requestNote,			
+				B.requestStatus,
+				B.processDate,		
+				B.processNote,
+				IF(B.requestStatus = 1202001,1,0) AS SORT_ORDER
+			FROM
+				EDAPP_DeveloperInfo A
+				INNER JOIN EDAPP_DeveloperRequest B ON A.userId = B.userId AND A.groupId = B.groupId
+				INNER JOIN (
+					SELECT D.userId, MAX(E.processDate) AS MaxProcessDate FROM EDAPP_DeveloperInfo D INNER JOIN EDAPP_DeveloperRequest E ON D.userId = E.userId WHERE D.groupId = :groupId GROUP BY userId
+				) F ON A.userId = F.userId AND B.processDate = F.MaxProcessDate
+			WHERE
+				A.groupId = :groupId ) C
+			]]>
+	</sql>
+
+	<sql id="org.kisti.edison.service.persistence.DeveloperInfo.getListCustomDeveloperInfoWhere1" >
+		<![CDATA[
+		WHERE
+			(
+				C.screenName like :search_field
+			OR
+				C.firstName like :search_field
+			OR
+				C.emailAddress like :search_field
+			)
+			]]>
+	</sql>
+
+	<sql id="org.kisti.edison.service.persistence.DeveloperInfo.getListCustomDeveloperInfoWhere2" >
+		<![CDATA[
+		AND
+			C.requestStatus = :select_status
+		]]>
+	</sql>
+
+	<sql id="org.kisti.edison.service.persistence.DeveloperInfo.getListCustomDeveloperInfoOrderBy" >
+		<![CDATA[
+		GROUP BY
+			userId
+		ORDER BY
+			C.SORT_ORDER DESC,C.requestDate DESC
+			]]>
+	</sql>
+
+	<sql id="org.kisti.edison.service.persistence.DeveloperInfo.getListCustomDeveloperInfoLimit" >
+		<![CDATA[
+			LIMIT
+				:begin , :end
+			]]>
+	</sql>
+	
+
+	<sql id="org.kisti.edison.service.persistence.DeveloperInfo.getCountCustomDeveloperInfo" >
+		<![CDATA[
+			SELECT
+				COUNT(*) AS CNT
+			FROM
+				EDAPP_DeveloperInfo A
+				INNER JOIN EDAPP_DeveloperRequest B ON A.userId = B.userId AND A.groupId = B.groupId 
+				INNER JOIN (
+					SELECT D.userId, MAX(E.processDate) AS MaxProcessDate FROM EDAPP_DeveloperInfo D INNER JOIN EDAPP_DeveloperRequest E ON D.userId = E.userId WHERE D.groupId = :groupId GROUP BY userId
+				) F ON A.userId = F.userId AND B.processDate = F.MaxProcessDate
+			WHERE
+				A.groupId = :groupId
+		]]>
+	</sql>
+
+	<sql id="org.kisti.edison.service.persistence.DeveloperInfo.getCountCustomDeveloperInfoWhere1" >
+		<![CDATA[
+		AND
+			(
+				A.screenName like :search_field
+			OR
+				A.emailAddress like :search_field
+			OR
+				A.firstName like :search_field
+			)
+		]]>
+	</sql>
+
+	<sql id="org.kisti.edison.service.persistence.DeveloperInfo.getCountCustomDeveloperInfoWhere2" >
+		<![CDATA[
+			AND
+			B.requestStatus = :select_status
+			]]>
+	</sql>
+
+	<sql id="org.kisti.edison.service.persistence.DeveloperInfo.getCustomDeveloperInfo" >
+		<![CDATA[
+		SELECT
+			A.userId,			A.screenName,			A.firstName,			A.emailAddress,			A.universityField,
+			A.majorField,		A.useStart,				A.useEnd,				A.developerSort,		A.languageFortran,
+			A.languageCpp,		A.languagePython,		A.languageJava,			A.languageOther,		A.languageOtherDescription,
+			A.rem,				A.agreementYn,			A.writtenOathLogical,	A.writtenOathPhysical,	A.detailIp,
+			A.detailOs,			A.detailCpu,			A.detailStorate,		A.detailLibrary, 			A.etc,
+			A.developerId,		A.developerPassword,	A.insertId,				A.insertDate,			A.updateId,
+			A.updateDate,		A.groupId,
+			B.requestSeq,		B.requestSort,			B.requestDate,			B.requestNote,			B.requestStatus,
+			B.processDate,		B.processNote,			B.groupId
+		FROM
+			EDAPP_DeveloperInfo A
+			INNER JOIN EDAPP_DeveloperRequest B ON A.userId = B.userId AND A.groupId = B.groupId 
+		WHERE
+				A.userId = B.userId
+			AND
+				A.groupId = :groupId
+			]]>
+	</sql>
+
+	<sql id="org.kisti.edison.service.persistence.DeveloperInfo.getCustomDeveloperInfoWhere" >
+		<![CDATA[
+				AND A.userId = :userId
+				AND requestSeq in (SELECT MAX(requestSeq) FROM EDAPP_DeveloperRequest WHERE userId = :userId AND groupId = :groupId)
+			]]>
+	</sql>
+
+	<sql id="org.kisti.edison.service.persistence.DeveloperInfo.getListCustomDeveloperIp" >
+		<![CDATA[
+		SELECT
+			ipSeq,			userId,			ip1,			ip2,			ip3,
+			ip4,			insertId,		insertDate,		updateId,		updateDate,
+			groupId
+		FROM
+			EDAPP_DeveloperIp
+		WHERE
+			userId =	:userId
+			AND
+			groupId = :groupId			
+		ORDER BY
+			ipSeq ASC
+			]]>
+	</sql>
+	
+	<sql id="org.kisti.edison.service.persistence.DeveloperInfo.getListCustomDeveloperRequest" >
+		<![CDATA[
+		SELECT
+			requestSeq,
+			userId,
+			requestSort,
+			requestDate,
+			requestNote,
+			requestStatus,
+			processDate,
+			processNote,
+			insertId,
+			insertDate,
+			updateId,
+			updateDate,
+			groupId
+		FROM
+			EDAPP_DeveloperRequest
+		WHERE
+			userId =	:userId
+				AND
+			groupId = :groupId
+		ORDER BY
+			insertDate DESC
+			]]>
+	</sql>
+	
+	<sql id="org.kisti.edison.service.persistence.DeveloperInfo.getDeveloperRequestStatus" >
+		<![CDATA[
+			SELECT
+				A.userId,			A.screenName,			A.firstName,			A.emailAddress,			A.universityField,
+				A.majorField,		A.useStart,				A.useEnd,				A.developerSort,		A.languageFortran,
+				A.languageCpp,		A.languagePython,		A.languageJava,			A.languageOther,		A.languageOtherDescription,
+				A.rem,				A.agreementYn,			A.writtenOathLogical,	A.writtenOathPhysical,	A.detailIp,
+				A.detailOs,			A.detailCpu,			A.detailStorate,		A.detailLibrary, 			A.etc,
+				A.developerId,		A.developerPassword,	A.insertId,				A.insertDate,			A.updateId,
+				A.updateDate,		A.groupId,
+				B.requestSeq,		B.requestSort,			B.requestDate,			B.requestNote,			B.requestStatus,
+				B.processDate,		B.processNote,			B.groupId
+			FROM
+				EDAPP_DeveloperRequest B
+				INNER JOIN EDAPP_DeveloperInfo A ON B.userId = A.userId AND B.groupId = A.groupId
+			WHERE
+				1=1
+				<isNotEmpty property="groupId">
+				AND
+				B.groupId = #groupId#
+				</isNotEmpty>
+				<isNotEmpty property="userId">
+				AND
+				B.userId = #userId#
+				</isNotEmpty>
+				<isNotEmpty property="requestStatus0">
+				AND
+				B.requestStatus = #requestStatus0#
+				</isNotEmpty>
+				<isNotEmpty property="requestStatus1">
+				OR
+				B.requestStatus = #requestStatus1#
+				</isNotEmpty>
+				
+		]]>
+	</sql>
+	
+	
+	
+	<sql id="org.kisti.edison.service.persistence.DeveloperInfo.getCountDeveloperRequestStatus" >
+		<![CDATA[
+			SELECT
+				COUNT(*) AS totalCount
+			FROM
+				EDAPP_DeveloperRequest B
+				INNER JOIN EDAPP_DeveloperInfo A ON B.userId = A.userId AND B.groupId = A.groupId
+			WHERE
+				1=1
+				<isNotEmpty property="groupId">
+				AND
+				B.groupId = #groupId#
+				</isNotEmpty>
+				<isNotEmpty property="userId">
+				AND
+				B.userId = #userId#
+				</isNotEmpty>
+				<isNotEmpty property="requestStatus0">
+				AND
+				B.requestStatus = #requestStatus0#
+				</isNotEmpty>
+				<isNotEmpty property="requestStatus1">
+				OR
+				B.requestStatus = #requestStatus1#
+				</isNotEmpty>
+				
+		]]>
+	</sql>
+	
+	<sql id="org.kisti.edison.service.persistence.DeveloperInfo.getCountRequestInfo">
+		<![CDATA[
+			SELECT
+				(
+				SELECT
+					COUNT(*)
+				FROM 
+					EDAPP_DeveloperRequest A 
+				WHERE
+					A.requestStatus = #developerStatus#
+					<isNotEmpty property="groupId">
+					AND 
+					A.groupId = #groupId# 
+					</isNotEmpty>
+				) AS developerRequestCount,
+				(
+				SELECT 
+					COUNT(*) 
+				FROM 
+					EDVIR_VirtualLab B 
+				WHERE
+					B.virtualLabStatus = #virtualLabStatus#
+					<isNotEmpty property="groupId">
+					AND
+					B.groupId = #groupId# 
+					</isNotEmpty>
+				) AS virtualLabRequestCount
+				<isNotEmpty property="libRequestStatus">
+					,(
+					SELECT COUNT(*)
+					FROM
+		  				EDAPP_RequiredLibConfirm A, EDAPP_ScienceApp B
+		  			WHERE  
+		  				A.scienceAppId = B.scienceAppId
+	  				 	AND
+	  	  				A.requiredState = #libRequestStatus#
+					) AS libRequestCount
+				</isNotEmpty>
+				,(
+				SELECT COUNT(*)
+				FROM 
+					EDAPP_DeveloperRequest A 
+				WHERE
+					A.requestStatus = #developerDeleteStatus#
+					<isNotEmpty property="groupId">
+					AND 
+					A.groupId = #groupId# 
+					</isNotEmpty>
+				) AS developerDeleteCount
+		]]>
+	</sql>
+</custom-sql>

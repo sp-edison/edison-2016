@@ -1,0 +1,24 @@
+.jstree-node,
+.jstree-children,
+.jstree-container-ul {
+  display: block;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  list-style-image: none;
+}
+.jstree .jstree-open > .jstree-children {
+  display: block;
+}
+.jstree .jstree-closed > .jstree-children,
+.jstree .jstree-leaf > .jstree-children {
+  display: none;
+}
+.jstree-hidden,
+.jstree-node.jstree-hidden {
+  display: none;
+}
+.jstree-default .jstree-search {
+  font-style: italic;
+  font-weight: bold;
+}

@@ -1,0 +1,81 @@
+/***************INPUTDECKEDITOR**************************/
+.mainContent input[type="text"]{
+  margin: 0 5px;
+  width: 30px;
+  font-family: sans-serif;
+  font-size: 15px;
+  appearance: none;
+  box-shadow: none;
+  border-radius: none;
+}
+.mainContent input[type="text"]:focus {
+  outline: none;
+}
+
+.mainContent{
+	width: 100%;
+	padding: 0px;
+}
+
+.mainContent h3{
+	background-color: #555;
+	padding-left: 20px;
+	color: #FFF;
+}
+
+.mainContent table{
+	width: 100%;
+}
+
+.mainContent td{
+	padding : 7px 3px;
+}
+
+.submitDiv 
+{
+	padding:0px;
+	margin-top:0px;	
+}
+
+.submitDiv input[type="button"]
+{
+	float: right;
+	display:none;
+	width:150px;
+	height:30px;
+	margin-left: 10px;
+}
+
+.jsonFormDiv{
+	padding: 0px 10px;
+}
+
+/***************INPUTDECKVIEWER**************************/
+.listContent
+{
+	width: 50%;
+	padding: 0px;
+	float: left;
+}
+.viewerContent
+{
+	width: 50%;
+	padding: 0px;
+	float: right;
+}
+
+/***************INPUTDECKVIEWER**************************/
+.stringInputText{
+	width: 100%;
+}
+/****************button**************************/
+.cancelBtn input[type="button"], .confirmBtn input[type="button"]
+{
+	display:none;
+	float:left;
+	width:150px;
+	height:30px;
+	font-size: 15px;
+	padding:0px;
+	margin-top:0px;	
+}

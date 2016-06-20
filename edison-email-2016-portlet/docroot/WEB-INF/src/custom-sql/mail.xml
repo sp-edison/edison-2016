@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom-sql>
+
+	<sql id="org.kisti.edison.service.persistence.SendMailContentFinder.getListSentMail.header">
+	<![CDATA[
+		SELECT 
+			A.sendMailId, A.userId, A.sendCount, A.successCount,A.failCount, A.sendDate, 
+			A.siteGroup, A.userGroup, A.state_, A.title, A.content, B.screenName
+		FROM
+			EDMAIL_SendMailContent A, User_ B	
+	]]>
+	</sql>	
+
+	<sql id="org.kisti.edison.service.persistence.SendMailContentFinder.getCountSentMail.header">
+	<![CDATA[
+		SELECT 
+			COUNT(*) AS totalCount
+		FROM
+			EDMAIL_SendMailContent A, User_ B	
+	]]>
+	</sql>
+	<sql id="org.kisti.edison.service.persistence.SendMailContentFinder.getListSentMail.where">
+	<![CDATA[
+		WHERE
+			A.userId = B.UserId 
+		<isNotEmpty property="searchValue">
+			AND 
+				(
+					A.title like '%@@searchValue@@%' 
+				OR	A.content like '%@@searchValue@@%' 
+				OR	B.screenName like '%@@searchValue@@%'
+				)
+		</isNotEmpty>
+		
+		ORDER BY A.sendDate DESC
+				
+		<isNotEmpty property="begin">
+		  LIMIT
+			#begin#, #end#
+		</isNotEmpty>
+	]]> 
+	</sql>
+</custom-sql>

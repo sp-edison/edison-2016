@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
+<service-builder package-path="org.kisti.edison.content">
+	<author>EDISON</author>
+	<namespace>EDMED</namespace>
+	
+	<entity name="AdvancedContent" local-service="true">
+		<!-- Primary Key -->
+		<column name="contentSeq" type="long" primary="true"></column>
+		<column name="groupId" type="long" primary="true"></column>
+		
+		<!-- Other -->
+		<column name="title" type="String"></column>
+		<column name="resume" type="String"></column>
+		<column name="contentFilePath" type="String"></column>
+		<column name="contentFileNm" type="String"></column>
+		<column name="contentStartFileNm" type="String"></column>
+		<column name="serviceLanguage" type="String"></column>
+		<column name="viewCnt" type="long"></column>
+		<column name="insertId" type="long"></column>
+		<column name="insertDate" type="Date"></column>
+		<column name="updateId" type="long"></column>
+		<column name="updateDate" type="Date"></column>
+		
+		<!-- Order By -->
+		<order by="desc">
+			<order-column name="contentSeq"/>
+		</order>
+		
+		<!-- Finder -->
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		
+		<finder name="GroupIdSeriveLang" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="serviceLanguage" />
+		</finder>
+	</entity>
+	
+	
+	<entity name="GeneralContent" local-service="true">
+		<!-- Primary Key -->
+		<column name="contentSeq" type="long" primary="true"></column>
+		<column name="groupId" type="long" primary="true"></column>
+		
+		<!-- Other -->
+		<column name="contentDiv" type="long" ></column>
+		<column name="title" type="String" localized="true"></column>
+		<column name="downloadCnt" type="long"></column>
+		<column name="serviceLanguage" type="String"></column>
+		<column name="projectYn" type="String"></column>
+		<column name="projectId" type="long"></column>
+		<column name="insertId" type="long"></column>
+		<column name="insertDate" type="Date"></column>
+		<column name="updateId" type="long"></column>
+		<column name="updateDate" type="Date"></column>
+		
+		<!-- Order By -->
+		<order by="desc">
+			<order-column name="contentSeq"/>
+		</order>
+		
+		<!-- Finder -->
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId"/>
+		</finder>
+		
+		<finder name="ContentSeq" return-type="Collection">
+			<finder-column name="contentSeq"/>
+		</finder>
+		
+		<finder name="ContentDiv" return-type="Collection">
+			<finder-column name="groupId"/>
+			<finder-column name="contentDiv" />
+		</finder>
+	</entity>
+	
+	
+	
+	
+	<entity name="OrgImgContent" local-service="true">
+		<!-- Primary Key -->
+		<column name="orgImgSeq" type="long" primary="true"></column>
+		<column name="groupId" type="long" primary="true"></column>
+		
+		<!-- Other -->
+		<column name="order" type="long"></column>
+		<column name="orgNm" type="String"></column>
+		<column name="orgLink" type="String"></column>
+		<column name="fileEntryId" type="long"></column>
+		<column name="insertId" type="long"></column>
+		<column name="insertDate" type="Date"></column>
+		<column name="updateId" type="long"></column>
+		<column name="updateDate" type="Date"></column>
+		
+		<!-- Order By -->
+		<order by="asc">
+			<order-column name="order"/>
+		</order>
+		
+		<!-- Finder -->
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId"/>
+		</finder>
+	</entity>
+</service-builder>

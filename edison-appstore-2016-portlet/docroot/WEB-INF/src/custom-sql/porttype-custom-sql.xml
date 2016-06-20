@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom-sql>
+	<sql id="org.kisti.edison.science.service.persistence.PortTypeFinder.retrieveListPortType.header" >
+		<![CDATA[
+		SELECT
+			A.*,
+			COUNT(B.portTypeEditorLinkId) AS editorCnt,
+			COUNT(C.portTypeAnalyzerLinkId) AS analyzerCnt,
+			COUNT(D.portTypeId) AS inputdeckCnt
+		FROM EDAPP_PortType A 
+			LEFT OUTER JOIN EDAPP_PortTypeEditorLink B ON A.companyId = B.companyId AND A.portTypeId = B.portTypeId
+			LEFT OUTER JOIN EDAPP_PortTypeAnalyzerLink C ON A.companyId = C.companyId AND A.portTypeId = C.portTypeId
+			LEFT OUTER JOIN EDAPP_PortTypeInputdeckForm D ON A.portTypeId = D.portTypeId
+		]]>
+	</sql>
+	
+	<sql id="org.kisti.edison.science.service.persistence.PortTypeFinder.countPortType.header" >
+		<![CDATA[
+		SELECT 
+			COUNT(*) AS totalCnt
+		FROM EDAPP_PortType A
+      ]]>
+    </sql>
+    
+	<sql id="org.kisti.edison.science.service.persistence.PortTypeFinder.portType.where" >
+		<![CDATA[
+		WHERE
+		<isNotEmpty property="companyId">
+			A.companyId = #companyId#
+		</isNotEmpty>
+		<isNotEmpty property="targetLanguage">
+		AND
+			A.targetLanguage LIKE '%@@targetLanguage@@%'
+		</isNotEmpty>
+		<isNotEmpty property="searchName">
+		AND 
+			A.name LIKE '%@@searchName@@%'
+		</isNotEmpty>
+		
+		<isNotEmpty property="selectPortType">
+			GROUP BY A.portTYpeId
+			ORDER BY A.name
+		</isNotEmpty>
+		
+		<isNotEmpty property="begin">
+			LIMIT
+				#begin#, #end#
+		</isNotEmpty>
+		]]>
+	</sql>
+	
+	<sql id="org.kisti.edison.science.service.persistence.PortTypeEditorLinkFinder.retrieveListPortTypeEditorLink" >
+		<![CDATA[
+		SELECT 
+			A.*,B.name 
+		FROM
+			EDAPP_PortTypeEditorLink A, EDAPP_ScienceApp B
+		WHERE
+		<isNotEmpty property="companyId">
+			A.companyId = #companyId#
+		</isNotEmpty>
+		
+		<isNotEmpty property="portTypeId">
+			AND
+				A.portTypeId = #portTypeId#
+		</isNotEmpty>
+		AND
+			A.companyId = B.companyId
+		AND
+			A.editorId = B.scienceAppId
+		]]>
+	</sql>
+	
+	
+	<sql id="org.kisti.edison.science.service.persistence.PortTypeEditorLinkFinder.retrieveListPortTypeEditorLink" >
+		<![CDATA[
+		SELECT 
+			A.*,B.name 
+		FROM
+			EDAPP_PortTypeEditorLink A, EDAPP_ScienceApp B
+		WHERE
+		<isNotEmpty property="companyId">
+			A.companyId = #companyId#
+		</isNotEmpty>
+		
+		<isNotEmpty property="portTypeId">
+			AND
+				A.portTypeId = #portTypeId#
+		</isNotEmpty>
+		AND
+			A.companyId = B.companyId
+		AND
+			A.editorId = B.scienceAppId
+		]]>
+	</sql>
+	
+	
+	<sql id="org.kisti.edison.science.service.persistence.PortTypeAnalyzerLinkFinder.retrieveListPortTypeAnalyzerLink" >
+		<![CDATA[
+		SELECT 
+			A.*,B.name 
+		FROM
+			EDAPP_PortTypeAnalyzerLink A, EDAPP_ScienceApp B
+		WHERE
+		<isNotEmpty property="companyId">
+			A.companyId = #companyId#
+		</isNotEmpty>
+		
+		<isNotEmpty property="portTypeId">
+			AND
+				A.portTypeId = #portTypeId#
+		</isNotEmpty>
+		AND
+			A.companyId = B.companyId
+		AND
+			A.analyzerId = B.scienceAppId
+		]]>
+	</sql>
+    <sql id="org.kisti.edison.science.service.persistence.PortTypeEditorLinkFinder.retrieveListPortTypeEditorLink.header" >
+      SELECT
+        A.*,
+        B.*
+      FROM EDAPP_PortTypeEditorLink A, EDAPP_ScienceApp B
+    </sql>
+	<sql id="org.kisti.edison.science.service.persistence.PortTypeEditorLinkFinder.retrieveListPortTypeEditorLink.where" >
+      WHERE A.portTypeId = #portTypeId#
+      AND A.editorId = B.scienceAppId
+      AND A.companyId = B.companyId
+    </sql>
+    <sql id="org.kisti.edison.science.service.persistence.PortTypeAnalyzerLinkFinder.retrieveListPortTypeAnalyzerLink.header" >
+      SELECT
+        A.*,
+        B.*
+      FROM EDAPP_PortTypeAnalyzerLink A, EDAPP_ScienceApp B
+    </sql>
+	<sql id="org.kisti.edison.science.service.persistence.PortTypeAnalyzerLinkFinder.retrieveListPortTypeAnalyzerLink.where" >
+      WHERE A.portTypeId = #portTypeId#
+      AND A.analyzerId = B.scienceAppId
+      AND A.companyId = B.companyId
+    </sql>
+	
+</custom-sql>

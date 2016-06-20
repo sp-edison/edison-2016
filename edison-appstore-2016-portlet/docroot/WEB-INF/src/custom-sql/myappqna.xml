@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<custom-sql>
+	<sql id="org.kisti.edison.science.service.persistence.ScienceAppFinder.getListMyAppQna" >
+	<![CDATA[
+		SELECT
+			AA.boardSeq, AA.title, AA.content, AA.writerId, AA.writerDate, AA.readCnt, AA.groupBoardSeq, AA.replyCount, AA.groupId
+		FROM
+		(
+		SELECT 
+			B.boardSeq, B.title, B.content, B.writerId, B.writerDate, B.readCnt, B.groupBoardSeq, B.groupId,
+			(select COUNT(*) from EDCON_Board C where C.groupBoardSeq = B.boardSeq) AS replyCount,
+			(select COUNT(*) from EDCON_Board C where C.groupBoardSeq = B.boardSeq AND C.writerId = #userId#) AS answerCount
+		FROM
+			EDCON_Board B
+		WHERE
+			B.customId = 'solver_@@solverId@@'
+			AND
+			B.groupBoardSeq = 0
+		) AS AA
+		WHERE
+			AA.answerCount = 0
+	]]>
+	</sql>
+
+	<sql id="org.kisti.edison.science.service.persistence.ScienceAppFinder.getMyAppListWithQna" >
+	<![CDATA[
+	<isNotEmpty property="parentCategoryId">
+		SELECT 
+			E.*
+		FROM
+		(
+	</isNotEmpty>	
+			SELECT 
+				A.*,
+				if(C.boardSeq IS NULL,0,SUM((SELECT if(COUNT(*)>0,0,1) FROM EDCON_Board D WHERE D.groupBoardSeq = C.boardSeq AND D.groupId = C.groupId)))AS answerCount
+			FROM
+				EDAPP_ScienceApp A
+				LEFT OUTER JOIN EDCON_Board C ON C.groupBoardSeq = 0 AND C.groupId = A.groupId AND C.customId = CONCAT('solver_',A.scienceAppId)
+				LEFT OUTER JOIN EDAPP_ScienceAppManager B  ON A.scienceAppId = B.scienceAppId
+			WHERE
+				A.status = 1901004
+				AND 
+				( A.authorId = #userId# OR B.managerId = #userId# )
+				AND A.appType = 'Solver'
+			GROUP BY A.scienceAppId
+	<isNotEmpty property="parentCategoryId">	
+		)E
+		INNER JOIN EDAPP_ScienceAppCategoryLink D  ON E.scienceAppId = D.scienceAppId
+		WHERE
+			D.parentCategoryId IN (#parentCategoryId#)
+		GROUP BY E.scienceAppId		
+	</isNotEmpty>
+	]]>	
+	</sql>
+	
+	<sql id="org.kisti.edison.science.service.persistence.ScienceAppFinder.getMyAppListForProject" >
+	<![CDATA[
+			SELECT 
+				APP.*
+			FROM
+				EDAPP_ScienceApp APP
+				LEFT OUTER JOIN EDAPP_ScienceAppManager MANAGER  ON APP.scienceAppId = MANAGER.scienceAppId
+				INNER JOIN User_ USERS on APP.authorId = USERS.userId
+			WHERE
+			<isNotEmpty property="appStatus">
+				APP.status = #appStatus#
+				AND 
+			</isNotEmpty>
+			<isNotEmpty property="userId">
+				( APP.authorId = #userId# OR MANAGER.managerId = #userId# )
+				AND 
+			</isNotEmpty>
+					APP.appType = 'Solver'
+			<isNotEmpty property="searchText">
+			AND	
+			(ExtractValue(APP.title, 'root/Title[@language-id="@@languageId@@"]') LIKE '%@@searchText@@%' OR USERS.firstName LIKE '%@@searchText@@%')
+			</isNotEmpty>
+			<isNotEmpty property="projectCategoryId">
+			AND	 APP.projectCategoryId = #projectCategoryId#
+			</isNotEmpty>
+			<isNotEmpty property="begin">
+				Limit #begin#, #end#
+			</isNotEmpty>
+		
+		
+	]]>		
+	</sql>
+	
+	<sql id="org.kisti.edison.science.service.persistence.ScienceAppFinder.getMyAppListForProjectCount" >
+	<![CDATA[
+			SELECT 
+				COUNT(*) AS totalCnt
+			FROM
+				EDAPP_ScienceApp APP
+				LEFT OUTER JOIN EDAPP_ScienceAppManager MANAGER  ON APP.scienceAppId = MANAGER.scienceAppId
+				INNER JOIN User_ USERS on APP.authorId = USERS.userId
+			WHERE
+			<isNotEmpty property="appStatus">
+				APP.status = #appStatus#
+				AND 
+			</isNotEmpty>
+			<isNotEmpty property="userId">
+				( APP.authorId = #userId# OR MANAGER.managerId = #userId# )
+				AND 
+			</isNotEmpty>
+					APP.appType = 'Solver'
+			
+			<isNotEmpty property="searchText">
+			AND	
+			(ExtractValue(APP.title, 'root/Title[@language-id="@@languageId@@"]') LIKE '%@@searchText@@%' OR USERS.firstName LIKE '%@@searchText@@%')
+			</isNotEmpty>
+			
+			<isNotEmpty property="projectCategoryId">
+			AND	 APP.projectCategoryId = #projectCategoryId#
+			</isNotEmpty>
+		
+	]]>		
+	</sql>
+
+</custom-sql>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
+<service-builder package-path="org.kisti.edison.project">
+	<author>EDISON</author>
+	<namespace>EDPRJ</namespace>
+
+	<entity name="HistoryScienceApp" local-service="true" >
+		<column name="scienceAppId" type="long" primary="true"></column>
+		<column name="groupId" type="long" primary="true"></column>
+		<column name="projectCategoryId" type="long" primary="true"></column>
+		
+		<column name="title" type="String" localized="true"></column>
+		<column name="version" type="String"></column>
+		<column name="name" type="String" localized="true"></column>
+		<column name="affiliation_id" type="String"></column>
+		<column name="AppStatus" type="String"></column>
+		<column name="userId" type="long"></column>
+		<column name="insertDate" type="Date"></column>
+	</entity>
+	
+	<entity name="HistoryContent" local-service="true">
+		<column name="contentSeq" type="long" primary="true"></column>
+		<column name="groupId" type="long" primary="true"></column>
+		<column name="projectCategoryId" type="long" primary="true"></column>
+		
+		<column name="contentDiv" type="long"></column>
+		<column name="title" type="String" localized="true"></column>
+		<column name="insertId" type="long"></column>
+		<column name="insertDate" type="Date"></column>
+		<column name="updateId" type="long"></column>
+		<column name="updateDate" type="Date"></column>
+	</entity>
+	
+	<entity name="HistoryAppSimulation" local-service="true" >
+		<column name="scienceAppId" type="long" primary="true"></column>
+		<column name="groupId" type="long" primary="true"></column>
+		<column name="projectCategoryId" type="long" primary="true"></column>
+		
+		<column name="title" type="String" localized="true"></column>
+		<column name="version" type="String"></column>
+		<column name="name" type="String" localized="true"></column>
+		<column name="affiliation_id" type="String"></column>
+		<column name="AppStatus" type="String"></column>
+		<column name="userId" type="long"></column>
+		<column name="runtime" type="long"></column>
+		<column name="executeCount" type="long"></column>
+		<column name="averageRuntime" type="long"></column>
+		<column name="userCount" type="long"></column>
+		<column name="insertDate" type="Date"></column>
+	</entity>
+	
+	
+</service-builder>

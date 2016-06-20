@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom-sql >
+	<sql file="custom-sql/workspace.xml"/>
+	<sql file="custom-sql/scienceapp-custom-sql.xml"/>
+	<sql file="custom-sql/porttype-custom-sql.xml"/>
+	<sql file="custom-sql/statistics.xml"/>
+	<sql file="custom-sql/myappqna.xml"/>
+	<sql file="custom-sql/requiredLibrary.xml"/>
+	<sql file="custom-sql/appmanager.xml"/>
+	<sql file="custom-sql/commonlib-custom-sql.xml"/>
+</custom-sql >

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom-sql>
+
+	<sql id="org.kisti.edison.service.persistence.getClassVirtualLabId">
+	<![CDATA[
+		SELECT
+			A.virtualLabId
+		FROM
+			EDVIR_VirtualLab A
+			INNER JOIN EDVIR_VirtualLabs_VirtualLabClasses B ON A.virtualLabId = B.virtualLabId
+			INNER JOIN EDVIR_VirtualLabClass C ON B.classId = C.classId
+		WHERE
+			C.classId = #classId#
+	]]>
+	</sql>
+	
+		
+	<sql id="org.kisti.edison.service.persistence.getSiteLeaveOwnerTotalCnt">
+	<![CDATA[
+		SELECT 
+			appOwnerCnt,
+			contentOwnerCnt,
+			labOwnerCnt,
+			classOwnerCnt
+		FROM(
+			SELECT 
+				(SELECT count(app.authorId) FROM EDAPP_ScienceApp app WHERE users.userId = app.authorId AND app.groupId = #groupId#) appOwnerCnt,
+				(SELECT count(content.insertId) FROM EDMED_GeneralContent content WHERE users.userId = content.insertId  AND content.groupId = #groupId#) contentOwnerCnt,
+				(SELECT count(A.virtualLabId)
+					FROM(
+							SELECT 
+								lab.virtualLabId, customRole.userId
+							FROM EDAUT_UserGroupRoleCustom customRole
+								INNER JOIN EDVIR_VirtualLab lab on customRole.customId = lab.virtualLabId AND customRole.roleId = #labRoleId# AND customRole.groupId = #groupId#
+						)A 
+					WHERE users.userId = A.userId 
+				) labOwnerCnt,
+				(SELECT count(A.classId)
+					FROM(
+							SELECT 
+								customRole.userId, class.classId
+							FROM EDAUT_UserGroupRoleCustom customRole
+								INNER JOIN EDVIR_VirtualLabClass class on customRole.customId = class.classId AND customRole.roleId = #classRoleId#  AND customRole.groupId = #groupId#
+						)A 
+					WHERE users.userId = A.userId 
+				) classOwnerCnt
+			FROM User_ users
+			WHERE users.userId = #userId#
+		)A
+
+	]]>
+	</sql>
+	
+	
+	
+		
+	<sql id="org.kisti.edison.service.persistence.getContentAuthJoinSelect">
+	<![CDATA[
+		SELECT 
+			customRole.userId,
+			customRole.groupId,
+			content.contentSeq,
+			content.contentDiv,
+			EXTRACTVALUE(content.title, 'root/Title[@language-id="@@languageId@@"]') title
+		FROM 
+			EDAUT_UserGroupRoleCustom customRole
+			INNER JOIN EDMED_GeneralContent content on customRole.customId = content.contentSeq
+	]]>
+	</sql>	
+	<sql id="org.kisti.edison.service.persistence.getVirtualLabAuthJoinSelect">
+	<![CDATA[
+		SELECT 
+			customRole.userId,
+			customRole.groupId,
+			EXTRACTVALUE(lab.virtualLabPersonName, 'root/VirtualLabPersonName[@language-id="@@languageId@@"]') virtualLabPersonName,
+			EXTRACTVALUE(lab.virtualLabTitle, 'root/VirtualLabTitle[@language-id="@@languageId@@"]') virtualLabTitle
+		FROM 
+			EDAUT_UserGroupRoleCustom customRole
+			INNER JOIN EDVIR_VirtualLab lab on customRole.customId = lab.virtualLabId
+	]]>
+	</sql>	
+	<sql id="org.kisti.edison.service.persistence.getVirtualClassAuthJoinSelect">
+	<![CDATA[
+		SELECT 
+			customRole.userId,
+			customRole.groupId,
+			EXTRACTVALUE(class.classTitle, 'root/ClassTitle[@language-id="@@languageId@@"]') classTitle
+		FROM
+			EDAUT_UserGroupRoleCustom customRole
+			INNER JOIN EDVIR_VirtualLabClass class on customRole.customId = class.classId
+	]]>
+	</sql>	
+	
+	<sql id="org.kisti.edison.service.persistence.getAuthWhere">
+	<![CDATA[
+		WHERE 
+				customRole.userId = #userId#
+			AND customRole.roleId = #roleId#
+			AND customRole.groupId = #groupId#
+	]]>
+	</sql>	
+
+</custom-sql>

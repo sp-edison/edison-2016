@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<bean id="org.kisti.edison.multiboard.service.BoardLocalService" class="org.kisti.edison.multiboard.service.impl.BoardLocalServiceImpl" />
+	<bean id="org.kisti.edison.multiboard.service.BoardService" class="org.kisti.edison.multiboard.service.impl.BoardServiceImpl" />
+	<bean id="org.kisti.edison.multiboard.service.persistence.BoardPersistence" class="org.kisti.edison.multiboard.service.persistence.BoardPersistenceImpl" parent="basePersistence" />
+	<bean id="org.kisti.edison.multiboard.service.persistence.BoardFinder" class="org.kisti.edison.multiboard.service.persistence.BoardFinderImpl" parent="basePersistence" />
+	<bean id="org.kisti.edison.multiboard.service.BoardDivLocalService" class="org.kisti.edison.multiboard.service.impl.BoardDivLocalServiceImpl" />
+	<bean id="org.kisti.edison.multiboard.service.BoardDivService" class="org.kisti.edison.multiboard.service.impl.BoardDivServiceImpl" />
+	<bean id="org.kisti.edison.multiboard.service.persistence.BoardDivPersistence" class="org.kisti.edison.multiboard.service.persistence.BoardDivPersistenceImpl" parent="basePersistence" />
+</beans>

@@ -1,0 +1,454 @@
+select.categorySelect {
+	width: 170px;
+	margin-bottom: 0px;
+}
+
+div.selectProjectWrapper{
+	right:150px;
+	width:160px;
+	position: absolute;
+    top: 11px;
+    height: 17px;
+    border-radius: 3px 3px 3px 3px;
+    -webkit-border-radius: 3px 3px 3px 3px;
+    background-color: #fff;
+    padding: 5px;
+    border: solid 1px #ddd;
+}
+select.selectProject{
+	border: 0;
+    width: 150px;
+    background-color: #fff;
+    font-size: 13px;
+    height: 20px;
+    padding: 0px;
+    margin: 0px;
+}
+
+.perfoh1 {
+	border-bottom: solid 1px #d0d1d3;
+}
+
+.perfochartbox {
+	border: solid 1px #ddd;
+	background-color: #f9f9f9;
+	padding: 35px 15px;
+	margin-top: 45px;
+	border-radius: 3px;
+	margin-bottom: 82px;
+	text-align: center;
+}
+
+.usesBarChartDiv {
+	width: 25%;
+	height: 350px;
+	display: inline-block;
+}
+
+.achievBarChartDiv {
+	width: 19%;
+	height: 350px;
+	display: inline-block;
+}
+
+.boxs ul {
+	margin: 0;
+	padding: 0;
+}
+
+.boxs ul li {
+	width: 210px;
+	height: 302px;
+	background: url(/edison-project-2016-portlet/images/output/cfdbg.png) no-repeat;
+	list-style: none;
+	margin-right: 40px;
+	float: left;
+}
+
+.boxs ul li.chembg {
+	background: url(/edison-project-2016-portlet/images/output/chembg.png) no-repeat;
+}
+
+.boxs ul li.nanobg {
+	background: url(/edison-project-2016-portlet/images/output/nanobg.png) no-repeat;
+}
+
+.boxs ul li.csdbg {
+	background: url(/edison-project-2016-portlet/images/output/csdbg.png) no-repeat;
+}
+
+.boxs ul li.designbg {
+	margin-right: 0;
+	background: url(/edison-project-2016-portlet/images/output/designbg.png) no-repeat;
+}
+
+.boxlogo {
+	padding: 17px 0 0 0px;
+	height: 112px;
+	font-size: 22px;
+	font-weight: 600;
+	color: #5381ac;
+	text-align: center;
+	line-height: 1.7em;
+}
+
+.boxintable {
+	width: 172px;
+	margin: 0 auto;
+	padding-top: 20px;
+	color: #fff;
+	font-size: 13px;
+	line-height: 22px;
+}
+
+.edison .table401 {
+	line-height: 2.0em;
+	width: 1198px;
+	float: left;
+}
+
+.edison .table401 a {
+	color: #6e6e6e;
+	text-decoration: none;
+}
+
+.edison .table401 a:hover {
+	color: #000;
+	text-decoration: none;
+}
+
+.edison .table401 td {
+	text-align: center;
+}
+
+.edison .table401 td.brdm {
+	color: #6e6e6e;
+	font-size: 17px;
+	padding-left: 50px;
+	padding-right: 50px;
+	text-align: center;
+}
+
+.edison .table401 td.brdm a {
+	color: #6e6e6e;
+	text-decoration: none;
+}
+
+.edison .table401 td.brdm a:hover {
+	color: #000;
+	text-decoration: none;
+}
+
+.edison .table401 td.brdmon {
+	color: #000;
+	font-size: 20px;
+	padding-left: 50px;
+	padding-right: 50px;
+	text-align: center;
+}
+
+.edison .table4 td div img {
+	vertical-align: middle;
+}
+
+.edison .tablepr_list {
+	line-height: 1.3em;
+	width: 100%;
+	border-top: 2px solid #6a8ec6;
+	border-collapse: collapse;
+	font-size: 15px;
+	margin-top: 42px;
+}
+
+.edison .borderno {
+	border-top: 0px solid #6a8ec6;
+}
+
+.edison .tablepr_list a {
+	text-decoration: none;
+}
+
+.edison .tablepr_list a:hover {
+	color: #000;
+	text-decoration: none;
+}
+
+.edison .tablepr_list caption {
+	text-align: right;
+	padding-right: 15px;
+	color: #777;
+	width: 100%;
+	padding-bottom: 5px;
+}
+
+.edison .tablepr_list th {
+	line-height: 2.0em;
+	border: 1px solid #e1e1e1;
+	border-bottom: 1px solid #ccc;
+	padding: 4px;
+	color: #000;
+	font-weight: 500;
+	background-color: #f1f1f1;
+	text-align: center;
+	font-size: 15px;
+}
+
+.edison .tablepr_list td.bottom {
+	border-bottom: 1px solid #9397AE;
+}
+
+.edison .tablepr_list td {
+	border: 1px solid #e1e1e1;
+	color: #000;
+	font-weight: 500;
+	padding: 7px;
+	vertical-align: middle;
+}
+
+.edison .tablepr_list td img {
+	vertical-align: middle;
+}
+
+.edison .tablepr_list td.view {
+	padding-top: 15px;
+	padding-bottom: 20px;
+	min-height: 250px;
+}
+
+.edison .tablepr_list td.name {
+	color: #2184aa;
+}
+
+.bgcolor {
+	background-color: #fcfcfc;
+}
+
+.edison .button04per {
+	padding: 4px 10px 5px 10px;
+	background: url(/edison-project-2016-portlet/images/output/downloadicon.gif) no-repeat 5px 3px;
+	padding-left: 35px;
+	background-color: #43b099;
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border: solid 1px #7a99af;
+	min-width: 50px;
+	color: #fff;
+	font-weight: 600;
+	font-size: 14px;
+	text-shadow: 1px 1px 0px #567c98;
+}
+
+.edison .button04per a:hover {
+	color: #fffcf4;
+	text-shadow: 1px 1px 0px #567c98;
+}
+
+.perchartbox {
+	margin-top: 75px;
+	padding: 30px;
+	border: solid 0px #6CF;
+	text-align: center;
+}
+
+.perchartbox2 {
+	margin-top: 75px;
+	padding: 30px;
+	border: solid 0px #6CF;
+	text-align: center;
+	width: 80%;
+	margin: 0 auto;
+	background-color: #f6f7fc;
+	border: solid 1px #e0dbe2;
+	border-radius: 3px;
+	margin-top: 42px
+}
+
+.edison .table0p_list {
+	line-height: 1.3em;
+	width: 100%;
+	border-top: 2px solid #6a8ec6;
+	border-collapse: collapse;
+	font-size: 14px;
+	position: relative;
+	/* 	margin-top: 42px; */
+}
+
+.edison .borderno {
+	border-top: 0px solid #6a8ec6;
+}
+
+.edison .table0p_list a {
+	text-decoration: none;
+}
+
+.edison .table0p_list a:hover {
+	color: #000;
+	text-decoration: none;
+}
+
+.edison .table0p_list caption {
+	text-align: right;
+	padding-right: 15px;
+	color: #777;
+	width: 100%;
+	padding-bottom: 5px;
+}
+
+.edison .table0p_list th {
+	line-height: 2.0em;
+	border-bottom: 1px solid #b4b4b4;
+	border-right: 1px solid #ddd;
+	padding: 8px;
+	color: #383838;
+	font-weight: 600;
+	background-color: #eaf1f9;
+	text-align: center;
+	font-size: 15px;
+}
+
+.edison .table0p_list th.last {
+	border-right: none;
+}
+
+.edison .table0p_list td.bottom {
+	border-bottom: 1px solid #9397AE;
+}
+
+.edison .table0p_list td {
+	border-right: 1px solid #ddd;
+	color: #777777;
+	border-bottom: 1px solid #ddd;
+	padding: 8px;
+	vertical-align: middle;
+}
+
+.edison .table0p_list td.last {
+	border-right: 0;
+}
+
+.edison .table0p_list td img {
+	vertical-align: middle;
+}
+
+.edison .table0p_list td.view {
+	padding-top: 15px;
+	padding-bottom: 20px;
+	min-height: 250px;
+}
+
+.edison .table0p_list td.attach {
+	color: #555;
+}
+
+.edison .tabletopCategoryrightper {
+	/* position: absolute;
+	right: 0px;
+	top: -31px; */
+	width: 140px;
+	height: 17px;
+	border-radius: 3px 3px 3px 3px;
+	-webkit-border-radius: 3px 3px 3px 3px;
+	background-color: #fff;
+	padding: 5px;
+	border: solid 1px #ddd;
+	display: inline-block;
+}
+
+.edison .selectCategoryView {
+    border: 0;
+    width: 140px;
+    background-color: #fff;
+    font-size: 13px;
+    height: 20px;
+    padding: 0px;
+    margin: 0px;
+}
+
+.EDbuttonbox {
+	/* position: absolute;
+	left: 1054px;
+	top: -35px; */
+/* 	display: inline-block; */
+/* 	width: 155px; */
+/* 	height: 31px; */
+	float:right;
+	margin:10px
+}
+
+.buttonWrapper {
+	text-align: right;
+	margin: 10px;
+}
+
+.chartDiv {
+	width: 90%;
+	height: 400px;
+	margin: 20px auto;
+}
+
+.dntxtbox {
+	width: 572px;
+	float: left;
+	font-size: 15px;
+	color: #666;
+	font-weight: 500;
+	margin-top: 42px;
+}
+
+.dntxtbox img {
+	margin-top: 20px;
+	margin-bottom: 70px;
+}
+
+.dntxtbox2 {
+	width: 512px;
+	float: right;
+	border: solid 1px #cecece;
+	margin-top: 42px; /*border-radius:3px;*/
+	background-color: #fafafa;
+	padding: 47px 20px 30px 56px;
+	/* padding-bottom: 152px; */
+}
+
+.dntxtbox2 ul {
+	margin: 0;
+	padding: 0;
+	clear: both;
+}
+
+.dntxtbox2 ul li {
+	font-size: 17px;
+	color: #000;
+	background: url(/edison-project-2016-portlet/images/output/dnbl.png)
+		no-repeat 15px 15px;
+	padding-left: 30px;
+	line-height: 2.0em;
+	list-style-type: none;
+}
+
+.dntxtbox2 ul li.stxt {
+	font-size: 15px;
+	color: #666;
+	padding-left: 30px;
+	line-height: 1.5em;
+	background: none;
+}
+
+.virtitlebox {
+	margin: 0 auto;
+	float: left;
+	width: 100%
+}
+
+.virtitlebox img {
+	float: left;
+	padding-top: 25px;
+	padding-right: 10px
+}
+
+.virtitle {
+	float: left;
+	font-size: 18px;
+	color: #000;
+	padding-top: 22px
+}

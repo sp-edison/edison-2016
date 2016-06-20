@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd">
+	<persistence-unit-metadata>
+		<xml-mapping-metadata-complete/>
+		<persistence-unit-defaults>
+			<access>PROPERTY</access>
+		</persistence-unit-defaults>
+	</persistence-unit-metadata>
+	<mapped-superclass class="org.kisti.edison.model.impl.WorkflowModelImpl">
+		<attributes>
+			<id name="workflowId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="title" />
+			<basic name="description" />
+			<basic name="isPublic" />
+			<basic name="parentWorkflowId" />
+			<basic name="screenLogic" />
+			<transient name="descriptionCurrentLanguageId" />
+			<transient name="descriptionMap" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="titleCurrentLanguageId" />
+			<transient name="titleMap" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.kisti.edison.model.impl.WorkflowInstanceModelImpl">
+		<attributes>
+			<id name="workflowInstanceId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="title" />
+			<basic name="status" />
+			<basic name="startTime">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="endTime">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="workflowId" />
+			<basic name="workflowUUID" />
+			<basic name="screenLogic" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="statusCurrentLanguageId" />
+			<transient name="statusMap" />
+			<transient name="titleCurrentLanguageId" />
+			<transient name="titleMap" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<entity class="org.kisti.edison.model.impl.WorkflowImpl" name="Workflow">
+		<table name="EDWF_Workflow" />
+		<attributes />
+	</entity>
+	<entity class="org.kisti.edison.model.impl.WorkflowInstanceImpl" name="WorkflowInstance">
+		<table name="EDWF_WorkflowInstance" />
+		<attributes />
+	</entity>
+</entity-mappings>

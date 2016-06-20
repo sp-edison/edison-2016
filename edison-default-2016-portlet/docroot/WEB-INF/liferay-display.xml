@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!DOCTYPE display PUBLIC "-//Liferay//DTD Display 6.2.0//EN" "http://www.liferay.com/dtd/liferay-display_6_2_0.dtd">
+
+<display>
+	<category name="EDISON">
+		<portlet id="edison-privateinfoporlicy" />
+		<portlet id="edison-portalagree" />
+		<portlet id="edison-termsofuse" />
+		<portlet id="edison-orgcodesearch" />
+		<portlet id="edison-site-join" />
+	</category>
+</display>

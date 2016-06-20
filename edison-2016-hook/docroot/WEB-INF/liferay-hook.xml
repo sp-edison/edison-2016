@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!DOCTYPE hook PUBLIC "-//Liferay//DTD Hook 6.2.0//EN" "http://www.liferay.com/dtd/liferay-hook_6_2_0.dtd">
+
+<hook>
+	<portal-properties>portal.properties</portal-properties>
+	<custom-jsp-dir>/custom_jsps</custom-jsp-dir>
+
+
+	<service>
+		<service-type>
+			com.liferay.portal.service.UserLocalService
+		</service-type>
+		<service-impl>
+			org.kisti.edison.service.EdisonUserLocalService
+		</service-impl>
+	</service>
+	
+	<!--  OVERRIDING STRUTS ACTIONS -->
+	
+	<struts-action>
+		<struts-action-path>/login/create_account</struts-action-path>
+		<struts-action-impl>org.kisti.edison.portlet.login.action.CreateAccountAction</struts-action-impl>
+	</struts-action>
+	
+	<struts-action>
+		<struts-action-path>/login/forgot_password</struts-action-path>
+		<struts-action-impl>org.kisti.edison.portlet.login.action.ForgotPasswordAction</struts-action-impl>
+	</struts-action>
+
+	<struts-action>
+		<struts-action-path>/my_account/edit_user</struts-action-path>
+		<struts-action-impl>org.kisti.edison.portlet.myaccount.action.HookEditUserAction</struts-action-impl>
+	</struts-action>
+	
+	<!--  ADDING STRUTS ACTIONS -->
+	<struts-action>
+		<struts-action-path>/portal/create_account_validataion</struts-action-path> 
+		<struts-action-impl>org.kisti.edison.portal.action.EdisonValidationAction</struts-action-impl> 
+	</struts-action>
+	
+	<struts-action>
+		<struts-action-path>/login/find_id</struts-action-path> 
+		<struts-action-impl>org.kisti.edison.portlet.login.action.FindIdAction</struts-action-impl> 
+	</struts-action>
+	
+	<struts-action>
+		<struts-action-path>/login/forgot_id</struts-action-path> 
+		<struts-action-impl>org.kisti.edison.portlet.login.action.ForgotIdAction</struts-action-impl> 
+	</struts-action>
+</hook>

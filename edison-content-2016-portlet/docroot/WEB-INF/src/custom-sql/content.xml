@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<custom-sql>
+	<sql id="org.kisti.edison.content.service.persistence.getCountGeneralHeader" >
+		<![CDATA[
+		SELECT
+			COUNT(*) AS totalCnt
+		]]>
+	</sql>
+	
+	<sql id="org.kisti.edison.content.service.persistence.getListGeneralHeader" >
+		<![CDATA[
+		SELECT
+			A.contentSeq, 	A.groupId, 		A.contentDiv, 	A.title, 		A.downloadCnt,	A.serviceLanguage,		A.projectYn, 	A.projectId,
+			A.insertId, 	A.insertDate, 	A.updateId, 	A.updateDate, 	B.screenName
+		]]>
+	</sql>
+	
+	<sql id="org.kisti.edison.content.service.persistence.getCountGeneralContent" >
+		<![CDATA[
+		FROM
+			EDMED_GeneralContent A, User_ B 
+		WHERE
+		A.insertId = B.userId 
+		AND A.groupId = #groupId#
+		
+		<isNotEmpty property="searchText">
+		AND	
+			(ExtractValue(title, 'root/Title[@language-id="@@languageId@@"]') LIKE '%@@searchText@@%' OR B.screenName LIKE '%@@searchText@@%')
+		</isNotEmpty>
+		
+		<isNotEmpty property="languageId">
+		AND
+			(serviceLanguage LIKE '%all%' OR serviceLanguage LIKE '%@@languageId@@%') 
+		</isNotEmpty>
+		<isNotEmpty property="contentDiv">
+		AND
+			contentDiv = #contentDiv#
+		</isNotEmpty>
+			
+		<isNotEmpty property="contentSeq">
+		AND
+			contentSeq = #contentSeq#
+		</isNotEmpty>
+		
+		<isNotEmpty property="begin">
+			Limit #begin#, #end#
+		</isNotEmpty>
+		]]>
+	</sql>
+	
+	<sql id="org.kisti.edison.content.service.persistence.getListGeneralForProject" >
+		<![CDATA[
+		SELECT
+			A.contentSeq, 	A.groupId, 		A.contentDiv, 	A.title, 		A.downloadCnt,	A.serviceLanguage,		A.projectYn, 	A.projectId,
+			A.insertId, 	A.insertDate, 	A.updateId, 	A.updateDate, 	B.screenName, 	B.firstName
+		FROM
+			EDMED_GeneralContent A, User_ B 
+		WHERE
+		A.insertId = B.userId
+		<isNotEmpty property="groupId"> 
+			AND A.groupId = #groupId#
+		</isNotEmpty>
+		<isNotEmpty property="contentSeq"> 
+			AND A.contentSeq = #contentSeq#
+		</isNotEmpty>
+		<isNotEmpty property="userId"> 
+			AND A.insertId = #userId#
+		</isNotEmpty>
+		<isNotEmpty property="searchText">
+		AND	
+			(ExtractValue(A.title, 'root/Title[@language-id="@@languageId@@"]') LIKE '%@@searchText@@%' OR B.firstName LIKE '%@@searchText@@%')
+		</isNotEmpty>
+		<isNotEmpty property="projectCategoryId">
+			AND	 A.projectId = #projectCategoryId#
+		</isNotEmpty>
+ 		<isNotEmpty property="begin">
+			Limit #begin#, #end#
+		</isNotEmpty>
+		]]>
+	</sql>
+	<sql id="org.kisti.edison.content.service.persistence.getListGeneralForProjectListCont" >
+		<![CDATA[
+		SELECT
+			COUNT(*) AS totalCnt
+		FROM
+			EDMED_GeneralContent A, User_ B 
+		WHERE
+		A.insertId = B.userId
+		<isNotEmpty property="groupId"> 
+			AND A.groupId = #groupId#
+		</isNotEmpty>
+		<isNotEmpty property="contentSeq"> 
+			AND A.contentSeq = #contentSeq#
+		</isNotEmpty>
+		<isNotEmpty property="userId"> 
+			AND A.insertId = #userId#
+		</isNotEmpty>
+		<isNotEmpty property="searchText">
+		AND	
+			(ExtractValue(A.title, 'root/Title[@language-id="@@languageId@@"]') LIKE '%@@searchText@@%' OR B.firstName LIKE '%@@searchText@@%')
+		</isNotEmpty>
+		
+		<isNotEmpty property="projectCategoryId">
+			AND	 A.projectId = #projectCategoryId#
+		</isNotEmpty>
+		]]>
+	</sql>
+</custom-sql>

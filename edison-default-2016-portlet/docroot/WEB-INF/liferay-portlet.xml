@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<!DOCTYPE liferay-portlet-app PUBLIC "-//Liferay//DTD Portlet Application 6.2.0//EN" "http://www.liferay.com/dtd/liferay-portlet-app_6_2_0.dtd">
+
+<liferay-portlet-app>
+	<portlet>
+		<portlet-name>edison-privateinfoporlicy</portlet-name>
+		<icon>/icon.png</icon>
+		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
+		<friendly-url-mapping>privateinfopolicy</friendly-url-mapping>
+		<friendly-url-routes>org/kisti/edison/privateinfopolicy/friendly-url-router.xml</friendly-url-routes>
+		<header-portlet-css>/css/main.css</header-portlet-css>
+		<css-class-wrapper>content-sub</css-class-wrapper>		
+		<add-default-resource>true</add-default-resource>		
+	</portlet>
+	
+	<portlet>
+		<portlet-name>edison-termsofuse</portlet-name>
+		<icon>/icon.png</icon>
+		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
+		<friendly-url-mapping>termsofuse</friendly-url-mapping>
+		<friendly-url-routes>org/kisti/edison/termsofuse/friendly-url-router.xml</friendly-url-routes>
+		<header-portlet-css>/css/main.css</header-portlet-css>
+		<css-class-wrapper>content-sub</css-class-wrapper>
+		<add-default-resource>true</add-default-resource>		
+	</portlet>
+	
+	<portlet>
+		<portlet-name>edison-orgcodesearch</portlet-name>
+		<icon>/icon.png</icon>
+		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
+		<friendly-url-mapping>orgcodesearch</friendly-url-mapping>
+		<friendly-url-routes>org/kisti/edison/orgcodesearch/friendly-url-router.xml</friendly-url-routes>
+		<header-portlet-css>/css/main.css</header-portlet-css>
+		<header-portlet-javascript>/js/jquery-1.10.2.min.js</header-portlet-javascript>
+		<css-class-wrapper>content-sub</css-class-wrapper>
+		<add-default-resource>true</add-default-resource>
+	</portlet>
+	
+	
+	<portlet>
+		<portlet-name>edison-portalagree</portlet-name>
+		<icon>/icon.png</icon>
+		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
+		<friendly-url-mapping>portalagree</friendly-url-mapping>
+		<friendly-url-routes>org/kisti/edison/portalagree/friendly-url-router.xml</friendly-url-routes>
+		<instanceable>true</instanceable>
+		<header-portlet-css>/css/main.css</header-portlet-css>
+		<css-class-wrapper>content-sub</css-class-wrapper>
+		<add-default-resource>true</add-default-resource>		
+	</portlet>
+		
+	<portlet>
+		<portlet-name>edison-site-join</portlet-name>
+		<icon>/icon.png</icon>
+		<instanceable>true</instanceable>
+		<header-portlet-css>/css/main.css</header-portlet-css>
+		<header-portlet-css>/css/jquery/jquery-ui.min.css</header-portlet-css>
+		<header-portlet-css>/css/jquery/jquery-ui.theme.min.css</header-portlet-css>
+		<header-portlet-javascript>/js/jquery-1.10.2.min.js</header-portlet-javascript>
+		<header-portlet-javascript>/js/jquery-ui.min.js</header-portlet-javascript>
+		<footer-portlet-javascript>/js/main.js</footer-portlet-javascript>
+		<css-class-wrapper>edison-site-join</css-class-wrapper>
+	</portlet>	
+	
+	<role-mapper>
+		<role-name>administrator</role-name>
+		<role-link>Administrator</role-link>
+	</role-mapper>
+	<role-mapper>
+		<role-name>guest</role-name>
+		<role-link>Guest</role-link>
+	</role-mapper>
+	<role-mapper>
+		<role-name>power-user</role-name>
+		<role-link>Power User</role-link>
+	</role-mapper>
+	<role-mapper>
+		<role-name>user</role-name>
+		<role-link>User</role-link>
+	</role-mapper>
+</liferay-portlet-app>

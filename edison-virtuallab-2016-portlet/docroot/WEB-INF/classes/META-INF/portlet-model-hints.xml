@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="org.kisti.edison.virtuallaboratory.model.Survey">
+		<field name="surveySeqNo" type="long" />
+		<field name="surveyUseYn" type="String" />
+		<field name="surveyTitle" type="String" localized="true" />
+		<field name="surveyStartDate" type="String" />
+		<field name="surveyEndDate" type="String" />
+		<field name="surveyStatus" type="String" />
+		<field name="surveyCreateDate" type="Date" />
+	</model>
+	<model name="org.kisti.edison.virtuallaboratory.model.SurveyAnswer">
+		<field name="SurveyAnswerId" type="long" />
+		<field name="userId" type="long" />
+		<field name="virtualLabId" type="long" />
+		<field name="classId" type="long" />
+		<field name="subjectivityAnswer" type="String" localized="true" />
+		<field name="objecttivityAnswer" type="String" />
+		<field name="answerDate" type="Date" />
+	</model>
+	<model name="org.kisti.edison.virtuallaboratory.model.SurveyQuestion">
+		<field name="questionSeqNo" type="long" />
+		<field name="questionDivCd" type="String" />
+		<field name="questionTitle" type="String" localized="true" />
+		<field name="question1" type="String" localized="true" />
+		<field name="question2" type="String" localized="true" />
+		<field name="question3" type="String" localized="true" />
+		<field name="question4" type="String" localized="true" />
+		<field name="question5" type="String" localized="true" />
+		<field name="question6" type="String" localized="true" />
+		<field name="question7" type="String" localized="true" />
+		<field name="question8" type="String" localized="true" />
+		<field name="question9" type="String" localized="true" />
+		<field name="question10" type="String" localized="true" />
+	</model>
+	<model name="org.kisti.edison.virtuallaboratory.model.VirtualLab">
+		<field name="virtualLabId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="userId" type="long" />
+		<field name="virtualLabPersonName" type="String" localized="true" />
+		<field name="virtualLabRequestDt" type="Date" />
+		<field name="virtualLabConfirmDt" type="Date" />
+		<field name="virtualLabConfirmDescription" type="String" />
+		<field name="virtualLabStatus" type="String" />
+		<field name="virtualLabTitle" type="String" localized="true" />
+		<field name="virtualLabDescription" type="String" localized="true" />
+		<field name="virtualLabUseYn" type="String" />
+		<field name="virtualLabUniversityField" type="String" />
+	</model>
+	<model name="org.kisti.edison.virtuallaboratory.model.VirtualLabClass">
+		<field name="classId" type="long" />
+		<field name="classTitle" type="String" localized="true" />
+		<field name="classStartDt" type="String" />
+		<field name="classEndDt" type="String" />
+		<field name="classUseYn" type="String" />
+		<field name="classDescription" type="String" localized="true" />
+		<field name="classPersonnel" type="int" />
+		<field name="classCreateDt" type="Date" />
+		<field name="classUpdateDt" type="Date" />
+		<field name="virtualClassCd" type="String" />
+	</model>
+	<model name="org.kisti.edison.virtuallaboratory.model.VirtualLabClassScienceApp">
+		<field name="scienceAppSeqNo" type="long" />
+		<field name="scienceAppId" type="long" />
+		<field name="createDate" type="Date" />
+	</model>
+	<model name="org.kisti.edison.virtuallaboratory.model.VirtualLabUser">
+		<field name="virtualLabUserId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userStudentNumber" type="String" />
+		<field name="authRole" type="String" />
+		<field name="userUseYn" type="String" />
+		<field name="requestSort" type="String" />
+		<field name="processNote" type="String" />
+		<field name="processDate" type="Date" />
+		<field name="createDt" type="Date" />
+		<field name="updateDt" type="Date" />
+	</model>
+	<model name="org.kisti.edison.virtuallaboratory.model.VirtualLabUserTemp">
+		<field name="seqNo" type="long" />
+		<field name="virtualLabId" type="long" />
+		<field name="classId" type="long" />
+		<field name="userStudentNumber" type="String" />
+		<field name="userName" type="String" />
+		<field name="status" type="boolean" />
+	</model>
+</model-hints>

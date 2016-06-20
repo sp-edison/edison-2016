@@ -1,0 +1,499 @@
+<?xml version="1.0"?>
+
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd">
+	<persistence-unit-metadata>
+		<xml-mapping-metadata-complete/>
+		<persistence-unit-defaults>
+			<access>PROPERTY</access>
+		</persistence-unit-defaults>
+	</persistence-unit-metadata>
+	<mapped-superclass class="org.kisti.edison.science.model.impl.CommonLibModelImpl">
+		<id-class class="org.kisti.edison.science.service.persistence.CommonLibPK" />
+		<attributes>
+			<id name="libName" />
+			<id name="libPath" />
+			<basic name="libraryVersion" />
+			<basic name="cLibVer" />
+			<basic name="sysArch" />
+			<basic name="kernelVer" />
+			<transient name="CLibVer" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.kisti.edison.science.model.impl.CommonModuleModelImpl">
+		<attributes>
+			<id name="commonModuleId" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="moduleName" />
+			<basic name="moduleVersion" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.kisti.edison.science.model.impl.DeveloperInfoModelImpl">
+		<id-class class="org.kisti.edison.science.service.persistence.DeveloperInfoPK" />
+		<attributes>
+			<id name="userId" />
+			<id name="groupId" />
+			<basic name="screenName" />
+			<basic name="firstName" />
+			<basic name="emailAddress" />
+			<basic name="universityField" />
+			<basic name="majorField" />
+			<basic name="useStart" />
+			<basic name="useEnd" />
+			<basic name="developerSort" />
+			<basic name="languageFortran" />
+			<basic name="languageCpp" />
+			<basic name="languagePython" />
+			<basic name="languageJava" />
+			<basic name="languageOther" />
+			<basic name="languageOtherDescription" />
+			<basic name="rem" />
+			<basic name="agreementYn" />
+			<basic name="writtenOathLogical" />
+			<basic name="writtenOathPhysical" />
+			<basic name="detailIp" />
+			<basic name="detailOs" />
+			<basic name="detailCpu" />
+			<basic name="detailStorate" />
+			<basic name="detailLibrary" />
+			<basic name="insertId" />
+			<basic name="insertDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="updateId" />
+			<basic name="updateDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="etc" />
+			<basic name="developerId" />
+			<basic name="developerPassword" />
+			<transient name="etcCurrentLanguageId" />
+			<transient name="etcMap" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="remCurrentLanguageId" />
+			<transient name="remMap" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.kisti.edison.science.model.impl.DeveloperIpModelImpl">
+		<id-class class="org.kisti.edison.science.service.persistence.DeveloperIpPK" />
+		<attributes>
+			<id name="ipSeq" />
+			<id name="userId" />
+			<id name="groupId" />
+			<basic name="ip1" />
+			<basic name="ip2" />
+			<basic name="ip3" />
+			<basic name="ip4" />
+			<basic name="insertId" />
+			<basic name="insertDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="updateId" />
+			<basic name="updateDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.kisti.edison.science.model.impl.DeveloperRequestModelImpl">
+		<id-class class="org.kisti.edison.science.service.persistence.DeveloperRequestPK" />
+		<attributes>
+			<id name="requestSeq" />
+			<id name="userId" />
+			<id name="groupId" />
+			<basic name="requestSort" />
+			<basic name="requestDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="requestNote" />
+			<basic name="requestStatus" />
+			<basic name="processDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="processNote" />
+			<basic name="insertId" />
+			<basic name="insertDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="updateId" />
+			<basic name="updateDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="processNoteCurrentLanguageId" />
+			<transient name="processNoteMap" />
+			<transient name="requestNoteCurrentLanguageId" />
+			<transient name="requestNoteMap" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.kisti.edison.science.model.impl.PortTypeModelImpl">
+		<attributes>
+			<id name="portTypeId" />
+			<basic name="uuid">
+				<column name="UUID_" />
+			</basic>
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="defaultEditorId" />
+			<basic name="defaultAnalyzerId" />
+			<basic name="name" />
+			<basic name="dataType" />
+			<basic name="sampleFilePath" />
+			<basic name="targetLanguage" />
+			<basic name="status" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.kisti.edison.science.model.impl.PortTypeAnalyzerLinkModelImpl">
+		<attributes>
+			<id name="portTypeAnalyzerLinkId" />
+			<basic name="uuid">
+				<column name="UUID_" />
+			</basic>
+			<basic name="companyId" />
+			<basic name="portTypeId" />
+			<basic name="analyzerId" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.kisti.edison.science.model.impl.PortTypeEditorLinkModelImpl">
+		<attributes>
+			<id name="portTypeEditorLinkId" />
+			<basic name="uuid">
+				<column name="UUID_" />
+			</basic>
+			<basic name="companyId" />
+			<basic name="portTypeId" />
+			<basic name="editorId" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.kisti.edison.science.model.impl.PortTypeInputdeckFormModelImpl">
+		<attributes>
+			<id name="portTypeId" />
+			<basic name="inputdeckForm" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.kisti.edison.science.model.impl.RequiredLibModelImpl">
+		<attributes>
+			<id name="requiredLibId" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="libraryName" />
+			<basic name="libraryVersion" />
+			<basic name="libraryType" />
+			<basic name="librarySrcPath" />
+			<basic name="installScript" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.kisti.edison.science.model.impl.RequiredLibConfirmModelImpl">
+		<id-class class="org.kisti.edison.science.service.persistence.RequiredLibConfirmPK" />
+		<attributes>
+			<id name="requiredLibId" />
+			<id name="scienceAppId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="requiredDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="confirmDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="libraryName" />
+			<basic name="libraryVersion" />
+			<basic name="requiredContent" />
+			<basic name="requiredState" />
+			<basic name="confirmContent" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.kisti.edison.science.model.impl.RequiredModuleModelImpl">
+		<attributes>
+			<id name="requiredModuleId" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="moduleName" />
+			<basic name="moduleVersion" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.kisti.edison.science.model.impl.ScienceAppModelImpl">
+		<attributes>
+			<id name="scienceAppId" />
+			<basic name="uuid">
+				<column name="UUID_" />
+			</basic>
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="name" />
+			<basic name="version" />
+			<basic name="title" />
+			<basic name="descriptionId" />
+			<basic name="previousVersionId" />
+			<basic name="iconId" />
+			<basic name="manualId" />
+			<basic name="exeFileName" />
+			<basic name="appType" />
+			<basic name="runType" />
+			<basic name="authorId" />
+			<basic name="stage" />
+			<basic name="status" />
+			<basic name="recentModifierId" />
+			<basic name="parallelModule" />
+			<basic name="maxCpus" />
+			<basic name="defaultCpus" />
+			<basic name="statusDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="openLevel" />
+			<basic name="license" />
+			<basic name="srcFileName" />
+			<basic name="targetLanguage" />
+			<basic name="developers" />
+			<basic name="editorType" />
+			<basic name="swTest" />
+			<basic name="projectCategoryId" />
+			<transient name="developersCurrentLanguageId" />
+			<transient name="developersMap" />
+			<transient name="manualIdCurrentLanguageId" />
+			<transient name="manualIdMap" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="titleCurrentLanguageId" />
+			<transient name="titleMap" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.kisti.edison.science.model.impl.ScienceAppCategoryLinkModelImpl">
+		<attributes>
+			<id name="scienceAppCategoryLinkId" />
+			<basic name="uuid">
+				<column name="UUID_" />
+			</basic>
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="categoryId" />
+			<basic name="scienceAppId" />
+			<basic name="parentCategoryId" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.kisti.edison.science.model.impl.ScienceAppDescriptionModelImpl">
+		<attributes>
+			<id name="descriptionId" />
+			<basic name="content" />
+			<basic name="insertId" />
+			<basic name="insertDt">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="updateId" />
+			<basic name="updateDt">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="contentCurrentLanguageId" />
+			<transient name="contentMap" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.kisti.edison.science.model.impl.ScienceAppFavoriteModelImpl">
+		<id-class class="org.kisti.edison.science.service.persistence.ScienceAppFavoritePK" />
+		<attributes>
+			<id name="scienceAppId" />
+			<id name="userId" />
+			<basic name="groupId" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.kisti.edison.science.model.impl.ScienceAppInputPortsModelImpl">
+		<attributes>
+			<id name="scienceAppId" />
+			<basic name="inputPorts" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.kisti.edison.science.model.impl.ScienceAppManagerModelImpl">
+		<attributes>
+			<id name="scienceAppManagerId" />
+			<basic name="userId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="scienceAppId" />
+			<basic name="managerId" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.kisti.edison.science.model.impl.ScienceAppOutputPortsModelImpl">
+		<attributes>
+			<id name="scienceAppId" />
+			<basic name="outputPorts" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<entity class="org.kisti.edison.science.model.impl.CommonLibImpl" name="CommonLib">
+		<table name="EDAPP_CommonLib" />
+		<attributes />
+	</entity>
+	<entity class="org.kisti.edison.science.model.impl.CommonModuleImpl" name="CommonModule">
+		<table name="EDAPP_CommonModule" />
+		<attributes />
+	</entity>
+	<entity class="org.kisti.edison.science.model.impl.DeveloperInfoImpl" name="DeveloperInfo">
+		<table name="EDAPP_DeveloperInfo" />
+		<attributes />
+	</entity>
+	<entity class="org.kisti.edison.science.model.impl.DeveloperIpImpl" name="DeveloperIp">
+		<table name="EDAPP_DeveloperIp" />
+		<attributes />
+	</entity>
+	<entity class="org.kisti.edison.science.model.impl.DeveloperRequestImpl" name="DeveloperRequest">
+		<table name="EDAPP_DeveloperRequest" />
+		<attributes />
+	</entity>
+	<entity class="org.kisti.edison.science.model.impl.PortTypeImpl" name="PortType">
+		<table name="EDAPP_PortType" />
+		<attributes />
+	</entity>
+	<entity class="org.kisti.edison.science.model.impl.PortTypeAnalyzerLinkImpl" name="PortTypeAnalyzerLink">
+		<table name="EDAPP_PortTypeAnalyzerLink" />
+		<attributes />
+	</entity>
+	<entity class="org.kisti.edison.science.model.impl.PortTypeEditorLinkImpl" name="PortTypeEditorLink">
+		<table name="EDAPP_PortTypeEditorLink" />
+		<attributes />
+	</entity>
+	<entity class="org.kisti.edison.science.model.impl.PortTypeInputdeckFormImpl" name="PortTypeInputdeckForm">
+		<table name="EDAPP_PortTypeInputdeckForm" />
+		<attributes />
+	</entity>
+	<entity class="org.kisti.edison.science.model.impl.RequiredLibImpl" name="RequiredLib">
+		<table name="EDAPP_RequiredLib" />
+		<attributes />
+	</entity>
+	<entity class="org.kisti.edison.science.model.impl.RequiredLibConfirmImpl" name="RequiredLibConfirm">
+		<table name="EDAPP_RequiredLibConfirm" />
+		<attributes />
+	</entity>
+	<entity class="org.kisti.edison.science.model.impl.RequiredModuleImpl" name="RequiredModule">
+		<table name="EDAPP_RequiredModule" />
+		<attributes />
+	</entity>
+	<entity class="org.kisti.edison.science.model.impl.ScienceAppImpl" name="ScienceApp">
+		<table name="EDAPP_ScienceApp" />
+		<attributes />
+	</entity>
+	<entity class="org.kisti.edison.science.model.impl.ScienceAppCategoryLinkImpl" name="ScienceAppCategoryLink">
+		<table name="EDAPP_ScienceAppCategoryLink" />
+		<attributes />
+	</entity>
+	<entity class="org.kisti.edison.science.model.impl.ScienceAppDescriptionImpl" name="ScienceAppDescription">
+		<table name="EDAPP_ScienceAppDescription" />
+		<attributes />
+	</entity>
+	<entity class="org.kisti.edison.science.model.impl.ScienceAppFavoriteImpl" name="ScienceAppFavorite">
+		<table name="EDAPP_ScienceAppFavorite" />
+		<attributes />
+	</entity>
+	<entity class="org.kisti.edison.science.model.impl.ScienceAppInputPortsImpl" name="ScienceAppInputPorts">
+		<table name="EDAPP_ScienceAppInputPorts" />
+		<attributes />
+	</entity>
+	<entity class="org.kisti.edison.science.model.impl.ScienceAppManagerImpl" name="ScienceAppManager">
+		<table name="EDAPP_ScienceAppManager" />
+		<attributes />
+	</entity>
+	<entity class="org.kisti.edison.science.model.impl.ScienceAppOutputPortsImpl" name="ScienceAppOutputPorts">
+		<table name="EDAPP_ScienceAppOutputPorts" />
+		<attributes />
+	</entity>
+</entity-mappings>
