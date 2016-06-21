@@ -1,0 +1,213 @@
+# EDISON Platform for Open Science
+
+## ICE-Breaker (RESTful HPC Job Submission & Management Middleware)
+
+Architecture figure.
+
+## Installation (CentOS6.6)
+
+### Prerequsite
+
+* Some Utilities
+
+```
+yum install wget curl java-1.7.0-openjdk-devel python-setuptools git zip
+```
+
+* ntp service (optional)
+
+* torque installation
+
+```
+```
+
+* MySQL
+```
+yum install mysql mysql-server
+vi /etc/my.cnf
+```
+
+**add the following line
+> character-set-server = utf8
+```
+[mysqld]
+datadir=/var/lib/mysql
+socket=/var/lib/mysql/mysql.sock
+user=mysql
+# Disabling symbolic-links is recommended to prevent assorted security risks
+symbolic-links=0
+character-set-server = utf8
+```
+
+```
+service mysqld start
+chkconfig mysqld on
+```
+
+**create IB_TEST DATABASE
+```
+/usr/bin/mysqladmin -u root password 'password'
+mysql -u root -p'password'
+```
+> mysql\> create database IB_TEST DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+* tomcat
+```
+wget http://apache.tt.co.kr/tomcat/tomcat-8/v8.0.36/bin/apache-tomcat-8.0.36.tar.gz
+tar xzvf apache-tomcat-8.0.36.tar.gz
+cd apache-tomcat-8.0.36/webapps
+rm -rf docs examples/
+cd ..
+cd bin
+echo 'export JAVA_OPTS="-Dfile.encoding=UTF-8 -Xms1280m -Xmx10240m -XX:PermSize=1024m -XX:MaxPermSize=2048m"' > setenv.sh
+cd ..
+cd conf
+vi tomcat-users.xml
+```
+
+add the following line
+> \<user username="tomcat" password="password" roles="manager-gui,manager-script" /\>
+```
+<!--
+  <role rolename="tomcat"/>
+  <role rolename="role1"/>
+  <user username="tomcat" password="<must-be-changed>" roles="tomcat"/>
+  <user username="both" password="<must-be-changed>" roles="tomcat,role1"/>
+  <user username="role1" password="<must-be-changed>" roles="role1"/>
+-->
+  <user username="tomcat" password="password" roles="manager-gui,manager-script" />
+```
+
+```
+cd ..
+cd bin
+./startup.sh
+```
+
+* maven 
+```
+wget http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-maven.repo -O /etc/yum.repos.d/epel-apache-maven.repo
+yum install apache-maven
+mvn -version
+Apache Maven 3.3.9 (bb52d8502b132ec0a5a3f4c09453c07478323dc5; 2015-11-11T01:41:47+09:00)
+Maven home: /usr/share/apache-maven
+Java version: 1.7.0_101, vendor: Oracle Corporation
+Java home: /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.101.x86_64/jre
+Default locale: en_US, platform encoding: UTF-8
+OS name: "linux", version: "2.6.32-573.22.1.el6.x86_64", arch: "amd64", family: "unix"
+```
+
+* IB (ICE-Breaker) checkout
+```
+svn co svn://svn.edison.re.kr/branches/org.edison.cloud.maven.git/org.edison.cloud.maven
+
+scp org.edison.cloud.maven/pbs-cores localhost:/usr/local/bin/pbs-cores
+```
+
+* IB deploy
+```
+cd org.edison.cloud.maven/
+vi pom.xml
+```
+
+**add two jar dependencies to pom.xml
+```
+        <dependency>
+            <groupId>org.kie.modules</groupId>
+            <artifactId>org-apache-commons-exec</artifactId>
+            <version>6.4.0.Final</version>
+            <type>pom</type>
+        </dependency>
+
+        <!-- Copy from here -->
+        <dependency>
+              <groupId>org.opennebula.client</groupId>
+              <artifactId>org.opennebula.client</artifactId>
+              <version>1.0</version>
+              <scope>system</scope>
+              <systemPath>/root/edison-2016/edison-icebreaker/src/main/webapp/WEB-INF/lib/org.opennebula.client.jar</systemPath>
+        </dependency>
+
+        <dependency>
+              <groupId>pbs4java_m</groupId>
+              <artifactId>pbs4java_m</artifactId>
+              <version>1.0</version>
+              <scope>system</scope>
+              <systemPath>/root/edison-2016/edison-icebreaker/src/main/webapp/WEB-INF/lib/pbs4java_m.jar</systemPath>
+        </dependency>
+```
+
+```
+mvn -Ptest tomcat7:redeploy
+```
+
+
+* IB configuration
+
+** DB:
+
+vi src/main/resources-test/WEB-INF/config/rest.properties
+```
+app.jdbc.driverClassName=com.mysql.jdbc.Driver
+app.jdbc.url=jdbc:mysql://localhost:3306/IB_TEST
+app.jdbc.username=root
+app.jdbc.password=password
+app.jdbc.maxActive=8192
+app.jdbc.maxIdle=32
+```
+
+** LOG:
+
+vi src/main/resources-test/WEB-INF/config/log4j.properties
+```
+log4j.rootLogger = INFO, ecloud
+log4j.appender.ecloud = org.apache.log4j.rolling.RollingFileAppender
+log4j.appender.ecloud.File = /root/LOG/logfile.log
+log4j.appender.ecloud.RollingPolicy = org.apache.log4j.rolling.TimeBasedRollingPolicy
+log4j.appender.ecloud.RollingPolicy.ActiveFileName = /root/LOG/logfile.log
+log4j.appender.ecloud.RollingPolicy.FileNamePattern = /root/LOG/logfile.%d{yyyy-MM-dd}.gz
+log4j.appender.ecloud.layout = org.apache.log4j.PatternLayout
+log4j.appender.ecloud.layout.ConversionPattern = %d{ABSOLUTE} %5p %c{1}:%L - %m%n
+```
+
+** admin pw:
+
+vi src/main/resources/config.common.ini
+```
+##################################################################
+####### ADMIN. CONFIGURATION
+##################################################################
+user.admin.id=admin
+user.admin.password=password
+user.admin.email=root@gmail.com
+```
+
+** cluster setting:
+
+vi src/main/resources-test/WEB-INF/classes/config.ini
+```
+####### TEST
+resources=EDISON-TEST:localhost:22:OpenPBS:3.0.5:batch:2:/EDISON/:ko:true
+```
+
+
+* TEST
+```
+easy_install pip
+pip install requests
+python test_script/login.py
+```
+
+
+* Check LOG
+
+```
+tail -f /root/LOG/logfile.log
+```
+
+
+* mount shared storage
+
+<p>
+EDISON is free and open source and it always will be! It is licensed under the <a href="http://www.gnu.org/licenses/lgpl-2.1.html">GNU Lesser General Public License</a>.
+</p>
