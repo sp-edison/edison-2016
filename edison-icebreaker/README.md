@@ -3,6 +3,7 @@
 ## ICE-Breaker (RESTful HPC Job Submission & Management Middleware)
 
 Architecture figure.
+![Architecture of IB](https://github.com/sp-edison/edison-2016/blob/master/edison-icebreaker/IB-arch.png)
 
 ## Installation (CentOS6.6)
 
