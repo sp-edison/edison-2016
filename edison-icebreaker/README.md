@@ -11,7 +11,7 @@ Architecture figure.
 * Some Utilities
 
 ```
-yum install wget curl tar java-1.7.0-openjdk-devel python-setuptools git zip
+yum install wget curl tar which java-1.7.0-openjdk-devel python-setuptools git zip
 ```
 
 * ntp service (optional)
@@ -53,9 +53,6 @@ tar xzvf apache-tomcat-8.0.36.tar.gz
 cd apache-tomcat-8.0.36/webapps
 rm -rf docs examples/
 cd ..
-cd bin
-echo 'export JAVA_OPTS="-Dfile.encoding=UTF-8 -Xms1280m -Xmx10240m -XX:PermSize=1024m -XX:MaxPermSize=2048m"' > setenv.sh
-cd ..
 cd conf
 vi tomcat-users.xml
 ```
@@ -77,6 +74,7 @@ add the following line
 cd ..
 cd bin
 ./startup.sh
+cd ../..
 ```
 
 * maven 
@@ -190,6 +188,13 @@ resources=EDISON-TEST:localhost:22:OpenPBS:3.0.5:batch:2:/EDISON/:ko:true
 easy_install pip
 pip install requests
 python test_script/login.py
+```
+
+```
+login:  http://localhost:8080/test/api/user/login
+<Response [200]>
+Token: YWRtaW46MTQ2NjQ4OTg2Mzk4NSMkJV4lJCMxNDY2NTc2MjYzOTg1
+Expired: Wed Jun 22 06:17:43 UTC 2016
 ```
 
 
