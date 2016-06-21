@@ -190,13 +190,6 @@ pip install requests
 python test_script/login.py
 ```
 
-```
-login:  http://localhost:8080/test/api/user/login
-<Response [200]>
-Token: YWRtaW46MTQ2NjQ4OTg2Mzk4NSMkJV4lJCMxNDY2NTc2MjYzOTg1
-Expired: Wed Jun 22 06:17:43 UTC 2016
-```
-
 
 * Check LOG
 
