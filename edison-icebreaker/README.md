@@ -245,7 +245,24 @@ chkconfig pbs_sched on
 service pbs_sched start
 ```
 
+```
+pbsnodes -a
+v6a197
+     state = free
+     power_state = Running
+     np = 4
+     ntype = cluster
+     status = rectime=1466470937,cpuclock=Fixed,varattr=,jobs=,state=free,netload=1338923997,gres=,loadave=0.13,ncpus=4,physmem=3973948kb,availmem=3214180kb,totmem=4809528kb,idletime=7,nusers=0,nsessions=0,uname=Linux v6a197 2.6.32-573.22.1.el6.x86_64 #1 SMP Wed Mar 23 03:35:39 UTC 2016 x86_64,opsys=linux
+     mom_service_port = 15002
+     mom_manager_port = 15003
+```
 
+
+* ssh key copy
+```
+ssh-keygen -t rsa
+ssh-copy-id localhost
+```
 
 * mount shared storage
 
