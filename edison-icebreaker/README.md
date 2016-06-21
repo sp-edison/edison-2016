@@ -16,50 +16,6 @@ yum install wget curl java-1.7.0-openjdk-devel python-setuptools git zip
 
 * ntp service (optional)
 
-* torque installation
-
-```
-yum install libxml2-devel openssl-devel gcc gcc-c++ libtool boost-devel
-git clone https://github.com/adaptivecomputing/torque.git -b 5.0.0
-cd torque
-./autogen.sh
-./configure
-make -j4 2>&1 | tee make.log
-make install
-
-#Configure Torque on headnode
-echo $HOSTNAME > /var/spool/torque/server_name
-echo "/usr/local/lib" > /etc/ld.so.conf.d/torque.conf
-ldconfig
-ldconfig -v | grep torque
-
-cp contrib/init.d/trqauthd /etc/init.d/
-chkconfig trqauthd on
-service trqauthd start
-
-./torque.setup root
-qterm
-
-vi /var/spool/torque/server_priv/nodes
-localhost np=4
-
-cp contrib/init.d/pbs_server /etc/init.d/
-chkconfig pbs_server on
-service pbs_server start
-
-#Install Torque MOMs on compute nodes 
-make packages
-./torque-package-mom-linux-x86_64.sh --install
-cp contrib/init.d/pbs_mom /etc/init.d/
-chkconfig pbs_mom on
-service pbs_mom start
-
-#Configure the scheduler 
-cp contrib/init.d/pbs_sched /etc/init.d/
-chkconfig pbs_sched on
-service pbs_sched start
-```
-
 * MySQL
 ```
 yum install mysql mysql-server
@@ -242,6 +198,53 @@ python test_script/login.py
 ```
 tail -f /root/LOG/logfile.log
 ```
+
+
+
+* torque installation (If needed)
+
+```
+yum install libxml2-devel openssl-devel gcc gcc-c++ libtool boost-devel
+git clone https://github.com/adaptivecomputing/torque.git -b 5.0.0
+cd torque
+./autogen.sh
+./configure
+make -j4 2>&1 | tee make.log
+make install
+
+#Configure Torque on headnode
+echo $HOSTNAME > /var/spool/torque/server_name
+echo "/usr/local/lib" > /etc/ld.so.conf.d/torque.conf
+ldconfig
+ldconfig -v | grep torque
+
+cp contrib/init.d/trqauthd /etc/init.d/
+chkconfig trqauthd on
+service trqauthd start
+
+./torque.setup root
+qterm
+
+vi /var/spool/torque/server_priv/nodes
+localhost np=4
+
+cp contrib/init.d/pbs_server /etc/init.d/
+chkconfig pbs_server on
+service pbs_server start
+
+#Install Torque MOMs on compute nodes
+make packages
+./torque-package-mom-linux-x86_64.sh --install
+cp contrib/init.d/pbs_mom /etc/init.d/
+chkconfig pbs_mom on
+service pbs_mom start
+
+#Configure the scheduler
+cp contrib/init.d/pbs_sched /etc/init.d/
+chkconfig pbs_sched on
+service pbs_sched start
+```
+
 
 
 * mount shared storage
