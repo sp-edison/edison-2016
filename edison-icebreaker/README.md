@@ -95,6 +95,7 @@ OS name: "linux", version: "2.6.32-573.22.1.el6.x86_64", arch: "amd64", family: 
 ```
 git clone https://github.com/sp-edison/edison-2016.git
 cd edison-2016/edison-icebreaker
+# copy util file to cluster head node
 scp pbs-cores localhost:/usr/local/bin/pbs-cores
 ```
 
@@ -257,7 +258,7 @@ v6a197
 ```
 
 
-* ssh key copy
+* ssh key copy (for password-less connection: IB and cluster head node)
 ```
 ssh-keygen -t rsa
 ssh-copy-id localhost
