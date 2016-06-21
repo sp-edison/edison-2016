@@ -11,7 +11,7 @@ Architecture figure.
 * Some Utilities
 
 ```
-yum install wget curl java-1.7.0-openjdk-devel python-setuptools git zip
+yum install wget curl tar java-1.7.0-openjdk-devel python-setuptools git zip
 ```
 
 * ntp service (optional)
