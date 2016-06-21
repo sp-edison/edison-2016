@@ -146,7 +146,7 @@ mvn -Ptest tomcat7:redeploy
 
 ** DB:
 
-vi src/main/resources-test/WEB-INF/config/rest.properties
+cat src/main/resources-test/WEB-INF/config/rest.properties
 ```
 app.jdbc.driverClassName=com.mysql.jdbc.Driver
 app.jdbc.url=jdbc:mysql://localhost:3306/IB_TEST
@@ -158,7 +158,7 @@ app.jdbc.maxIdle=32
 
 ** LOG:
 
-vi src/main/resources-test/WEB-INF/config/log4j.properties
+cat src/main/resources-test/WEB-INF/config/log4j.properties
 ```
 log4j.rootLogger = INFO, ecloud
 log4j.appender.ecloud = org.apache.log4j.rolling.RollingFileAppender
@@ -172,7 +172,7 @@ log4j.appender.ecloud.layout.ConversionPattern = %d{ABSOLUTE} %5p %c{1}:%L - %m%
 
 ** admin pw:
 
-vi src/main/resources/config.common.ini
+cat src/main/resources/config.common.ini
 ```
 ##################################################################
 ####### ADMIN. CONFIGURATION
@@ -184,7 +184,7 @@ user.admin.email=root@gmail.com
 
 ** cluster setting:
 
-vi src/main/resources-test/WEB-INF/classes/config.ini
+cat src/main/resources-test/WEB-INF/classes/config.ini
 ```
 ####### TEST
 resources=EDISON-TEST:localhost:22:OpenPBS:3.0.5:batch:2:/EDISON/:ko:true
