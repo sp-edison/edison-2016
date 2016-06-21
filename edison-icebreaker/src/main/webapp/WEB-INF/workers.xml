@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:jms="http://www.springframework.org/schema/jms"
+	xmlns:lang="http://www.springframework.org/schema/lang"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:oxm="http://www.springframework.org/schema/oxm"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd
+		http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-3.1.xsd
+		http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-3.1.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+		http://www.springframework.org/schema/oxm http://www.springframework.org/schema/oxm/spring-oxm-3.1.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd">
+	    
+	<context:annotation-config/>	
+    <context:component-scan base-package="kisti.edison.cloud.worker" />
+    
+    <!-- BACKUP SERVICE MONITORING -->
+    <bean id="backupQueue" class="java.util.concurrent.LinkedBlockingQueue" />
+    <bean id="backupTaskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+	  <property name="corePoolSize" value="64" />
+	  <property name="maxPoolSize" value="64" />
+	  <property name="queueCapacity" value="128" />
+	</bean>
+    <bean id="backupTasksExecutor" class="kisti.edison.cloud.worker.BackupTasks">
+	  <constructor-arg ref="backupTaskExecutor" />
+	</bean>
+	<task:scheduled-tasks scheduler="backupScheduler">
+          <task:scheduled ref="backupMonitor" method="dispatchTasks" fixed-delay="3600000"/>
+     </task:scheduled-tasks>
+     <!-- The bean that does the actual work -->
+     <bean id="backupMonitor" class="kisti.edison.cloud.worker.BackupMonitor">
+     </bean>
+
+     <!-- Defines a ThreadPoolTaskScheduler instance with configurable pool size. -->
+     <task:scheduler id="backupScheduler"/>
+    
+    
+    <!--  CLUSTER MONITORING -->
+	<bean id="clusterQueue" class="java.util.concurrent.LinkedBlockingQueue" />
+	<bean id="clusterTaskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+	  <property name="corePoolSize" value="64" />
+	  <property name="maxPoolSize" value="64" />
+	  <property name="queueCapacity" value="128" />
+	</bean>
+    <bean id="clusterTasksExecutor" class="kisti.edison.cloud.worker.ClusterTasks">
+	  <constructor-arg ref="clusterTaskExecutor" />
+	</bean>
+	<task:scheduled-tasks scheduler="clusterMonitoringScheduler">
+          <task:scheduled ref="clusterMonitor" method="dispatchTasks" fixed-delay="300000"/>
+     </task:scheduled-tasks>
+     <!-- The bean that does the actual work -->
+     <bean id="clusterMonitor" class="kisti.edison.cloud.worker.ClusterMonitor">
+     </bean>
+
+     <!-- Defines a ThreadPoolTaskScheduler instance with configurable pool size. -->
+     <task:scheduler id="clusterMonitoringScheduler"/>
+     
+
+	<bean id="jobQueue" class="java.util.concurrent.LinkedBlockingQueue" />
+	<!-- Job Tasks Executor -->
+	<bean id="jobTaskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+	  <property name="corePoolSize" value="1024" />
+	  <property name="maxPoolSize" value="1024" />
+	  <property name="queueCapacity" value="2048" />
+	</bean>
+	
+	<bean id="jobTasksExecutor" class="kisti.edison.cloud.worker.JobTasksExecutor">
+	  <constructor-arg ref="jobTaskExecutor" />
+	</bean>
+
+     <task:scheduled-tasks scheduler="jobMonitoringScheduler">
+          <task:scheduled ref="jobMonitoringWorker" method="dispatchTasks" fixed-delay="30000"/>
+     </task:scheduled-tasks>
+     <!-- The bean that does the actual work -->
+     <bean id="jobMonitoringWorker" class="kisti.edison.cloud.worker.JobMonitoringWorker">
+     </bean>
+
+     <!-- Defines a ThreadPoolTaskScheduler instance with configurable pool size. -->
+     <task:scheduler id="jobMonitoringScheduler"/>
+     
+       
+    
+	<bean id="hostQueue" class="java.util.concurrent.LinkedBlockingQueue" />
+	<!-- Host Tasks Executor -->
+	<bean id="hostTaskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+	  <property name="corePoolSize" value="512" />
+	  <property name="maxPoolSize" value="512" />
+	  <property name="queueCapacity" value="1024" />
+	</bean>
+	
+	<bean id="hostTasksExecutor" class="kisti.edison.cloud.worker.HostTasksExecutor">
+	  <constructor-arg ref="hostTaskExecutor" />
+	</bean>
+
+     <task:scheduled-tasks scheduler="hostMonitoringScheduler">
+          <task:scheduled ref="hostMonitoringWorker" method="dispatchTasks" fixed-delay="86400000"/>
+     </task:scheduled-tasks>
+
+     <!-- The bean that does the actual work -->
+     <bean id="hostMonitoringWorker" class="kisti.edison.cloud.worker.HostMonitoringWorker">
+     </bean>
+
+     <!-- Defines a ThreadPoolTaskScheduler instance with configurable pool size. -->
+     <task:scheduler id="hostMonitoringScheduler"/>  
+     
+     
+    <bean id="virtualNetworkQueue" class="java.util.concurrent.LinkedBlockingQueue" />
+	<!-- Virtual Network Tasks Executor -->
+	<bean id="virtualNetworkTaskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+	  <property name="corePoolSize" value="512" />
+	  <property name="maxPoolSize" value="512" />
+	  <property name="queueCapacity" value="1024" />
+	</bean>
+	
+	<bean id="virtualNetworkTasksExecutor" class="kisti.edison.cloud.worker.VirtualNetworkTasksExecutor">
+	  <constructor-arg ref="virtualNetworkTaskExecutor" />
+	</bean>
+
+     <task:scheduled-tasks scheduler="virtualNetworkMonitoringScheduler">
+          <task:scheduled ref="virtualNetworkMonitoringWorker" method="dispatchTasks" fixed-delay="86400000"/>
+     </task:scheduled-tasks>
+
+     <!-- The bean that does the actual work -->
+     <bean id="virtualNetworkMonitoringWorker" class="kisti.edison.cloud.worker.VirtualNetworkMonitoringWorker">
+     </bean>
+
+     <!-- Defines a ThreadPoolTaskScheduler instance with configurable pool size. -->
+     <task:scheduler id="virtualNetworkMonitoringScheduler"/>  
+     
+     
+    <bean id="virtualImageQueue" class="java.util.concurrent.LinkedBlockingQueue" />
+	<!-- Virtual Network Tasks Executor -->
+	<bean id="virtualImageTaskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+	  <property name="corePoolSize" value="512" />
+	  <property name="maxPoolSize" value="512" />
+	  <property name="queueCapacity" value="1024" />
+	</bean>
+	
+	<bean id="virtualImageTasksExecutor" class="kisti.edison.cloud.worker.VirtualImageTasksExecutor">
+	  <constructor-arg ref="virtualImageTaskExecutor" />
+	</bean>
+
+     <task:scheduled-tasks scheduler="virtualImageMonitoringScheduler">
+          <task:scheduled ref="virtualImageMonitoringWorker" method="dispatchTasks" fixed-delay="86400000"/>
+     </task:scheduled-tasks>
+
+     <!-- The bean that does the actual work -->
+     <bean id="virtualImageMonitoringWorker" class="kisti.edison.cloud.worker.VirtualImageMonitoringWorker">
+     </bean>
+
+     <!-- Defines a ThreadPoolTaskScheduler instance with configurable pool size. -->
+     <task:scheduler id="virtualImageMonitoringScheduler"/>  
+     
+     
+    <bean id="virtualMachineQueue" class="java.util.concurrent.LinkedBlockingQueue" />
+	<!-- Virtual Network Tasks Executor -->
+	<bean id="virtualMachineTaskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+	  <property name="corePoolSize" value="512" />
+	  <property name="maxPoolSize" value="512" />
+	  <property name="queueCapacity" value="1024" />
+	</bean>
+	
+	<bean id="virtualMachineTasksExecutor" class="kisti.edison.cloud.worker.VirtualMachineTasksExecutor">
+	  <constructor-arg ref="virtualMachineTaskExecutor" />
+	</bean>
+
+     <task:scheduled-tasks scheduler="virtualMachineMonitoringScheduler">
+          <task:scheduled ref="virtualMachineMonitoringWorker" method="dispatchTasks" fixed-delay="86400000"/>
+     </task:scheduled-tasks>
+
+     <!-- The bean that does the actual work -->
+     <bean id="virtualMachineMonitoringWorker" class="kisti.edison.cloud.worker.VirtualMachineMonitoringWorker">
+     </bean>
+
+     <!-- Defines a ThreadPoolTaskScheduler instance with configurable pool size. -->
+     <task:scheduler id="virtualMachineMonitoringScheduler"/> 
+</beans>

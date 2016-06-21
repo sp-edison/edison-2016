@@ -1,0 +1,73 @@
+#!/usr/bin/perl
+# created by hschae at 2016. 01. 08
+# modified by hschae at 2016. 01. 21 - for multi-properties
+# modified by hschae at 2016. 02. 04 - for special (there is only a property)
+# modified by hschae at 2016. 06. 20 - for a case without properties; (default : batch)
+# contact : hschae at kisti.re.kr
+# KISTI, Daejeon, South Korea
+use strict;
+use warnings;
+
+
+# input a parameter. print all queue information without any input.
+my $input = shift || "batch";
+$input =~ s/^\*$/.*/;
+
+# pbsnodes excutable file
+my $pbsnodes = `which pbsnodes` || die "DIE : No pbsnodes excutable file!\n";
+open my $stream, "$pbsnodes |";
+{
+    local $/="\n\n";
+    my %data;
+# parsing by queue info
+# data spliting by server
+    while ( <$stream> ) {
+#        next unless /properties = (.*,)?$input(,.*)?$/m;
+# ignore different queue with input queue name
+        my %server;
+        s/(^.+)\n//;
+        my $serv_name = $1;
+
+# main parsing information
+        %server = map { s/^\s*|\s*$//g; split / = /, $_, 2 } split /\n/;
+
+# get queue name of this server
+        my @qnames = split /,/, $server{properties} || ("batch");
+        $server{properties}="batch" unless /properties = (.*,)?$input(,.*)?$/m;
+
+# statistics...
+        for my $qname ( @qnames ) {
+            $data{$qname}{core} += $server{np};
+            $data{$qname}{fail} += $server{np} if $server{state} eq "down";
+            if ( $server{state} eq "job-exclusive" ) {
+                $data{$qname}{jobs} += $server{np};
+            }
+            elsif ( exists $server{jobs} ) {
+                my @tmparr = split /,/, $server{jobs};
+                $data{$qname}{jobs} += scalar @tmparr;
+            }
+
+            $data{$qname}{jobs} = 0 unless exists $data{$qname}{jobs};
+            $data{$qname}{fail} = 0 unless exists $data{$qname}{fail};
+        }
+#print "np => ", $server{np}, "\n";
+#print "$_ => $server{$_}\n" for sort keys %server;
+    }
+
+# pringing final information
+    my $matching = 0;
+    for ( keys %data ) {
+        $matching++ if /^$input$/;
+    }
+    exit if $matching == 0;
+    if ( $matching == 1 ) {
+        for my $qn ( sort keys %data ) {
+            printf("%d:%d:%d\n", $data{$qn}{core}, $data{$qn}{jobs}, $data{$qn}{fail}) if $qn =~ /^$input$/;
+        }
+    }
+    else {
+        for my $qn ( sort keys %data ) {
+            printf("%-15s\t%s\n", "$data{$qn}{core}:$data{$qn}{jobs}:$data{$qn}{fail}", $qn);
+        }
+    }
+}
