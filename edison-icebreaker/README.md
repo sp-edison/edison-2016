@@ -104,7 +104,7 @@ scp pbs-cores localhost:/usr/local/bin/pbs-cores
 vi pom.xml
 ```
 
-**add two jar dependencies to pom.xml
+**add one jar dependencies to pom.xml
 ```
         <dependency>
             <groupId>org.kie.modules</groupId>
@@ -120,14 +120,6 @@ vi pom.xml
               <version>1.0</version>
               <scope>system</scope>
               <systemPath>/root/edison-2016/edison-icebreaker/src/main/webapp/WEB-INF/lib/org.opennebula.client.jar</systemPath>
-        </dependency>
-
-        <dependency>
-              <groupId>pbs4java_m</groupId>
-              <artifactId>pbs4java_m</artifactId>
-              <version>1.0</version>
-              <scope>system</scope>
-              <systemPath>/root/edison-2016/edison-icebreaker/src/main/webapp/WEB-INF/lib/pbs4java_m.jar</systemPath>
         </dependency>
 ```
 
@@ -265,6 +257,10 @@ ssh-copy-id localhost
 ```
 
 * mount shared storage
+
+
+* Reference
+maven install: http://xxun.tistory.com/233
 
 <p>
 EDISON is free and open source and it always will be! It is licensed under the <a href="http://www.gnu.org/licenses/lgpl-2.1.html">GNU Lesser General Public License</a>.
