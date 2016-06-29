@@ -1,4 +1,3 @@
-# edison-2016
 <h1>EDISON DOWNLOAD</h1>
 <p>
 Construction of EDISON open platform: the construction/ offering / support of integrated user of the Web portal service environment for simulation programs and content utilization of specialized field
