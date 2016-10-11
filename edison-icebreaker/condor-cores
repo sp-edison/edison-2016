@@ -1,0 +1,12 @@
+#!/bin/sh
+# Huiseung Chae
+# hschae at kisti.re.kr
+
+# return value:
+# (total core):(running core):(dead/down core)
+
+CONDOR_PROC=48
+# Manually written number; because condor status does not show dead node!
+
+
+/usr/bin/condor_status | tail -1 | awk "{printf \"%d:%d:%d\n\", \$2, \$4, $CONDOR_PROC-\$2}"
