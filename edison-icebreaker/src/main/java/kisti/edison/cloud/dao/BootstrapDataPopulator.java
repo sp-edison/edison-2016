@@ -318,6 +318,9 @@ public class BootstrapDataPopulator implements ApplicationContextAware, Initiali
 		else if(jobManager.equals("OpenPBS")) {
 			return Cluster.JobManagerType.OpenPBS;
 		}
+		else if(jobManager.equals("Condor")) {
+			return Cluster.JobManagerType.Condor;
+		}
 		else {
 			return Cluster.JobManagerType.UNKNOWN;
 		}

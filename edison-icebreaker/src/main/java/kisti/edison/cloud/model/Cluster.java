@@ -43,7 +43,7 @@ public class Cluster implements Serializable {
 	private static final long serialVersionUID = 3308510202966329916L;
 
 	public static enum JobManagerType {
-		TORQUE, LoadL, SGE, OpenPBS, UNKNOWN
+		TORQUE, LoadL, SGE, OpenPBS, Condor, UNKNOWN
 	}
 	
 	@Entity
