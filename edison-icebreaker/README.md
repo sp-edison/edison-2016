@@ -97,6 +97,9 @@ git clone https://github.com/sp-edison/edison-2016.git
 cd edison-2016/edison-icebreaker
 # copy util file to cluster head node
 scp pbs-cores localhost:/usr/local/bin/pbs-cores
+
+# copy util file to cluster head node (for HTCondor)
+scp condor-cores localhost:/usr/local/bin/condor-cores
 ```
 
 * IB deploy
@@ -174,6 +177,9 @@ cat src/main/resources-test/WEB-INF/classes/config.ini
 ```
 ####### TEST
 resources=EDISON-TEST:localhost:22:OpenPBS:3.0.5:batch:2:/EDISON/:ko:true
+
+####### HTCondor
+resources=CONDOR-TEST:localhost:22:Condor:7.8.8:dev:48:/EDISON/:ko:true
 ```
 
 
