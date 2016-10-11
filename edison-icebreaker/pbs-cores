@@ -5,6 +5,10 @@
 # modified by hschae at 2016. 06. 20 - for a case without properties; (default : batch)
 # contact : hschae at kisti.re.kr
 # KISTI, Daejeon, South Korea
+
+# return value:
+# (total core):(running core):(dead/down core)
+
 use strict;
 use warnings;
 
