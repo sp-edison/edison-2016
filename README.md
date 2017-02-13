@@ -11,10 +11,9 @@ provision of development and infrastructure resources of the EDISON application 
 <p>
 <ul>
   <li><a href="https://www.edison.re.kr/documents/20181/222701/EDISON+-+%EC%84%A4%EC%B9%98+%EA%B0%80%EC%9D%B4%EB%93%9C.pdf/1dd2a861-9057-4339-b803-20d824940b2a">Project Setup Guide</a></li>
-  <li><a href="https://www.edison.re.kr/documents/10194/8702920/UserGuide.pdf">User Guide</a></li>
-  <li><a href="https://www.edison.re.kr/documents/10194/8702920/ManagerGuide-VirtualLab.pdf">Class Manager Guide</a></li>
-  <li><a href="https://www.edison.re.kr/documents/10194/8702920/DeveloperGuide.pdf">App Developer Guide</a></li>
-  <li><a href="https://www.edison.re.kr/documents/10194/8702920/DeveloperAPIGuide.pdf">API Document</a></li>
+  <li><a href="https://www.edison.re.kr/documents/20181/222701/EDISON+-+%EC%82%AC%EC%9A%A9%EC%9E%90+%EA%B0%80%EC%9D%B4%EB%93%9C.pdf/7d26c7eb-7594-44a4-bb62-7620281bf099">User Guide</a></li>
+  <li><a href="https://www.edison.re.kr/documents/20181/222701/EDISON+-+%EA%B0%80%EC%83%81%EC%8B%A4%ED%97%98%EC%8B%A4+%EA%B4%80%EB%A6%AC+%EA%B0%80%EC%9D%B4%EB%93%9C+.pdf/b0ef4968-e0d7-4e4c-8801-55fcd8b622d5">Class Manager Guide</a></li>
+  <li><a href="https://www.edison.re.kr/documents/20181/222701/EDISON+-+%EA%B0%9C%EB%B0%9C%EC%9E%90+%EA%B0%80%EC%9D%B4%EB%93%9C.pdf/dbd23474-a189-4b61-8e77-b1f1bf3e7d9d">App Developer Guide</a></li>
 </ul>
 </p>
 <h1>License</h1>
