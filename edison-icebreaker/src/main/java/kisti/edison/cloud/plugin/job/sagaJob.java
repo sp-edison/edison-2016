@@ -48,7 +48,7 @@ public class sagaJob {
 	private String usedcput="N/A";
 	private String errrorPath="N/A";
 	private String outputPath="N/A";
-	private String VariablesList="N/A";
+//	private String VariablesList="N/A";
 	private String exitStatus = "N/A";
 //	private static final String CLUSTERFINDWORDS="has been submitted to cluster";
 
@@ -273,17 +273,17 @@ public class sagaJob {
 				value = line[1].trim();
 				// System.out.println("value = " + value);
 
-				if (header.equals("Variable_List"))
-				{
-					while (Info[i+1].startsWith("\t"))
-					{
-						value += Info[i+1];
-						i++;
-					}
-					value=value.replaceAll("\t", "");
-					j.VariablesList=value;
-				}
-				else if ("Job Id".equals(header))
+//				if (header.equals("Variable_List"))
+//				{
+//					while (Info[i+1].startsWith("\t"))
+//					{
+//						value += Info[i+1];
+//						i++;
+//					}
+//					value=value.replaceAll("\t", "");
+//					j.VariablesList=value;
+//				}
+				if ("Job Id".equals(header))
 //					j.setId(value);
 					j.setId(id);
 				/*

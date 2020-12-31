@@ -44,9 +44,9 @@ public class TorqueJobAdapter implements JobAdapter {
 		return "TORQUE";
 	}
 	
-	private String _replaceJobTitle(String source) {
-		return source.replaceAll("\\p{Space}", "_");
-	}
+//	private String _replaceJobTitle(String source) {
+//		return source.replaceAll("\\p{Space}", "_");
+//	}
 	/*
 	 * (non-Javadoc)
 	 * 

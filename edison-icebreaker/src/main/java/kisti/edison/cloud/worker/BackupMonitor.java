@@ -10,7 +10,6 @@ import java.util.concurrent.BlockingQueue;
 import javax.annotation.Resource;
 
 import kisti.edison.cloud.manager.Command;
-import kisti.edison.cloud.model.Cluster;
 import kisti.edison.cloud.model.User;
 import kisti.edison.cloud.service.BackupService;
 

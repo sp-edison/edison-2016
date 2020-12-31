@@ -31,7 +31,6 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import kisti.edison.cloud.model.VirtualMachine.VirtualMachineState;
 
 /**
  * @author jlyu

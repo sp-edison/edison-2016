@@ -174,8 +174,8 @@ public class UUIDUserType implements UserType {
 	 * 
 	 * @see org.hibernate.usertype.UserType#returnedClass()
 	 */
-	@SuppressWarnings("unchecked")
-	public Class returnedClass() {
+//	@SuppressWarnings("unchecked")
+	public Class<?> returnedClass() {
 
 		return UUID.class;
 	}

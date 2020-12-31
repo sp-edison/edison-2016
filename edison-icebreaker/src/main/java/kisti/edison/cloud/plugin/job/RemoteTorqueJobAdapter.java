@@ -3,7 +3,6 @@
  */
 package kisti.edison.cloud.plugin.job;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,10 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -105,7 +101,7 @@ public class RemoteTorqueJobAdapter implements JobAdapter {
 		String filePath = job.getWorkingDir() + "/remote-pbs-script";
 		try {
 			BufferedWriter out = new BufferedWriter(new FileWriter(filePath));
-			String s = "#!/bin/sh";
+			String s = "#!/bin/bash";
 			out.write(s);
 			out.newLine();
 			s = "#PBS -N " + job.getUuid();
@@ -122,6 +118,9 @@ public class RemoteTorqueJobAdapter implements JobAdapter {
 			out.write(s);
 			out.newLine();
 			s = "#PBS -e " + job.getWorkingDir() + "/" + job.getUuid() + ".err";
+			out.write(s);
+			out.newLine();
+			s = "#PBS -W " + "umask=002";
 			out.write(s);
 			out.newLine();
 			if(job.getnProcs() == 1) {
@@ -152,7 +151,7 @@ public class RemoteTorqueJobAdapter implements JobAdapter {
 			out.write(s);
 			out.newLine();
 			
-//			// Dependencies Setting
+			// Dependencies Setting
 //			if (job.getDependencies() != null) {
 //				Iterator<String> iter = job.getDependencies().keySet().iterator();
 //				while (iter.hasNext()) {
@@ -165,22 +164,11 @@ public class RemoteTorqueJobAdapter implements JobAdapter {
 //				}
 //			}
 
-			/* env variable setup */
-			s ="if [ -f " + job.getWorkingDir() + "simrc ]; then";
-			out.write(s);
-			out.newLine();
-		    s = "	source " + job.getWorkingDir() + "simrc;";
-		    out.write(s);
-			out.newLine();
-			s= "fi";
-			out.write(s);
-			out.newLine();
-
 			String executable = job.getExecutable();
 			s = "cp " + executable + " .";
 			out.write(s);
 			out.newLine();
-			
+
 			if (job.getDependencies() != null) {
 				// http://stackoverflow.com/questions/3657157/how-do-i-get-a-files-directory-using-the-file-object
 				File tmpFilePath = new File(executable);
@@ -193,6 +181,17 @@ public class RemoteTorqueJobAdapter implements JobAdapter {
 				out.write(s);
 				out.newLine();
 			}
+			
+			/* env variable setup */
+			s ="if [ -f " + job.getWorkingDir() + "simrc ]; then";
+			out.write(s);
+			out.newLine();
+		    s = "	source " + job.getWorkingDir() + "simrc;";
+		    out.write(s);
+			out.newLine();
+			s= "fi";
+			out.write(s);
+			out.newLine();
 			
 			/* Job Command Replacements */
 			String jobCommand = job.getExecution();
@@ -224,8 +223,10 @@ public class RemoteTorqueJobAdapter implements JobAdapter {
 				if (job.getCategory().equals(Job.JobCategory.GNU_OPENMP) || job.getCategory().equals(Job.JobCategory.INTEL_OPENMP)) {
 					s = "export OMP_NUM_THREADS=" + job.getnProcs() + ";";
 					out.write(s);
+					out.newLine();
 					s = "./" + executableName + " " + jobCommand + " >" + job.getUuid() + ".out";
 					out.write(s);
+					out.newLine();
 				}
 				else if (job.getCategory().equals(Job.JobCategory.INTEL_MPICH_1)) {
 					/*s = Cloud.getInstance().getProp("mpirun.path") + "/bin/mpirun"
@@ -244,103 +245,170 @@ public class RemoteTorqueJobAdapter implements JobAdapter {
 							+ job.getnProcs() + " ./" + executableName + " "
 							+ jobCommand + " >" + job.getUuid() + ".out";
 					out.write(s);
+					out.newLine();
 				} else if(job.getCategory().equals(Job.JobCategory.GNU_OPENMPI_1_4)){
-					s = "NCPU=`wc -l < $PBS_NODEFILE`\r\n";
+//					s = "NCPU=`wc -l < $PBS_NODEFILE`";
+//					out.write(s);
+//					out.newLine();
+//					s = "NNODES=`uniq $PBS_NODEFILE | wc -l`";
+//					out.write(s);
+//					out.newLine();
+//					s = "echo ------------------------------------------------------";
+//					out.write(s);
+//					out.newLine();
+//					s = "echo ' This job is allocated on '${NCPU}' cpu(s)'";
+//					out.write(s);
+//					out.newLine();
+//					s = "echo 'Job is running on node(s): '";
+//					out.write(s);
+//					out.newLine();
+//					s = "cat $PBS_NODEFILE";
+//					out.write(s);
+//					out.newLine();
+//					s = "echo ------------------------------------------------------";
+//					out.write(s);
+//					out.newLine();
+//					s = "echo PBS: qsub is running on $PBS_O_HOST";
+//					out.write(s);
+//					out.newLine();
+//					s = "echo PBS: originating queue is $PBS_O_QUEUE";
+//					out.write(s);
+//					out.newLine();
+//					s = "echo PBS: executing queue is $PBS_QUEUE";
+//					out.write(s);
+//					out.newLine();
+//					s = "echo PBS: working directory is $PBS_O_WORKDIR";
+//					out.write(s);
+//					out.newLine();
+//					s = "echo PBS: execution mode is $PBS_ENVIRONMENT";
+//					out.write(s);
+//					out.newLine();
+//					s = "echo PBS: job identifier is $PBS_JOBID";
+//					out.write(s);
+//					out.newLine();
+//					s = "echo PBS: job name is $PBS_JOBNAME";
+//					out.write(s);
+//					out.newLine();
+//					s = "echo PBS: node file is $PBS_NODEFILE";
+//					out.write(s);
+//					out.newLine();
+//					s = "echo PBS: number of nodes is $NNODES";
+//					out.write(s);
+//					out.newLine();
+//					s = "echo PBS: current home directory is $PBS_O_HOME";
+//					out.write(s);
+//					out.newLine();
+//					s = "echo PBS: PATH = $PBS_O_PATH";
+//					out.write(s);
+//					out.newLine();
+//					s = "echo ------------------------------------------------------";
+//					out.write(s);
+//					out.newLine();
+					s = "export LD_LIBRARY_PATH="+Cloud.getInstance().getProp("gcc.openmpi.path")+"/lib:$LD_LIBRARY_PATH";
 					out.write(s);
-					s = "NNODES=`uniq $PBS_NODEFILE | wc -l`\r\n";
+					out.newLine();
+					s = "MPIPATH="+Cloud.getInstance().getProp("gcc.openmpi.path")+"/bin";
 					out.write(s);
-					s = "echo ------------------------------------------------------\r\n";
-					out.write(s);
-					s = "echo ' This job is allocated on '${NCPU}' cpu(s)'\r\n";
-					out.write(s);
-					s = "echo 'Job is running on node(s): '\r\n";
-					out.write(s);
-					s = "cat $PBS_NODEFILE\r\n";
-					out.write(s);
-					s = "echo ------------------------------------------------------\r\n";
-					out.write(s);
-					s = "echo PBS: qsub is running on $PBS_O_HOST\r\n";
-					out.write(s);
-					s = "echo PBS: originating queue is $PBS_O_QUEUE\r\n";
-					out.write(s);
-					s = "echo PBS: executing queue is $PBS_QUEUE\r\n";
-					out.write(s);
-					s = "echo PBS: working directory is $PBS_O_WORKDIR\r\n";
-					out.write(s);
-					s = "echo PBS: execution mode is $PBS_ENVIRONMENT\r\n";
-					out.write(s);
-					s = "echo PBS: job identifier is $PBS_JOBID\r\n";
-					out.write(s);
-					s = "echo PBS: job name is $PBS_JOBNAME\r\n";
-					out.write(s);
-					s = "echo PBS: node file is $PBS_NODEFILE\r\n";
-					out.write(s);
-					s = "echo PBS: number of nodes is $NNODES\r\n";
-					out.write(s);
-					s = "echo PBS: current home directory is $PBS_O_HOME\r\n";
-					out.write(s);
-					s = "echo PBS: PATH = $PBS_O_PATH\r\n";
-					out.write(s);
-					s = "echo ------------------------------------------------------\r\n";
-					out.write(s);
-					s = "export LD_LIBRARY_PATH="+Cloud.getInstance().getProp("gcc.openmpi.path")+"/lib:$LD_LIBRARY_PATH\r\n";
-					out.write(s);
-					s = "MPIPATH="+Cloud.getInstance().getProp("gcc.openmpi.path")+"/bin\r\n";
-					out.write(s);
+					out.newLine();
 					s = "${MPIPATH}/mpirun"
 							+ " -machinefile " + "$PBS_NODEFILE" + " -np "
 							+ job.getnProcs() + " ./" + executableName + " "
-							+ jobCommand + " >" + job.getUuid() + ".out" + "\r\n";
+							+ jobCommand + " >" + job.getUuid() + ".out" + "";
 					out.write(s);
+					out.newLine();
 				} else if(job.getCategory().equals(Job.JobCategory.INTEL_OPENMPI_1_4)) {
-					s = "NCPU=`wc -l < $PBS_NODEFILE`\r\n";
+//					s = "NCPU=`wc -l < $PBS_NODEFILE`";
+//					out.write(s);
+//					out.newLine();
+//					s = "NNODES=`uniq $PBS_NODEFILE | wc -l`";
+//					out.write(s);
+//					out.newLine();
+//					s = "echo ------------------------------------------------------";
+//					out.write(s);
+//					out.newLine();
+//					s = "echo ' This job is allocated on '${NCPU}' cpu(s)'";
+//					out.write(s);
+//					out.newLine();
+//					s = "echo 'Job is running on node(s): '";
+//					out.write(s);
+//					out.newLine();
+//					s = "cat $PBS_NODEFILE";
+//					out.write(s);
+//					out.newLine();
+//					s = "echo ------------------------------------------------------";
+//					out.write(s);
+//					out.newLine();
+//					s = "echo PBS: qsub is running on $PBS_O_HOST";
+//					out.write(s);
+//					out.newLine();
+//					s = "echo PBS: originating queue is $PBS_O_QUEUE";
+//					out.write(s);
+//					out.newLine();
+//					s = "echo PBS: executing queue is $PBS_QUEUE";
+//					out.write(s);
+//					out.newLine();
+//					s = "echo PBS: working directory is $PBS_O_WORKDIR";
+//					out.write(s);
+//					out.newLine();
+//					s = "echo PBS: execution mode is $PBS_ENVIRONMENT";
+//					out.write(s);
+//					out.newLine();
+//					s = "echo PBS: job identifier is $PBS_JOBID";
+//					out.write(s);
+//					out.newLine();
+//					s = "echo PBS: job name is $PBS_JOBNAME";
+//					out.write(s);
+//					out.newLine();
+//					s = "echo PBS: node file is $PBS_NODEFILE";
+//					out.write(s);
+//					out.newLine();
+//					s = "echo PBS: number of nodes is $NNODES";
+//					out.write(s);
+//					out.newLine();
+//					s = "echo PBS: current home directory is $PBS_O_HOME";
+//					out.write(s);
+//					out.newLine();
+//					s = "echo PBS: PATH = $PBS_O_PATH";
+//					out.write(s);
+//					out.newLine();
+//					s = "echo ------------------------------------------------------";
+//					out.write(s);
+//					out.newLine();
+					s = "export LD_LIBRARY_PATH="+Cloud.getInstance().getProp("intel.openmpi.path")+"/lib:$LD_LIBRARY_PATH";
 					out.write(s);
-					s = "NNODES=`uniq $PBS_NODEFILE | wc -l`\r\n";
+					out.newLine();
+					s = "MPIPATH="+Cloud.getInstance().getProp("intel.openmpi.path")+"/bin";
 					out.write(s);
-					s = "echo ------------------------------------------------------\r\n";
-					out.write(s);
-					s = "echo ' This job is allocated on '${NCPU}' cpu(s)'\r\n";
-					out.write(s);
-					s = "echo 'Job is running on node(s): '\r\n";
-					out.write(s);
-					s = "cat $PBS_NODEFILE\r\n";
-					out.write(s);
-					s = "echo ------------------------------------------------------\r\n";
-					out.write(s);
-					s = "echo PBS: qsub is running on $PBS_O_HOST\r\n";
-					out.write(s);
-					s = "echo PBS: originating queue is $PBS_O_QUEUE\r\n";
-					out.write(s);
-					s = "echo PBS: executing queue is $PBS_QUEUE\r\n";
-					out.write(s);
-					s = "echo PBS: working directory is $PBS_O_WORKDIR\r\n";
-					out.write(s);
-					s = "echo PBS: execution mode is $PBS_ENVIRONMENT\r\n";
-					out.write(s);
-					s = "echo PBS: job identifier is $PBS_JOBID\r\n";
-					out.write(s);
-					s = "echo PBS: job name is $PBS_JOBNAME\r\n";
-					out.write(s);
-					s = "echo PBS: node file is $PBS_NODEFILE\r\n";
-					out.write(s);
-					s = "echo PBS: number of nodes is $NNODES\r\n";
-					out.write(s);
-					s = "echo PBS: current home directory is $PBS_O_HOME\r\n";
-					out.write(s);
-					s = "echo PBS: PATH = $PBS_O_PATH\r\n";
-					out.write(s);
-					s = "echo ------------------------------------------------------\r\n";
-					out.write(s);
-					s = "export LD_LIBRARY_PATH="+Cloud.getInstance().getProp("intel.openmpi.path")+"/lib:$LD_LIBRARY_PATH\r\n";
-					out.write(s);
-					s = "MPIPATH="+Cloud.getInstance().getProp("intel.openmpi.path")+"/bin\r\n";
-					out.write(s);
+					out.newLine();
 					s = "${MPIPATH}/mpirun"
 							+ " -machinefile " + "$PBS_NODEFILE" + " -np "
 							+ job.getnProcs() + " ./" + executableName + " "
-							+ jobCommand + " >" + job.getUuid() + ".out" + "\r\n";
+							+ jobCommand + " >" + job.getUuid() + ".out" + "";
 					out.write(s);
-				} else {
+					out.newLine();
+				} else if(job.getCategory().equals(Job.JobCategory.GNU_OPENMPI_2_1_2)) {
+					s = "module load openmpi/2.1.2";
+					out.write(s);
+					out.newLine();
+					s = "mpirun"
+							+ " -machinefile " + "$PBS_NODEFILE" + " -np "
+							+ job.getnProcs() + " ./" + executableName + " "
+							+ jobCommand + " >" + job.getUuid() + ".out" + "";
+					out.write(s);
+					out.newLine();
+				} else if (job.getCategory().equals(Job.JobCategory.INTEL2018_MPI))  {
+					s = "module load intel/2018-mpi";
+					out.write(s);
+					out.newLine();
+					s = "mpirun"
+							+ " -machinefile " + "$PBS_NODEFILE" + " -np "
+							+ job.getnProcs() + " ./" + executableName + " "
+							+ jobCommand + " >" + job.getUuid() + ".out" + "";
+					out.write(s);
+					out.newLine();
+				}
+				
+				else {
 					/* TODO: other categories should be supported in the near future */
 				}
 			}
@@ -370,17 +438,17 @@ public class RemoteTorqueJobAdapter implements JobAdapter {
 				out.write(s);
 				out.newLine();
 			}
-			
-			if (job.getDependencies() != null) {
-				s = "for i in *; do if [ -L $i ]; then unlink $i; fi; done";
-				out.write(s);
-				out.newLine();
-			}
-			
-			s = "zip -r " + Cloud.getInstance().getProp("output.zipfile") + " "
-					+ Cloud.getInstance().getProp("output.basedir");
-			out.write(s);
-			out.newLine();
+
+//			if (job.getDependencies() != null) {
+//				s = "for i in *; do if [ -L $i ]; then unlink $i; fi; done";
+//				out.write(s);
+//				out.newLine();
+//			}
+//
+//			s = "zip -r " + Cloud.getInstance().getProp("output.zipfile") + " "
+//					+ Cloud.getInstance().getProp("output.basedir");
+//			out.write(s);
+//			out.newLine();
 			out.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -407,6 +475,8 @@ public class RemoteTorqueJobAdapter implements JobAdapter {
 			}
 			scriptPath = makeJobScriptFile(job, cluster);
 			if(scriptPath == null) return null;
+			File script = new File(scriptPath);
+			script.setReadable(true, false);
 		} else {
 			job.setState(Job.JobState.SUBMISSION_FAILED);
 			return job;
@@ -596,10 +666,18 @@ public class RemoteTorqueJobAdapter implements JobAdapter {
 	public byte[] getErrorLog(User user, Cluster cluster, Job job) throws IOException {
 		String errFilePath = job.getWorkingDir() + "/" + job.getUuid() + ".err";
 		File file = new File(errFilePath);
+		long length;
+		byte[] bytes;
+		if ( file.exists() == false ) {
+			length = 0;
+			bytes = new byte[0];
+			return bytes;
+		}
 		
 		InputStream is = new FileInputStream(file);
-		long length = file.length();
-		byte[] bytes = new byte[(int) length];
+		
+		length = file.length();
+		bytes = new byte[(int) length];
 
 		int offset = 0;
 		int numRead = 0;

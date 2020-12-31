@@ -5,7 +5,6 @@ package kisti.edison.cloud.core;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +19,7 @@ import kisti.edison.cloud.model.Simulation;
  */
 @Component
 public class SchedulerImpl implements Scheduler {
-	private final Logger LOG = Logger.getLogger(this.getClass());
+//	private final Logger LOG = Logger.getLogger(this.getClass());
 	
 	private ClusterDAO clusterDAO;
 	

@@ -9,11 +9,8 @@ import java.util.List;
 import java.util.Map;
 
 import kisti.edison.cloud.manager.ClusterManager;
-import kisti.edison.cloud.manager.HostManager;
 import kisti.edison.cloud.model.Cluster;
-import kisti.edison.cloud.model.Host;
 
-import org.apache.log4j.Logger;
 import org.springframework.core.task.TaskExecutor;
 
 /**
@@ -21,7 +18,7 @@ import org.springframework.core.task.TaskExecutor;
  *
  */
 public class ClusterTasks {
-	private final Logger LOG = Logger.getLogger(this.getClass());
+//	private final Logger LOG = Logger.getLogger(this.getClass());
 	
 	private class ClusterTask implements Runnable {
 		private ClusterManager clusterManager;
@@ -65,10 +62,10 @@ public class ClusterTasks {
 				index = 0;
 		}
 
-		int createdThreads = 0;
+//		int createdThreads = 0;
 		for (int i = 0; i < nThreads; i++) {
 			if (clusterList.get(i).size() != 0) {
-				createdThreads++;
+//				createdThreads++;
 				taskExecutor.execute(new ClusterTask(clusterManager, clusterList.get(i)));
 			}
 		}

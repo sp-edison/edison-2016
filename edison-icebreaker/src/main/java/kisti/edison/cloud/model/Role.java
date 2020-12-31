@@ -13,18 +13,20 @@ import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.JoinTable;
+import javax.persistence.MapKeyColumn;
 import javax.persistence.Version;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import org.hibernate.annotations.CollectionOfElements;
+//import org.hibernate.annotations.CollectionOfElements;
 
 /**
  * @author jlyu
@@ -48,7 +50,9 @@ public class Role implements Serializable {
 	@Column(name = "description")
 	private String description;
 
-	@CollectionOfElements
+//	@CollectionOfEle
+	@ElementCollection
+	@MapKeyColumn(name = "id")
 	@JoinTable(name = "ROLES_PERMISSIONS")
 	private Set<String> permissions;
 

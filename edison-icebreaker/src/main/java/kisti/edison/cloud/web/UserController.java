@@ -8,24 +8,17 @@
  */
 package kisti.edison.cloud.web;
 
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-import java.security.PrivateKey;
-import java.security.PublicKey;
-import java.security.SecureRandom;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
 import kisti.edison.cloud.env.Cloud;
+import kisti.edison.cloud.manager.ClusterManager;
+import kisti.edison.cloud.model.Cluster;
 import kisti.edison.cloud.model.Count;
 import kisti.edison.cloud.model.Job;
 import kisti.edison.cloud.model.Login;
@@ -34,19 +27,18 @@ import kisti.edison.cloud.model.Role;
 import kisti.edison.cloud.model.User;
 import kisti.edison.cloud.model.User.UserState;
 import kisti.edison.cloud.model.UserList;
+import kisti.edison.cloud.plugin.spec.ClusterAdapter;
 import kisti.edison.cloud.service.BackupService;
 import kisti.edison.cloud.service.JobService;
 import kisti.edison.cloud.service.UserService;
-import kisti.edison.cloud.util.AuthUtils;
 import kisti.edison.cloud.util.DateUtil;
+import kisti.edison.cloud.service.ClusterService;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
-import org.joda.time.DateTimeZone;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -57,6 +49,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
 
 //import com.sun.syndication.io.impl.Base64;
 import kisti.edison.cloud.util.Base64;
@@ -70,7 +63,11 @@ public class UserController extends RestController {
 	private UserService userService;
 	private BackupService backupService;
 	private JobService jobService;
+	private ClusterService clusterService;
+	private ClusterManager clusterManager;
 
+	private HashSet <String> requestedList = new HashSet <String>();
+	
 	private enum FIELD {
 		id("id"),
 		userId("userId"),
@@ -82,6 +79,7 @@ public class UserController extends RestController {
 			this.field = f;
 		}
 		
+		@SuppressWarnings("unused")
 		public String getField() { return this.field; }
 		
 		public static FIELD fromString(String field) {
@@ -115,6 +113,25 @@ public class UserController extends RestController {
 		this.jobService = jobService;
 	}
 
+	public ClusterService getClusterService() {
+		return clusterService;
+	}
+	
+	@Autowired
+	public void setClusterService(ClusterService clusterService) {
+		this.clusterService = clusterService;
+	}
+	
+	public ClusterManager getClusterManager() {
+		return clusterManager;
+	}
+	
+	@Autowired
+	public void setClusterManager(ClusterManager clusterManager) {
+		this.clusterManager = clusterManager;
+	}
+	
+	
 	@RequestMapping(method = RequestMethod.GET, value = "/user/core/usage", headers = "Accept=application/json, application/xml")
 	public ResponseEntity<ResourceUsage> getResourceUsage(HttpServletRequest request) {
 		Subject currentUser = SecurityUtils.getSubject();
@@ -154,7 +171,33 @@ public class UserController extends RestController {
 		}
 		return responseWriter(currentUser, usage, new HttpHeaders(), HttpStatus.OK);
 	}
-	
+
+	@RequestMapping(method = RequestMethod.GET, value = "/user/core/usage2", headers = "Accept=application/json, application/xml")
+	public ResponseEntity<Integer> getResourceUsage2(@RequestParam(value="userId", required=false) String userId, @RequestParam(value="cluster", required=false) String clusterName, HttpServletRequest request) {
+		Subject currentUser = SecurityUtils.getSubject();
+		LOG.info("getResourceUsage2() called : " + currentUser.getPrincipal().toString());
+		String currentUserId = currentUser.getPrincipal().toString();
+		if (!currentUser.hasRole(Cloud.ROLE_ADMINISTRATOR) || userId == null) {
+			userId = currentUserId;
+		}
+		//LOG.info("userId = " + userId);
+		
+		int usage = 0;
+		//LOG.info("cluster " + clusterName);
+		Cluster cluster = clusterService.findCluster(clusterName);
+		ClusterAdapter aCluster = clusterManager.getACluster(cluster);
+		//LOG.info("aCluster " + aCluster);
+		try {
+			usage = aCluster.getClusterRunCore(cluster, userId);
+			//LOG.info("cpu core usage " + usage);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return responseWriter(currentUser, usage, new HttpHeaders(), HttpStatus.OK);
+	}	
+
 	@RequestMapping(method = RequestMethod.POST, value = "/user/login", headers = "Accept=application/json, application/xml")
 	public ResponseEntity<String> login(@RequestBody Login login,
 			HttpServletRequest request) {
@@ -352,6 +395,13 @@ public class UserController extends RestController {
 		LOG.info("postUser() called : " + user.getUserId());
 		Subject currentUser = SecurityUtils.getSubject();
 		LOG.info("currentUser : " + currentUser.getPrincipal().toString());
+		
+		if ( requestedList.contains(user.getUserId()) ) {
+			return responseWriter(currentUser, null, new HttpHeaders(),
+					HttpStatus.BAD_REQUEST);
+		} else {
+			requestedList.add(user.getUserId());
+		}
 
 		if (!currentUser.hasRole(Cloud.ROLE_ADMINISTRATOR)) {
 			return responseWriter(currentUser, null, new HttpHeaders(),
@@ -395,7 +445,9 @@ public class UserController extends RestController {
 		}
 		
 		User createdUser = userService.createUser(user);
-
+		if ( requestedList.contains(user.getUserId()) ) {
+			requestedList.remove(user.getUserId());
+		}
 		if (createdUser == null) {
 			return responseWriter(currentUser, null, new HttpHeaders(),
 					HttpStatus.BAD_REQUEST);
@@ -439,21 +491,38 @@ public class UserController extends RestController {
 			HttpServletRequest request) {
 		Subject currentUser = SecurityUtils.getSubject();
 		LOG.info("currentUser : " + currentUser.getPrincipal().toString());
+		
 
 		if (!currentUser.hasRole(Cloud.ROLE_ADMINISTRATOR)) {
 			return responseWriter(currentUser, null, new HttpHeaders(),
 					HttpStatus.UNAUTHORIZED);
 		}
-
+		LOG.info("test");
+		LOG.info("Role " + userId + " - " + userService.findRole(userId));
+		LOG.info("test finish");
 		if (!userService.isExist(userId)) {
 			return responseWriter(currentUser, null, new HttpHeaders(),
 					HttpStatus.NOT_FOUND);
-		} else if (userId.equals(Cloud.ADMIN_USERID)) {
+		} else if (userId.equals(Cloud.ADMIN_USERID) ||
+				( userService.findRole(userId) != null && userService.findRole(userId).equals(Cloud.ROLE_ADMINISTRATOR))) {
 			return responseWriter(currentUser, null, new HttpHeaders(),
 					HttpStatus.FORBIDDEN);
 		}
-
+		
+		if ( requestedList.contains(userId) ) {
+			return responseWriter(currentUser, null, new HttpHeaders(),
+					HttpStatus.BAD_REQUEST);
+		} else {
+			requestedList.add(userId);
+		}
+		
 		userService.deleteUser(userId);
+		
+		if ( requestedList.contains(userId) ) {
+			requestedList.remove(userId);
+		}
+		
+		
 		return responseWriter(currentUser, null, new HttpHeaders(),
 				HttpStatus.OK);
 	}

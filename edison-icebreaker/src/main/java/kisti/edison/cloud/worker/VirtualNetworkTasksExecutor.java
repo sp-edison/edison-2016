@@ -11,7 +11,6 @@ import java.util.Map;
 import kisti.edison.cloud.manager.VirtualNetworkManager;
 import kisti.edison.cloud.model.VirtualNetwork;
 
-import org.apache.log4j.Logger;
 import org.springframework.core.task.TaskExecutor;
 
 /**
@@ -19,7 +18,7 @@ import org.springframework.core.task.TaskExecutor;
  * 
  */
 public class VirtualNetworkTasksExecutor {
-	private final Logger LOG = Logger.getLogger(this.getClass());
+//	private final Logger LOG = Logger.getLogger(this.getClass());
 
 	private class VirtualNetworkTask implements Runnable {
 		private VirtualNetworkManager vnManager;
@@ -69,10 +68,10 @@ public class VirtualNetworkTasksExecutor {
 				index = 0;
 		}
 
-		int createdThreads = 0;
+//		int createdThreads = 0;
 		for (int i = 0; i < nThreads; i++) {
 			if (netList.get(i).size() != 0) {
-				createdThreads++;
+//				createdThreads++;
 				taskExecutor.execute(new VirtualNetworkTask(vnManager, netList
 						.get(i)));
 			}

@@ -38,12 +38,12 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 @XmlRootElement(name = "cluster")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = { "id", "name", "ip", "port", "jobManagerType", "jobManagerVersion",
-		"queues", "baseDir", "zone", "enabled", "lastModified", "runtime", "version"})
+		"queues", "baseDir", "zone", "enabled", "lastModified", "runtime", "remoteId", "version", "remotePW", "remoteOTP"})
 public class Cluster implements Serializable {
 	private static final long serialVersionUID = 3308510202966329916L;
 
 	public static enum JobManagerType {
-		TORQUE, LoadL, SGE, OpenPBS, Condor, UNKNOWN
+		TORQUE, LoadL, SGE, OpenPBS, Condor, Slurm, PBSPro, NSPBSPro, UNKNOWN
 	}
 	
 	@Entity
@@ -160,8 +160,15 @@ public class Cluster implements Serializable {
 	@Column(name = "zone")
 	private String zone;
 
+	@Column(name = "remoteId")
+	private String remoteId = "";
+
 	@Column(name = "enabled")
 	private boolean enabled;
+	
+	private String remotePW = "";
+	
+	private String remoteOTP = "";
 	
 	public Cluster() {
 	}
@@ -227,6 +234,20 @@ public class Cluster implements Serializable {
 		return lastModified;
 	}
 
+	public void setRemotePW(String remotePW) {
+		this.remotePW = remotePW;
+	}
+	
+	public void setRemoteOTP(String remoteOTP) {
+		this.remoteOTP = remoteOTP;
+	}
+	public String getRemotePW() {
+		return remotePW;
+	}
+	
+	public String getRemoteOTP() {
+		return remoteOTP;
+	}
 	public void setLastModified(Date lastModified) {
 		this.lastModified = lastModified;
 	}
@@ -261,6 +282,14 @@ public class Cluster implements Serializable {
 
 	public void setZone(String zone) {
 		this.zone = zone;
+	}
+
+	public String getRemoteId() {
+		return remoteId;
+	}
+
+	public void setRemoteId(String remoteId) {
+		this.remoteId = remoteId;
 	}
 	
 	public boolean isEnabled() {

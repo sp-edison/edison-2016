@@ -6,9 +6,6 @@ package kisti.edison.cloud.dao;
 import java.util.List;
 
 import kisti.edison.cloud.model.Cluster;
-import kisti.edison.cloud.model.FileEntry;
-import kisti.edison.cloud.model.Host;
-import kisti.edison.cloud.model.User;
 
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;

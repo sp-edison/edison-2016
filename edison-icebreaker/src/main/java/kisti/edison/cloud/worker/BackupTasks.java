@@ -11,7 +11,6 @@ import java.util.Map;
 import kisti.edison.cloud.model.User;
 import kisti.edison.cloud.service.BackupService;
 
-import org.apache.log4j.Logger;
 import org.springframework.core.task.TaskExecutor;
 
 /**
@@ -19,7 +18,7 @@ import org.springframework.core.task.TaskExecutor;
  *
  */
 public class BackupTasks {
-	private final Logger LOG = Logger.getLogger(this.getClass());
+//	private final Logger LOG = Logger.getLogger(this.getClass());
 	
 	private TaskExecutor taskExecutor;
 
@@ -62,10 +61,10 @@ public class BackupTasks {
 				index = 0;
 		}
 
-		int createdThreads = 0;
+//		int createdThreads = 0;
 		for (int i = 0; i < nThreads; i++) {
 			if (userList.get(i).size() != 0) {
-				createdThreads++;
+//				createdThreads++;
 				taskExecutor.execute(new BackupTask(backupService, userList.get(i)));
 			}
 		}

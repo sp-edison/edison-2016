@@ -6,9 +6,8 @@ package kisti.edison.cloud.web;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -22,8 +21,11 @@ import kisti.edison.cloud.env.Cloud;
 import kisti.edison.cloud.model.Callback;
 import kisti.edison.cloud.model.Cluster;
 import kisti.edison.cloud.model.Count;
+import kisti.edison.cloud.model.FileDirList;
 import kisti.edison.cloud.model.FileItem;
 import kisti.edison.cloud.model.FileItemList;
+import kisti.edison.cloud.model.PortInfo;
+import kisti.edison.cloud.model.PortInfoList;
 import kisti.edison.cloud.model.Job;
 import kisti.edison.cloud.model.JobCount;
 import kisti.edison.cloud.model.JobStatus;
@@ -35,7 +37,6 @@ import kisti.edison.cloud.service.JobService;
 import kisti.edison.cloud.service.RepositoryService;
 import kisti.edison.cloud.service.SimulationService;
 import kisti.edison.cloud.service.UserService;
-import kisti.edison.cloud.web.RestController.SORT;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -52,7 +53,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
+//import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
+import org.apache.commons.codec.binary.Base64;
 
 /**
  * @author root
@@ -65,6 +67,7 @@ public class JobController extends RestController {
 	private SimulationService simulationService;
 	private RepositoryService repositoryService;
 	private UserService userService;
+	Base64 base64 = new Base64(180, "".getBytes());
 
 	private enum FIELD {
 		title("title"),
@@ -78,6 +81,7 @@ public class JobController extends RestController {
 			this.field = f;
 		}
 		
+		@SuppressWarnings("unused")
 		public String getField() { return this.field; }
 		
 		public static FIELD fromString(String field) {
@@ -154,6 +158,7 @@ public class JobController extends RestController {
 		jobStatus.setExecution(null);
 		jobStatus.setWorkingDir(job.getWorkingDir());
 		jobStatus.setZipFilePath(job.getZipFilePath());
+		jobStatus.setNproc(job.getnProcs());
 
 		// java.text.SimpleDateFormat format = new
 		// java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -376,6 +381,7 @@ public class JobController extends RestController {
 
 	@RequestMapping(method = RequestMethod.POST, value = "/simulation/{sim_uuid}/job/submit", headers = "Accept=application/json, application/xml")
 	public ResponseEntity<JobStatus> submit(@PathVariable String sim_uuid,
+			@RequestParam(value = "url", required = false) String url,			
 			@RequestBody Job job, HttpServletRequest request) {
 		LOG.info("submit() called");
 		Subject currentUser = SecurityUtils.getSubject();
@@ -392,6 +398,8 @@ public class JobController extends RestController {
 			return responseWriter(currentUser, null, new HttpHeaders(),
 					HttpStatus.BAD_REQUEST);
 		}
+		
+
 		
 		if ((job.getTitle() == null || job.getTitle().isEmpty())
 				|| (job.getType() == null || !(job.getType() instanceof Job.JobType))) {
@@ -410,7 +418,7 @@ public class JobController extends RestController {
 		if (job.getType().equals(Job.JobType.PARALLEL)
 				&& (job.getAttributes().get(NPROCS_STR) == null || job
 						.getAttributes().get(NPROCS_STR).isEmpty())) {
-			LOG.info("parallel job, but nprocs is null");
+			LOG.error("parallel job, but nprocs is null");
 			return responseWriter(currentUser, null, new HttpHeaders(),
 					HttpStatus.BAD_REQUEST);
 		}
@@ -430,7 +438,12 @@ public class JobController extends RestController {
 				return responseWriter(currentUser, null, new HttpHeaders(),
 						HttpStatus.BAD_REQUEST);
 			}
-			job.setnProcs(Integer.parseInt(job.getAttributes().get("np")));
+			int numProc = Integer.parseInt(job.getAttributes().get("np"));
+			if ( numProc == 0 ) {
+				return responseWriter(currentUser, null, new HttpHeaders(),
+						HttpStatus.BAD_REQUEST);
+			}
+			job.setnProcs(numProc);
 		} else {
 			return responseWriter(currentUser, null, new HttpHeaders(),
 					HttpStatus.BAD_REQUEST);
@@ -496,14 +509,26 @@ public class JobController extends RestController {
 		}
 		*/
 		
-		
 		job.setUserId(currentUser.getPrincipal().toString());
-		Job createdJob = jobService.createJob(cluster, sim_uuid, job);
-		Callback callback = simulationService.getCallback(sim_uuid);
-		if ( callback != null )
-		{
-			simulationService.pushCallback(callback, sim_uuid, job);
+		Job createdJob = jobService.createJob(cluster, sim_uuid, job, url);
+		
+		if ( job.getState() != null && job.getState().toString().equals("SUBMISSION_FAILED") ) {
+			LOG.info("submission failed");
+			return responseWriter(currentUser, null, new HttpHeaders(),
+					HttpStatus.SERVICE_UNAVAILABLE);
 		}
+		
+		if (createdJob == null)
+		{
+			LOG.error("createdJob is NULL");
+			LOG.error("callback is FAIL!!!");
+		}
+		
+//		Callback callback = simulationService.getCallback(sim_uuid);
+//		if ( callback != null )
+//		{
+//			simulationService.pushCallback(callback, sim_uuid, job);
+//		}
 
 		LOG.info(createdJob.toString());
 		// LOG.info( Job.Map2Str(job.getFiles()) );
@@ -561,14 +586,13 @@ public class JobController extends RestController {
 				return responseWriter(currentUser, null, new HttpHeaders(),
 						HttpStatus.BAD_REQUEST);
 			}
-			else
-			{
-				Callback callback = simulationService.getCallback(sim_uuid);
-				if ( callback != null )
-				{
-					simulationService.pushCallback(callback, sim_uuid, cancelingJob);
-				}
-			}
+//			else
+//			{
+//				Callback callback = simulationService.getCallback(job_uuid);
+//				if ( callback != null ) {
+//					simulationService.pushCallback(callback, cancelingJob);
+//				}
+//			}
 			return responseWriter(currentUser, getJobStatus(cancelingJob),
 					new HttpHeaders(), HttpStatus.OK);
 		} else {
@@ -590,6 +614,7 @@ public class JobController extends RestController {
 
 		Job job = jobService.findJobByUUID(job_uuid);
 		if (job == null) {
+			LOG.info("Job return null");
 			return responseWriter(currentUser, null, new HttpHeaders(),
 					HttpStatus.NOT_FOUND);
 		}
@@ -623,7 +648,40 @@ public class JobController extends RestController {
 					HttpStatus.OK);
 		}
 */
+		Job renewedJob = job;
 		
+		if (currentUser.hasRole(Cloud.getInstance().getProp("user.role.admin"))) {
+			LOG.info(job.toString());
+			return responseWriter(currentUser, getJobStatus(renewedJob),
+					new HttpHeaders(), HttpStatus.OK);
+		} else {
+			if (!job.getUserId().equals(currentUser.getPrincipal().toString())) {
+				return responseWriter(currentUser, null, new HttpHeaders(),
+						HttpStatus.UNAUTHORIZED);
+			} else {
+				LOG.info(job.toString());
+				return responseWriter(currentUser, getJobStatus(renewedJob),
+						new HttpHeaders(), HttpStatus.OK);		
+			}
+		}
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/job/{job_uuid}/status", headers = "Accept=application/json, application/xml")
+	public ResponseEntity<JobStatus> getJob(@PathVariable String job_uuid, HttpServletRequest request) {
+		LOG.info("getJob() called (" + job_uuid + ")");
+		Subject currentUser = SecurityUtils.getSubject();
+		if (job_uuid == null	|| job_uuid.isEmpty()) {
+			return responseWriter(currentUser, null, new HttpHeaders(),
+					HttpStatus.BAD_REQUEST);
+		}
+
+		Job job = jobService.findJobByUUID(job_uuid);
+		if (job == null) {
+			LOG.info("Job return null");
+			return responseWriter(currentUser, null, new HttpHeaders(),
+					HttpStatus.NOT_FOUND);
+		}
+
 		Job renewedJob = job;
 		
 		if (currentUser.hasRole(Cloud.getInstance().getProp("user.role.admin"))) {
@@ -785,6 +843,49 @@ public class JobController extends RestController {
 				new HttpHeaders(), HttpStatus.OK);
 	}
 
+
+	@RequestMapping(method = RequestMethod.GET, value = "/job/{job_uuid}/inputport", headers = "Accept=application/json, application/xml")
+	public ResponseEntity<PortInfoList> getJobInputPorts(
+			@PathVariable String job_uuid, HttpServletRequest request) {
+		LOG.info("JobController::getJobInputs() called (" + job_uuid + ")");
+		Subject currentUser = SecurityUtils.getSubject();
+		if (job_uuid == null || job_uuid.isEmpty()) {
+			return responseWriter(currentUser, null, new HttpHeaders(),
+					HttpStatus.BAD_REQUEST);
+		}
+
+		Job job = jobService.findJobByUUID(job_uuid);
+		if (job == null) {
+			return responseWriter(currentUser, null, new HttpHeaders(),
+					HttpStatus.NOT_FOUND);
+		}
+
+		Map<String, String> files = Job.Str2Map(job.getFileStr());
+		List<PortInfo> fileItems = new LinkedList<PortInfo>();
+
+		Iterator<String> iter = files.keySet().iterator();
+		while (iter.hasNext()) {
+			String key = iter.next();
+			String fileId = files.get(key);
+			FileItem iterFile = repositoryService.find(fileId);
+			PortInfo portInfo = new PortInfo(iterFile, key);
+			fileItems.add(portInfo);
+		}
+
+		if (currentUser.hasRole(Cloud.getInstance().getProp("user.role.admin"))) {
+			return responseWriter(currentUser, new PortInfoList(fileItems),
+					new HttpHeaders(), HttpStatus.OK);
+		}
+
+		if (!job.getUserId().equals(currentUser.getPrincipal().toString())) {
+			return responseWriter(currentUser, null, new HttpHeaders(),
+					HttpStatus.UNAUTHORIZED);
+		}
+
+		return responseWriter(currentUser, new PortInfoList(fileItems),
+				new HttpHeaders(), HttpStatus.OK);
+	}
+	
 	@RequestMapping(method = RequestMethod.GET, value = "/job/{job_uuid}/output", headers = "Accept=application/json, application/xml")
 	public ResponseEntity<FileItemList> getJobOutputs(
 			@PathVariable String job_uuid,
@@ -799,15 +900,46 @@ public class JobController extends RestController {
 		}
 
 		Job job = jobService.findJobByUUID(job_uuid);
+		List<FileItem> fileItems = null;
+
 		if (job == null) {
-			return responseWriter(currentUser, null, new HttpHeaders(),
-					HttpStatus.NOT_FOUND);
+			LOG.info("Job return null");
+
+			User user = userService.getUser(currentUser.getPrincipal().toString());
+			String workingDir = "/EDISON/" + user.getStorageSource()+ "/" + Cloud.getInstance().getProp("user.jobpath")
+					+ "/scripts/" + job_uuid + ".job/";
+			LOG.info("working dir : " + workingDir);
+
+
+			try {
+				fileItems = repositoryService.getFiles(workingDir + dir);
+				if (fileItems == null) {
+					return responseWriter(currentUser, null, new HttpHeaders(),
+							HttpStatus.BAD_REQUEST);
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return responseWriter(currentUser, null, new HttpHeaders(),
+						HttpStatus.NOT_FOUND);
+			}
+			LOG.info(fileItems.toString());
+
+			if (currentUser.hasRole(Cloud.getInstance().getProp("user.role.admin"))) {
+				return responseWriter(currentUser, new FileItemList(fileItems),
+						new HttpHeaders(), HttpStatus.OK);
+			}
+
+			return responseWriter(currentUser, new FileItemList(fileItems),
+					new HttpHeaders(), HttpStatus.OK);
+			//return responseWriter(currentUser, null, new HttpHeaders(),
+			//		HttpStatus.NOT_FOUND);
 		}
 
-		List<FileItem> fileItems = null;
 		try {
 			fileItems = repositoryService.getFiles(job.getWorkingDir() + dir);
 			if (fileItems == null) {
+
 				return responseWriter(currentUser, null, new HttpHeaders(),
 						HttpStatus.BAD_REQUEST);
 			}
@@ -817,6 +949,7 @@ public class JobController extends RestController {
 			return responseWriter(currentUser, null, new HttpHeaders(),
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+		LOG.info(fileItems.toString());
 
 		if (currentUser.hasRole(Cloud.getInstance().getProp("user.role.admin"))) {
 			return responseWriter(currentUser, new FileItemList(fileItems),
@@ -831,6 +964,109 @@ public class JobController extends RestController {
 		return responseWriter(currentUser, new FileItemList(fileItems),
 				new HttpHeaders(), HttpStatus.OK);
 	}
+	
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/job/{job_uuid}/alloutput", headers = "Accept=application/json")
+	public ResponseEntity<FileDirList> getJobAllOutputs(
+			@PathVariable String job_uuid,
+			@RequestParam(value = "dir", required = true) String dir,
+			HttpServletRequest request) {
+		LOG.info("JobController::getJobAllOutputs() called (" + job_uuid + ")");
+		Subject currentUser = SecurityUtils.getSubject();
+		if (job_uuid == null || job_uuid.isEmpty() || dir == null
+				|| dir.isEmpty()) {
+			return responseWriter(currentUser, null, new HttpHeaders(),
+					HttpStatus.BAD_REQUEST);
+		}
+
+		Job job = jobService.findJobByUUID(job_uuid);
+		List<FileItem> fileItems = null;
+		List<FileItem> dirItems = null;
+
+		if (job == null) {
+			LOG.info("Job return null");
+
+			User user = userService.getUser(currentUser.getPrincipal().toString());
+			String workingDir = "/EDISON/" + user.getStorageSource()+ "/" + Cloud.getInstance().getProp("user.jobpath")
+					+ "/scripts/" + job_uuid + ".job/";
+			LOG.info("working dir : " + workingDir);
+
+
+			try {
+				fileItems = repositoryService.getFiles(workingDir + dir);
+				dirItems = this.repositoryService.getFolders(workingDir + dir);
+			    
+				if (fileItems == null && dirItems == null) {
+					return responseWriter(currentUser, null, new HttpHeaders(),
+							HttpStatus.BAD_REQUEST);
+				}
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return responseWriter(currentUser, null, new HttpHeaders(),
+						HttpStatus.NOT_FOUND);
+			}
+			LOG.info(fileItems.toString());
+
+		    FileItemList list = new FileItemList(fileItems);
+		    FileItemList dirList = new FileItemList(dirItems);
+		    
+		    HashMap<String, FileItemList> fdlist = new HashMap<String, FileItemList>();
+		    fdlist.put("files",  list);
+		    fdlist.put("folders", dirList);
+		    FileDirList alllist = new FileDirList(fdlist);
+		    			
+			if (currentUser.hasRole(Cloud.getInstance().getProp("user.role.admin"))) {
+				return responseWriter(currentUser, alllist,
+						new HttpHeaders(), HttpStatus.OK);
+			}
+
+			return responseWriter(currentUser, alllist,
+					new HttpHeaders(), HttpStatus.OK);
+			//return responseWriter(currentUser, null, new HttpHeaders(),
+			//		HttpStatus.NOT_FOUND);
+		}
+
+		try {
+			fileItems = repositoryService.getFiles(job.getWorkingDir() + dir);
+			dirItems = this.repositoryService.getFolders(job.getWorkingDir() + dir);
+
+			if (fileItems == null && dirItems == null) {
+
+				return responseWriter(currentUser, null, new HttpHeaders(),
+						HttpStatus.BAD_REQUEST);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return responseWriter(currentUser, null, new HttpHeaders(),
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		LOG.info(fileItems.toString());
+
+	    FileItemList list = new FileItemList(fileItems);
+	    FileItemList dirList = new FileItemList(dirItems);
+	    
+	    HashMap<String, FileItemList> fdlist = new HashMap<String, FileItemList>();
+	    fdlist.put("files",  list);
+	    fdlist.put("folders", dirList);
+	    FileDirList alllist = new FileDirList(fdlist);
+		
+		if (currentUser.hasRole(Cloud.getInstance().getProp("user.role.admin"))) {
+			return responseWriter(currentUser, alllist,
+					new HttpHeaders(), HttpStatus.OK);
+		}
+
+		if (!job.getUserId().equals(currentUser.getPrincipal().toString())) {
+			return responseWriter(currentUser, null, new HttpHeaders(),
+					HttpStatus.UNAUTHORIZED);
+		}
+
+		return responseWriter(currentUser, alllist,
+				new HttpHeaders(), HttpStatus.OK);
+	}
+	
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/job/{job_uuid}/file", headers = "Accept=application/json, application/xml")
 	public ResponseEntity<FileItem> getJobFile(
@@ -900,7 +1136,7 @@ public class JobController extends RestController {
 
 		String zipPath = job.getWorkingDir()
 				+ Cloud.getInstance().getProp("output.zipfile");
-		String fileId = Base64.encode(zipPath.getBytes());
+		String fileId = new String(base64.encode(zipPath.getBytes()));
 
 		FileItem item = repositoryService.find(fileId);
 		if (item == null) {
@@ -991,12 +1227,17 @@ public class JobController extends RestController {
 				User user = userService.getUser(currentUser.getPrincipal().toString());
 				String userHomeDir = baseDir + user.getStorageSource();
 				File homeDir = new File(userHomeDir);
-				if(canonicalPath.startsWith(homeDir.getCanonicalPath()) == false) {
-					LOG.error("Attack Detection. Requested filePath : " + job.getWorkingDir());
-					if (currentUser.isAuthenticated())
-						currentUser.logout();
-					return responseWriter(currentUser, null, new HttpHeaders(),
-							HttpStatus.UNAUTHORIZED);
+				if (( !currentUser.hasRole(Cloud.getInstance().getProp("user.role.admin")) ) &&
+						(canonicalPath.startsWith(homeDir.getCanonicalPath()) == false)) {
+					LOG.info("Attach checking by " + currentUser.getPrincipal().toString() + " : " + homeDir.getCanonicalPath() + " diff " + canonicalPath);
+					String archivingPath = canonicalPath.replaceFirst("/Storage/Volume\\d\\d", "");
+					if(archivingPath.startsWith(homeDir.getCanonicalPath()) == false) {
+						LOG.error("Attack Detection. Requested filePath : " + job.getWorkingDir() + " archivingPath = " + archivingPath);
+						if (currentUser.isAuthenticated())
+							currentUser.logout();
+						return responseWriter(currentUser, null, new HttpHeaders(),
+								HttpStatus.UNAUTHORIZED);
+					}
 				}
 				repositoryService.delete(canonicalPath);
 				return responseWriter(currentUser, null, new HttpHeaders(),

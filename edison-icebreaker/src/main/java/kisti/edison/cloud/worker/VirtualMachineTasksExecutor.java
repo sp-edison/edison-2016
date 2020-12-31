@@ -35,7 +35,7 @@ public class VirtualMachineTasksExecutor {
 		}
 
 		public void run() {
-			String threadName = Thread.currentThread().getName();
+//			String threadName = Thread.currentThread().getName();
 			// LOG.info(threadName + " task start. ( " +
 			// Thread.currentThread().getId() + " )");
 			for (VirtualMachine vm : vms) {
@@ -110,10 +110,10 @@ public class VirtualMachineTasksExecutor {
 				index = 0;
 		}
 
-		int createdThreads = 0;
+//		int createdThreads = 0;
 		for (int i = 0; i < nThreads; i++) {
 			if (vmsList.get(i).size() != 0) {
-				createdThreads++;
+//				createdThreads++;
 				taskExecutor.execute(new VirtualMachineTask(
 						virtualMachineManager, vmsList.get(i)));
 			}

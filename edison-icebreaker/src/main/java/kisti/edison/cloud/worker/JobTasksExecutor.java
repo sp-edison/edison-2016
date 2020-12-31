@@ -3,18 +3,15 @@
  */
 package kisti.edison.cloud.worker;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import kisti.edison.cloud.manager.JobManager;
-import kisti.edison.cloud.model.Callback;
 import kisti.edison.cloud.model.Cluster;
 import kisti.edison.cloud.model.Job;
 import kisti.edison.cloud.model.User;
-import kisti.edison.cloud.model.Job.JobState;
 import kisti.edison.cloud.service.ClusterService;
 import kisti.edison.cloud.service.SimulationService;
 import kisti.edison.cloud.service.UserService;
@@ -70,18 +67,18 @@ public class JobTasksExecutor {
 					}
 					
 //					LOG.info("dbJob: " + dbJob.getState());
-					if ( (updateJob != null ) && dbJob.getState() != updateJob.getState() )
-					{
-//						LOG.info("updateJob: " + updateJob.getState());
-
-//						String sim_uuid = dbJob.getSimulation().getUuid();
-						String sim_uuid = jobManager.getSimUuid(dbJob);
-						Callback callback = simulationService.getCallback(sim_uuid);
-						if ( callback != null )
-						{
-							simulationService.pushCallback(callback, sim_uuid, updateJob);
-						}
-					}
+//					if ( (updateJob != null ) && dbJob.getState() != updateJob.getState() )
+//					{
+////						LOG.info("updateJob: " + updateJob.getState());
+//
+////						String sim_uuid = dbJob.getSimulation().getUuid();
+////						String sim_uuid = jobManager.getSimUuid(dbJob);
+//						Callback callback = simulationService.getCallback(updateJob.getUuid());
+//						if ( callback != null )
+//						{
+//							simulationService.pushCallback(callback, updateJob);
+//						}
+//					}
 				}
 				else{
 					LOG.error("JobTasksExecutor::JobTask update failed. can't get a lock - " + jobs.get(i).getUuid());

@@ -22,13 +22,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kisti.edison.cloud.env.Cloud;
-import kisti.edison.cloud.model.Callback;
 import kisti.edison.cloud.model.Count;
 import kisti.edison.cloud.model.Simulation;
 import kisti.edison.cloud.model.SimulationInfo;
 import kisti.edison.cloud.model.SimulationInfoList;
 import kisti.edison.cloud.service.SimulationService;
-import kisti.edison.cloud.web.RestController.SORT;
 
 /**
  * @author root
@@ -49,6 +47,7 @@ public class SimulationContoller extends RestController {
 			this.field = f;
 		}
 		
+		@SuppressWarnings("unused")
 		public String getField() { return this.field; }
 		
 		public static FIELD fromString(String field) {
@@ -298,10 +297,10 @@ public class SimulationContoller extends RestController {
 	@RequestMapping(method = RequestMethod.POST, value = "/simulation/create", headers = "Accept=application/json, application/xml")
 	public ResponseEntity<SimulationInfo> createSimulation(
 			@RequestParam(value = "zone", required = false) String zone,
-			@RequestParam(value = "url", required = false) String url,
+//			@RequestParam(value = "url", required = false) String url,
 //			@RequestParam(value = "ip", required = false) String ip,
 //			@RequestParam(value = "port", required = false) String port,
-			@RequestParam(value = "gid", required = false) String gid,
+//			@RequestParam(value = "gid", required = false) String gid,
 			@RequestBody Simulation simulation, HttpServletRequest request) {
 		LOG.info("createSimulation() called");
 		Subject currentUser = SecurityUtils.getSubject();
@@ -317,7 +316,7 @@ public class SimulationContoller extends RestController {
 		}
 
 		if(zone == null || zone.isEmpty()) {
-			zone = "ko";
+			zone = "cfd";
 		}
 		
 		LOG.info(simulation.toString());
@@ -327,22 +326,24 @@ public class SimulationContoller extends RestController {
 		if(createdSim != null) {
 			LOG.info(createdSim.toString());
 
-			/*
-			 * add callback
-			 */
-//			if (ip != null && port != null && gid != null)
-			if (url != null && gid != null)
-			{
-//				Callback callback = new Callback(ip, port, gid, createdSim.getUuid());
-				Callback callback = new Callback(url, gid, createdSim.getUuid());
-				LOG.info(callback.toString());
-				simulationService.addCallback(callback);
-			}
+//			/*
+//			 * add callback
+//			 */
+////			if (ip != null && port != null && gid != null)
+//			if (url != null && gid != null)
+//			{
+////				Callback callback = new Callback(ip, port, gid, createdSim.getUuid());
+//				Callback callback = new Callback(url, gid, createdSim.getUuid());
+//				LOG.info(callback.toString());
+//				simulationService.addCallback(callback);
+//			}
 
 			return responseWriter(currentUser, extract(createdSim),
 					new HttpHeaders(), HttpStatus.CREATED);
 		}
 		else {
+			LOG.error("createdSim is null: Check existance of simulation directory - icebreaker cannot create sim dir");
+			LOG.error("createdSim is null: check cluster, or zone");
 			return responseWriter(currentUser, null, new HttpHeaders(),
 					HttpStatus.BAD_REQUEST);
 		}
@@ -364,10 +365,10 @@ public class SimulationContoller extends RestController {
 					HttpStatus.NOT_FOUND);
 		}
 
-		if (simulation.getJobs().size() != 0) {
+		/*if (simulation.getJobs().size() != 0) {
 			return responseWriter(currentUser, null, new HttpHeaders(),
 					HttpStatus.BAD_REQUEST);
-		}
+		}*/
 
 		if (currentUser.hasRole(Cloud.ROLE_ADMINISTRATOR)) {
 			simulationService.deleteSimulation(uuid);

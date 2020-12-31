@@ -3,7 +3,6 @@ package kisti.edison.cloud.dao;
 import java.util.List;
 
 import kisti.edison.cloud.model.Host;
-import kisti.edison.cloud.model.User;
 
 import org.hibernate.Query;
 import org.hibernate.Session;

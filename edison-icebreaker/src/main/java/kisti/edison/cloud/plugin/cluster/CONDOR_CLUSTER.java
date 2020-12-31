@@ -90,4 +90,9 @@ public class CONDOR_CLUSTER implements ClusterAdapter {
 		return cluster;
 	}
 
+	@Override
+	public int getClusterRunCore(Cluster cluster, String username) {
+		return 0;
+	}
+
 }

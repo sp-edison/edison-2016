@@ -75,10 +75,10 @@ public class VirtualImageTasksExecutor {
 					index = 0;
 			}
 
-			int createdThreads = 0;
+//			int createdThreads = 0;
 			for (int i = 0; i < nThreads; i++) {
 				if (imageList.get(i).size() != 0) {
-					createdThreads++;
+//					createdThreads++;
 					taskExecutor.execute(new VirtualImageTask(imageManager,
 							imageList.get(i)));
 				}

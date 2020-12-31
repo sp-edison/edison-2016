@@ -6,7 +6,6 @@ package kisti.edison.cloud.dao;
 import java.util.List;
 
 import kisti.edison.cloud.model.FileEntry;
-import kisti.edison.cloud.model.Job;
 
 import org.hibernate.Query;
 import org.hibernate.Session;

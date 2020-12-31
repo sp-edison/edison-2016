@@ -6,7 +6,6 @@ package kisti.edison.cloud.plugin.xen;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.opennebula.client.Client;
 import org.opennebula.client.OneResponse;
 import org.springframework.stereotype.Component;

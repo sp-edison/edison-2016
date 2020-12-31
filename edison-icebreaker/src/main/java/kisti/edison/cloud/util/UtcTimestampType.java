@@ -3,13 +3,6 @@
  */
 package kisti.edison.cloud.util;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.util.Calendar;
-import java.util.TimeZone;
-
 import org.hibernate.type.TimestampType;
 
 /**
@@ -17,7 +10,7 @@ import org.hibernate.type.TimestampType;
  * 
  */
 public class UtcTimestampType extends TimestampType {
-	// private static final long serialVersionUID = 1132973341902870049L;
+	 private static final long serialVersionUID = 1132973341902870049L;
 	// private static final TimeZone UTC = TimeZone.getTimeZone("UTC");
 	//
 	// @Override

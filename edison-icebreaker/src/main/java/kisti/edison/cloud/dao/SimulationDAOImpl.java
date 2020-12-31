@@ -5,7 +5,6 @@ package kisti.edison.cloud.dao;
 
 import java.util.List;
 
-import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
@@ -13,8 +12,6 @@ import org.springframework.util.Assert;
 
 import kisti.edison.cloud.model.Job;
 import kisti.edison.cloud.model.Simulation;
-import kisti.edison.cloud.model.User;
-import kisti.edison.cloud.model.VirtualMachine;
 
 /**
  * @author root
@@ -93,7 +90,7 @@ public class SimulationDAOImpl extends HibernateDAO implements SimulationDAO {
 	}
 
 	@Override
-	public Job addJob(Session session, String uuid, Job job) {
+	public synchronized Job addJob(Session session, String uuid, Job job) {
 		// TODO Auto-generated method stub
 		if (session == null) {
 			session = getSession();

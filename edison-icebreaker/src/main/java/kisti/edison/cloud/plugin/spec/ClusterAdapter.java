@@ -16,5 +16,6 @@ public interface ClusterAdapter {
 	public String getName();
 	
 	public Cluster getClusterRuntime(Cluster cluster) throws Exception;
-	
+
+	public int getClusterRunCore(Cluster cluster, String username) throws Exception;
 }

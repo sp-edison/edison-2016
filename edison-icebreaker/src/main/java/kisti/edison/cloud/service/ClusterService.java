@@ -16,4 +16,6 @@ public interface ClusterService {
 	public List<Cluster> getClusters();
 	
 	public Cluster findCluster(String name);
+	
+	public void updateCluster(Cluster cluster);
 }

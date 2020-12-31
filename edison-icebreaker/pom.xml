@@ -225,6 +225,14 @@
 			<type>pom</type>
 		</dependency>
 
+        <dependency>
+              <groupId>org.opennebula.client</groupId>
+              <artifactId>org.opennebula.client</artifactId>
+              <version>1.0</version>
+              <scope>system</scope>
+              <systemPath>/home/hgkim/ib/edison-2016/edison-icebreaker/src/main/webapp/WEB-INF/lib/org.opennebula.client.jar</systemPath>
+        </dependency>
+
 	</dependencies>
 
     <build>

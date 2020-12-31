@@ -7,14 +7,12 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
-
 /**
  * @author jlyu
  *
  */
 public class ResourceConf {
-	private final Logger LOG = Logger.getLogger(this.getClass());
+//	private final Logger LOG = Logger.getLogger(this.getClass());
 	private static ResourceConf conf = null;
 	
 	private Map<String, Map<String, String>> env;

@@ -12,14 +12,12 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
-
 /**
  * @author root
  * 
  */
 public class Cloud {
-	private final Logger LOG = Logger.getLogger(this.getClass());
+//	private final Logger LOG = Logger.getLogger(this.getClass());
 	private static Cloud cloud = null;
 
 	public final static String HTTP_HEADER_AUTHORIZATION = "Authorization";

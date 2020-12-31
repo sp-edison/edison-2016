@@ -6,7 +6,6 @@ package kisti.edison.cloud.model;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -20,7 +19,7 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
  */
 @XmlType(propOrder = { "title", "description", "uuid", "simulationUuid",
 		"jobId", "status", "submittedTime", "startTime", "endTime",
-		"executable", "execution", "workingDir", "zipFilePath", "solverId", "solverName", "cyberLabId", "classId", "cluster" })
+		"executable", "execution", "workingDir", "zipFilePath", "solverId", "solverName", "cyberLabId", "classId", "nproc", "cluster" })
 @XmlRootElement(name = "jobStatus")
 public class JobStatus implements Serializable {
 
@@ -44,6 +43,7 @@ public class JobStatus implements Serializable {
 	private String solverName;
 	private String cyberLabId;
 	private String classId;
+	private int nproc;
 	
 	private String cluster;
 
@@ -195,5 +195,13 @@ public class JobStatus implements Serializable {
 
 	public void setCluster(String cluster) {
 		this.cluster = cluster;
+	}
+	
+	public int getNproc() {
+		return nproc;
+	}
+
+	public void setNproc(int nproc) {
+		this.nproc = nproc;
 	}
 }

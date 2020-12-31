@@ -8,12 +8,10 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import kisti.edison.cloud.env.Cloud;
-import kisti.edison.cloud.model.Count;
 import kisti.edison.cloud.model.Host;
 import kisti.edison.cloud.model.HostCount;
 import kisti.edison.cloud.model.HostList;
 import kisti.edison.cloud.service.HostService;
-import kisti.edison.cloud.web.RestController.SORT;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -47,6 +45,7 @@ public class HostController extends RestController {
 			this.field = f;
 		}
 		
+		@SuppressWarnings("unused")
 		public String getField() { return this.field; }
 		
 		public static FIELD fromString(String field) {

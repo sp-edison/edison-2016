@@ -41,8 +41,8 @@ public class Callback implements Serializable {
 	@Column(name = "url")
 	private String url;
 	
-	@Column(name = "gid")
-	private String gid;
+//	@Column(name = "gid")
+//	private String gid;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "submittedtime")
@@ -58,15 +58,16 @@ public class Callback implements Serializable {
 //	@OneToOne(fetch = FetchType.LAZY)
 //	@JoinColumn(name = "sim_uuid")
 //	private Simulation simulation;
-	@Column(name = "sim_uuid", nullable = false)
-	private String sim_uuid;
+	@Column(name = "job_uuid", nullable = false)
+	private String job_uuid;
 	
 //	public Callback(String ip, String port, String gid, String sim_uuid) {
-	public Callback(String url, String gid, String sim_uuid) {
+//	public Callback(String url, String gid, String sim_uuid) {
+	public Callback(String url, String job_uuid) {
 //		this.ip = ip;
 //		this.port = port;
 		this.url = url;
-		this.gid = gid;
+//		this.gid = gid;
 		this.state = Job.JobState.INITIALIZED;
 		this.retry = false;
 		
@@ -78,7 +79,7 @@ public class Callback implements Serializable {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		this.sim_uuid = sim_uuid;
+		this.job_uuid = job_uuid;
 	}
 
 //	public String getIp() {
@@ -105,16 +106,16 @@ public class Callback implements Serializable {
 //		this.port = port;
 //	}
 
-	public String getGid() {
-		return gid;
-	}
+//	public String getGid() {
+//		return gid;
+//	}
 
 	public Callback() {
 	}
 
-	public void setGid(String gid) {
-		this.gid = gid;
-	}
+//	public void setGid(String gid) {
+//		this.gid = gid;
+//	}
 	
 	public Job.JobState getState() {
 		return state;
@@ -142,9 +143,9 @@ public class Callback implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Callback [uuid=" + uuid + ", url=" + url + ", gid=" + gid
-				+ ", submittedTime=" + submittedTime + ", state=" + state
-				+ ", retry=" + retry + ", sim_uuid=" + sim_uuid + "]";
+		return "Callback [uuid=" + uuid + ", url=" + url + ", submittedTime="
+				+ submittedTime + ", state=" + state + ", retry=" + retry
+				+ ", job_uuid=" + job_uuid + "]";
 	}
 	
 }

@@ -4,9 +4,7 @@
 package kisti.edison.cloud.manager;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 
@@ -16,7 +14,6 @@ import kisti.edison.cloud.dao.JobDAO;
 import kisti.edison.cloud.model.Cluster;
 import kisti.edison.cloud.model.Job;
 import kisti.edison.cloud.model.User;
-import kisti.edison.cloud.model.VirtualMachine;
 import kisti.edison.cloud.plugin.spec.JobAdapter;
 
 import org.apache.log4j.Logger;
@@ -27,8 +24,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.orm.hibernate3.SessionFactoryUtils;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author eairs
@@ -176,7 +171,7 @@ public class JobManager {
 						LOG.info("JOB ( " + uJob.getUuid() + " , " + uJob.getState()
 								+ " ) UPDATE DONE.");
 						
-						LOG.info("2: " + uJob);
+						LOG.debug("2: " + uJob);
 						if (uJob.getState().equals(Job.JobState.QUEUED)
 								|| uJob.getState().equals(Job.JobState.RUNNING)) {
 							this.notifyToWorker(new Command<Job>("ADD", uJob));

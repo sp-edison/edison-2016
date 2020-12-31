@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 
 @Repository("callbackDAO")
-@SuppressWarnings("unchecked")
 public class CallbackDAOImpl  extends HibernateDAO implements CallbackDAO {
 	
 	@Override
@@ -61,7 +60,7 @@ public class CallbackDAOImpl  extends HibernateDAO implements CallbackDAO {
 		if (session == null) {
 			session = getSession();
 		}
-		String query = "from Callback callback where callback.sim_uuid = :uuid";
+		String query = "from Callback callback where callback.job_uuid = :uuid";
 		Callback callback = (Callback) session.createQuery(query).setString("uuid", uuid)
 				.uniqueResult();
 		return callback;

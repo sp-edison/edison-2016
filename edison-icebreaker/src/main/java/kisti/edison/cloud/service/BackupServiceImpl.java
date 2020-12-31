@@ -5,8 +5,6 @@ package kisti.edison.cloud.service;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 
@@ -18,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kisti.edison.cloud.dao.ClusterDAO;
-import kisti.edison.cloud.dao.RoleDAO;
 import kisti.edison.cloud.dao.UserDAO;
 import kisti.edison.cloud.env.Cloud;
 import kisti.edison.cloud.manager.Command;
@@ -37,7 +34,7 @@ public class BackupServiceImpl implements BackupService {
 	private final Logger LOG = Logger.getLogger(this.getClass());
 	
 	private UserDAO userDAO;
-	private RoleDAO roleDAO;
+//	private RoleDAO roleDAO;
 	private ClusterDAO clusterDAO;
 
 	public ClusterDAO getClusterDAO() {
@@ -54,10 +51,10 @@ public class BackupServiceImpl implements BackupService {
 		this.userDAO = userDAO;
 	}
 
-	@Autowired
-	public void setRoleDAO(RoleDAO roleDAO) {
-		this.roleDAO = roleDAO;
-	}
+//	@Autowired
+//	public void setRoleDAO(RoleDAO roleDAO) {
+//		this.roleDAO = roleDAO;
+//	}
 	
 	@Resource(name = "backupQueue")
 	private BlockingQueue<Command<User>> backupQueue;

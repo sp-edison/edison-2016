@@ -15,7 +15,6 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
@@ -25,11 +24,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.Version;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlID;
-import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -63,15 +58,17 @@ public class Job implements Serializable {
 		GNU_MPICH_1, 
 		GNU_MPICH_2, 
 		GNU_OPENMPI_1_4, 
+		GNU_OPENMPI_2_1_2, 
 		GNU_OPENMP, 
 		INTEL_OPENMP_MPI, 
 		INTEL_MPICH_1,
 		INTEL_MPICH_2,
 		INTEL_OPENMPI_1_4, 
-		INTEL_OPENMP 
+		INTEL_OPENMP,
+		INTEL2018_MPI
 	}
 	public static enum JobState {
-		UNKNOWN, INITIALIZE_FAILED, INITIALIZED, SUBMISSION_FAILED, QUEUED, RUNNING, SUSPEND_REQUESTED, SUSPENDED, CANCEL_REQUESTED, CANCELED, SUCCESS, FAILED
+		UNKNOWN, INITIALIZE_FAILED, INITIALIZED, SUBMISSION_FAILED, QUEUED, RUNNING, SUSPEND_REQUESTED, SUSPENDED, CANCEL_REQUESTED, CANCELED, SUCCESS, FAILED, TRANSFER, UPLOAD
 	}
 
 	@Id
@@ -323,7 +320,6 @@ public class Job implements Serializable {
 		return str;
 	}
 
-	@SuppressWarnings("unchecked")
 	public static Map<String, String> Str2Map(String propStr) {
 		Map<String, String> retMap = new HashMap<String, String>();
 		if (propStr.isEmpty()) {

@@ -4,31 +4,21 @@
 package kisti.edison.cloud.service;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.StringWriter;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.LinkOption;
-import java.nio.file.attribute.PosixFileAttributeView;
-import java.nio.file.attribute.UserPrincipal;
-import java.nio.file.attribute.UserPrincipalLookupService;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.UUID;
 
 import kisti.edison.cloud.dao.JobDAO;
 import kisti.edison.cloud.dao.LocalAccountDAO;
-import kisti.edison.cloud.dao.UserDAO;
 import kisti.edison.cloud.env.Cloud;
 import kisti.edison.cloud.manager.Command;
 import kisti.edison.cloud.manager.JobManager;
+import kisti.edison.cloud.model.Callback;
 import kisti.edison.cloud.model.Cluster;
 import kisti.edison.cloud.model.Job;
-import kisti.edison.cloud.model.Job.JobState;
 import kisti.edison.cloud.model.LocalAccount;
 import kisti.edison.cloud.model.User;
 
@@ -36,10 +26,12 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
-import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
+import org.apache.velocity.runtime.RuntimeConstants;
+
+//import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
+import org.apache.commons.codec.binary.Base64;
 
 /**
  * @author root
@@ -49,6 +41,7 @@ import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 @Service("jobService")
 public class JobServiceImpl implements JobService {
 	private final Logger LOG = Logger.getLogger(this.getClass());
+	Base64 base64 = new Base64(180, "".getBytes());
 	
 	private LocalAccountDAO localAccountDAO;
 	@Autowired
@@ -102,9 +95,18 @@ public class JobServiceImpl implements JobService {
 //	}
 	
 	private String makeJobDir(Cluster cluster, String sim_uuid, String job_uuid, User user) {
+		String pdir = cluster.getBaseDir() + user.getStorageSource()+ "/" + Cloud.getInstance().getProp("user.jobpath")
+				+ "/" + sim_uuid + "/";
 		String dir = cluster.getBaseDir() + user.getStorageSource()+ "/" + Cloud.getInstance().getProp("user.jobpath")
 				+ "/" + sim_uuid + "/" + job_uuid + ".job/";
-		
+		File pfile = new File(pdir);
+		if ( !pfile.exists() ) {
+			LOG.info("creating " + pdir);
+			pfile.mkdirs();
+			pfile.setExecutable(true, false);
+			pfile.setReadable(true, false);
+			pfile.setWritable(true, false);
+		}
 		File file = new File(dir);
 		if (!file.exists()) {
 			LOG.info("creating " + dir);
@@ -112,14 +114,20 @@ public class JobServiceImpl implements JobService {
 			file.setExecutable(true, false);
 			file.setReadable(true, false);
 			file.setWritable(true, false);
-			UserPrincipalLookupService lookupService = FileSystems.getDefault().getUserPrincipalLookupService();
-			try {
-				UserPrincipal userPrincipal = lookupService.lookupPrincipalByName(user.getUserId());
-				Files.getFileAttributeView(file.toPath(), PosixFileAttributeView.class, LinkOption.NOFOLLOW_LINKS).setOwner(userPrincipal);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+//			UserPrincipalLookupService lookupService = FileSystems.getDefault().getUserPrincipalLookupService();
+//			try {
+//				UserPrincipal userPrincipal = lookupService.lookupPrincipalByName(user.getUserId());
+//				Files.getFileAttributeView(file.toPath(), PosixFileAttributeView.class, LinkOption.NOFOLLOW_LINKS).setOwner(userPrincipal);
+//				
+//				//chown sim directory
+//				String sim_dir = cluster.getBaseDir() + user.getStorageSource()+ "/" + Cloud.getInstance().getProp("user.jobpath")
+//						+ "/" + sim_uuid + "/";
+//				File simDir = FileUtils.getFile(sim_dir);
+//				Files.setOwner(simDir.toPath(), userPrincipal);
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 		}
 		
 		return dir;
@@ -133,19 +141,21 @@ public class JobServiceImpl implements JobService {
 	 * .Job)
 	 */
 	@Override
-	public Job createJob(Cluster cluster, String sim_uuid, Job job) {
+	public Job createJob(Cluster cluster, String sim_uuid, Job job, String url) {
 		if (job == null) {
 			return job;
 		}
 
 		if (job.getFiles() != null) {
 			Iterator<String> iter = job.getFiles().keySet().iterator();
+			Velocity.setProperty(RuntimeConstants.RUNTIME_LOG_LOGSYSTEM_CLASS,"org.apache.velocity.runtime.log.Log4JLogChute" );
+			Velocity.setProperty("runtime.log.logsystem.log4j.logger", LOG.getName());
 			Velocity.init();
 			VelocityContext context = new VelocityContext();
 			while (iter.hasNext()) {
 				String key = iter.next();
 				String value = job.getFiles().get(key);
-				context.put(key, new String(Base64.decode(value)));
+				context.put(key, new String(base64.decode(value.getBytes())).replaceAll("\\p{Space}", "_"));
 			}
 
 			String execution = job.getExecution();
@@ -192,7 +202,13 @@ public class JobServiceImpl implements JobService {
 //		pJob.setWorkingDir(generateJobDir(cluster, sim_uuid, pJob.getUuid(), pJob.getUserId()));
 		pJob.setWorkingDir(makeJobDir(cluster, sim_uuid, pJob.getUuid(), user));
 
-
+		// change callback process
+		if (url != null && pJob != null)
+		{
+			Callback callback = new Callback(url, pJob.getUuid());
+			simulationService.addCallback(callback);
+			//simulationService.pushCallback(callback, createdJob);
+		}
 		
 		/* Get the local account object */
 		LocalAccount account = localAccountDAO.findLeastUsed(null, cluster.getName());

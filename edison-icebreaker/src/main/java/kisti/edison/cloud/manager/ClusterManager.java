@@ -3,19 +3,17 @@
  */
 package kisti.edison.cloud.manager;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 
 import javax.annotation.Resource;
 
 import kisti.edison.cloud.dao.ClusterDAO;
+import kisti.edison.cloud.env.Cloud;
 import kisti.edison.cloud.model.Cluster;
-import kisti.edison.cloud.model.Host;
 import kisti.edison.cloud.plugin.spec.ClusterAdapter;
+import kisti.edison.cloud.util.AuthUtils;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
@@ -79,18 +77,23 @@ public class ClusterManager {
 		ClusterAdapter adapter = clusterAdapters.get(cluster.getName());
 		if(adapter != null) {
 			Cluster aCluster;
+			LOG.info(cluster);
+//			LOG.info(cluster.getRemotePW());
+			
+//			String key = Cloud.getInstance().getProp("user.admin.password");
+//			LOG.info(AuthUtils.decrypt(cluster.getRemotePW(), key));
 			try {
 				aCluster = adapter.getClusterRuntime(cluster);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				LOG.info("[ " + cluster.getName() + " ] Exception !");
+				LOG.error("[ " + cluster.getName() + " ] Exception !");
 				this.notifyToWorker(new Command<Cluster>("ADD", cluster));
 				return;
 			}
 			
 			if(aCluster == null) {
-				LOG.info("[ " + cluster.getName() + " ] GetRunTime() Fail !");
+				LOG.error("[ " + cluster.getName() + " ] GetRunTime() Fail !");
 				this.notifyToWorker(new Command<Cluster>("ADD", cluster));
 				return;
 			}
@@ -125,5 +128,10 @@ public class ClusterManager {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public ClusterAdapter getACluster(Cluster cluster) {
+		ClusterAdapter adapter = clusterAdapters.get(cluster.getName());
+		return adapter;
 	}
 }

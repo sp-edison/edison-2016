@@ -3,12 +3,12 @@
  */
 package kisti.edison.cloud.service;
 
-import java.io.IOException;
 import java.util.List;
 
 import kisti.edison.cloud.model.Callback;
 import kisti.edison.cloud.model.Job;
 import kisti.edison.cloud.model.Simulation;
+import kisti.edison.cloud.model.Job.JobState;
 
 /**
  * @author root
@@ -30,9 +30,13 @@ public interface SimulationService {
 	
 	public void addCallback(Callback callback);
 	
-	public void pushCallback(Callback callback, String uuid, Job job);
+	public void pushCallback(Callback callback, Job job);
 	
-	public Callback getCallback(String sim_uuid);
+	public void pushCallback(Callback callback, Job job, JobState jobState);
+	
+	public void pushCallback2(Callback callback, Job job, JobState jobState);
+	
+	public Callback getCallback(String job_uuid);
 
 	public void deleteSimulation(String uuid);
 

@@ -49,9 +49,9 @@ public final class StringToMap {
          * @return Map representing map mapping of given character array or empty map.
          * @see cz.atlas.bubbles.it.stringtomap.StringToMap#MAIN_KEY
          */
-        public static Map toMap(final char[] string, final char iSep,
+        public static Map<String, String> toMap(final char[] string, final char iSep,
                                 final char keySep, final char escape) {
-                final HashMap retVal = new HashMap();
+                final HashMap<String, String> retVal = new HashMap<String, String>();
                 int ikey1 = 0, ikey2 = -1;
                 int ival1 = 0, ival2 = -1;
                 boolean wasEscape = false;
@@ -104,7 +104,7 @@ public final class StringToMap {
          * @return Map mpa representation of the passed array of characters
          * @see StringToMap#toMap(char[], char, char, char)
          */
-        public static Map toMap(final char[] chars) {
+        public static Map<String, String> toMap(final char[] chars) {
                 return toMap(chars, DEFAULT_ITEM_SEPARATOR, DEFAULT_KEY_SEPARATOR, DEFAULT_ESCAPE_CHARACTER);
         }
 

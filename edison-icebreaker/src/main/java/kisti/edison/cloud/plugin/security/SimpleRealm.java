@@ -4,8 +4,7 @@ import java.util.Date;
 
 import org.apache.log4j.Logger;
 import org.apache.shiro.authc.*;
-import org.apache.shiro.authc.credential.Sha256CredentialsMatcher;
-import org.apache.shiro.authc.credential.SimpleCredentialsMatcher;
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.crypto.hash.Sha256Hash;
@@ -55,7 +54,8 @@ public class SimpleRealm extends AuthorizingRealm {
 	public SimpleRealm() {
 		setName("simpleRealm"); // This name must match the name in the User
 								// class's getPrincipals() method
-		setCredentialsMatcher(new Sha256CredentialsMatcher());
+//		setCredentialsMatcher(new Sha256CredentialsMatcher());
+		setCredentialsMatcher(new HashedCredentialsMatcher("SHA-256"));
 		// setCredentialsMatcher(new SimpleCredentialsMatcher());
 	}
 

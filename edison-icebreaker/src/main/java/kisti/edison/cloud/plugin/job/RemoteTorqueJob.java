@@ -8,10 +8,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.TimeZone;
-import java.util.concurrent.locks.ReentrantLock;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import kisti.edison.cloud.env.Cloud;
 import kisti.edison.cloud.model.Cluster;
 import kisti.edison.cloud.model.Job;
 import kisti.edison.cloud.model.User;
@@ -77,11 +77,13 @@ public class RemoteTorqueJob {
 		cmd.add("ssh");
 		cmd.add("-p");
 		cmd.add(cluster.getPort());
-		cmd.add(job.getLocalAccount()+"@"+cluster.getIp());
+//		cmd.add("-i");
+//		cmd.add(job.getWorkingDir()+"/../../../.ssh/id_rsa");
+		cmd.add(job.getUserId()+"@"+cluster.getIp());
 		cmd.add("qsub");
 		cmd.add(getExecutableFile());
 		
-//		LOG.info("qsub cmd: " + cmd.toString());
+		LOG.info("qsub cmd: " + cmd.toString());
 		
 		ProcessBuilder builder = new ProcessBuilder(cmd);
 		builder.redirectErrorStream(true);
@@ -482,16 +484,19 @@ public class RemoteTorqueJob {
 //		ssh -p 22002 150.183.247.211 "/usr/local/bin/qstat -f 4083"
 //		StringBuilder command usage
 //		http://egloos.zum.com/lempel/v/10961361
+		String userId = Cloud.getInstance().getProp("user.admin.id");
 		List<String> cmd = new ArrayList<String>();
 		cmd.add("ssh");
 		cmd.add("-p");
 		cmd.add(cluster.getPort());
-		cmd.add(job.getLocalAccount()+"@"+cluster.getIp());
-		cmd.add("/usr/local/bin/qstat");
+		cmd.add(userId + "@"+cluster.getIp());
+//		cmd.add(job.getLocalAccount()+"@"+cluster.getIp());
+//		cmd.add("/usr/local/bin/qstat");
+		cmd.add("/usr/bin/qstat");
 		cmd.add("-f");
 		cmd.add(JobID);
 		
-//		LOG2.info("qstat cmd: " + cmd.toString());
+		LOG2.info("qstat cmd: " + cmd.toString());
 		
 		ProcessBuilder builder = new ProcessBuilder(cmd);
 		builder.redirectErrorStream(true);

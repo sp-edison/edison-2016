@@ -7,7 +7,6 @@ import java.util.List;
 
 import kisti.edison.cloud.model.Cluster;
 import kisti.edison.cloud.model.Job;
-import kisti.edison.cloud.model.User;
 
 /**
  * @author root
@@ -17,7 +16,7 @@ public interface JobService {
 
 	public int getJobCount(String state);
 	
-	public Job createJob(Cluster cluster, String sim_uuid, Job job);
+	public Job createJob(Cluster cluster, String sim_uuid, Job job, String url);
 
 	public Job findJobByUUID(String uuid);
 

@@ -13,7 +13,6 @@ import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import kisti.edison.cloud.env.Cloud;
 import kisti.edison.cloud.model.Cluster;
 import kisti.edison.cloud.model.Job;
 import kisti.edison.cloud.model.User;
@@ -49,7 +48,6 @@ public class RemoteCondorJob {
 	private String usedcput="N/A";
 	private String errrorPath="N/A";
 	private String outputPath="N/A";
-	private String VariablesList="N/A";
 	private String exitStatus = "N/A";
 
 	/**
@@ -69,13 +67,11 @@ public class RemoteCondorJob {
 	
 	public String queue(Cluster cluster, Job job)
 	{
-        String userId = Cloud.getInstance().getProp("user.admin.id");
 		List<String> cmd = new ArrayList<String>();
 		cmd.add("ssh");
 		cmd.add("-p");
 		cmd.add(cluster.getPort());
-		cmd.add(userId+"@"+cluster.getIp());
-//		cmd.add(job.getUserId()+"@"+cluster.getIp());
+		cmd.add(job.getUserId()+"@"+cluster.getIp());
 //		cmd.add("/opt/condor/bin/condor_submit");
 		cmd.add("condor_submit");
 		cmd.add(getExecutableFile());

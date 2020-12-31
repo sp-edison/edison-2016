@@ -9,8 +9,6 @@ import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 
-import kisti.edison.cloud.model.Host;
-import kisti.edison.cloud.model.User;
 import kisti.edison.cloud.model.VirtualImage;
 
 /**

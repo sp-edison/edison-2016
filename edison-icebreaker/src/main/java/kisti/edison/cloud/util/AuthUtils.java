@@ -9,6 +9,7 @@
 package kisti.edison.cloud.util;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
@@ -18,13 +19,16 @@ import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 //import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.crypto.AesCipherService;
 import org.apache.shiro.crypto.hash.Sha256Hash;
 
-import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
+//import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
+import org.apache.commons.codec.binary.Base64;
 
 import kisti.edison.cloud.env.Cloud;
 import kisti.edison.cloud.model.Cluster;
@@ -44,8 +48,20 @@ import java.io.File;
  * 
  */
 public class AuthUtils {
+	private static AtomicInteger counter = new AtomicInteger(1000001);
+	
+	private static AesCipherService aesCipher = new AesCipherService();
+	
 	private static final Logger LOG = Logger.getLogger(AuthUtils.class
 			.getName());
+	
+	public static AtomicInteger getCounter() {
+		return counter;
+	}
+
+	public static void setCounter(int uid) {
+		counter.set(uid);
+	}
 
 	public static Map<String, String> getKeyPairs(String userId,
 			String credential) {
@@ -76,12 +92,14 @@ public class AuthUtils {
 
 	public static Map<String, String> parseAuthorizationHeader(String authStr) {
 		Map<String, String> result = new HashMap<String, String>();
+		Base64 base64 = new Base64(180, "".getBytes());
 
 		if (authStr == null || authStr.isEmpty())
 			return result;
 
 		if (authStr.startsWith(Cloud.HTTP_HEADER_BASIC)) {
-			String usernpass = new String(Base64.decode(authStr.substring(6)));
+//			String usernpass = new String(Base64.decode(authStr.substring(6)));
+			String usernpass = new String(base64.decode(authStr.substring(6).getBytes()));
 			String userId = usernpass.substring(0, usernpass.indexOf(":"));
 			String password = usernpass.substring(usernpass.indexOf(":") + 1);
 
@@ -201,7 +219,8 @@ public class AuthUtils {
 			}	
 			else {
 				// grouped user
-				userBase = "/" + user.getCyberLabId() + "/" + user.getClassId() + "/" + user.getUserId() + "/";
+				//userBase = "/" + user.getCyberLabId() + "/" + user.getClassId() + "/" + user.getUserId() + "/";
+				userBase = "/" + user.getUserId() + "/";
 			}
 			String repodir = storageBase + userBase + "/" + Cloud.getInstance().getProp("user.repositorypath") + "/";
 			if (!(new File(repodir)).exists()) {
@@ -212,6 +231,11 @@ public class AuthUtils {
 			if (!(new File(jobdir)).exists()) {
 				LOG.info("creating jobdir : " + jobdir);
 				(new File(jobdir)).mkdirs();
+			}
+			String sshdir = storageBase + userBase + "/.ssh/";
+			if (!(new File(sshdir)).exists()) {
+				LOG.info("creating jobdir : " + sshdir);
+				(new File(sshdir)).mkdirs();
 			}
 			/*
 			if(Cloud.getInstance().getProp("build.target").equals("KISTI-NAP")) {
@@ -242,9 +266,11 @@ public class AuthUtils {
 		return userBase;
 	}
 
-	public static void deleteDir(String userId) {
-		String cmd = "rm -rf " + Cloud.getInstance().getProp("data.basedir")
-				+ "/" + userId;
+	public static void deleteDir(String basedir, String userId, String repodir) {
+//		c.getBaseDir()
+//		String cmd = "/usr/bin/sudo /bin/rm -rf " + basedir + Cloud.getInstance().getProp("data.basedir")
+//				+ "/" + userId;
+		String cmd = "/usr/bin/sudo /bin/rm -rf " + repodir;
 		try {
 			LOG.info(cmd);
 			Process p = Runtime.getRuntime().exec(cmd);
@@ -252,7 +278,7 @@ public class AuthUtils {
 			p.getInputStream().close();
 			p.getOutputStream().close();
 			p.getErrorStream().close();
-			LOG.info("Exit Value : " + p.exitValue());
+//			LOG.info("Exit Value : " + p.exitValue());
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (InterruptedException e) {
@@ -337,5 +363,48 @@ public class AuthUtils {
 //		return bRet;
 //	}
 	
+	/**
+	 * @param input
+	 * @param key key는 16자 이상
+	 * @return null error
+	 */
+	public static String encrypt(String input, String key) {
+		if ( key.length() < 16 ) return null;
+		String key2 = key.substring(0, 16);
+//		System.out.println(key2);
+        aesCipher.setModeName("ECB");
+//        aesCipher.setKeySize(256);
+//        System.out.println(aesCipher.getKeySize()); //KeySize : 128
+        byte[] bytes;
+		try {
+			bytes = aesCipher.encrypt(input.getBytes("UTF-8"), key2.getBytes()).getBytes();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+        byte[] bytesEncoded = Base64.encodeBase64(bytes); 
+        return new String(bytesEncoded);
+    }
+	
+	/**
+	 * @param input : encoded text
+	 * @param key : key는 16자 이상
+	 * @return
+	 */
+	public static String decrypt(String input, String key) {
+		String key2 = key.substring(0, 16);
+        aesCipher.setModeName("ECB");
+//        aesCipher.setKeySize(256);
+//        System.out.println(aesCipher.getKeySize());  //KeySize : 128
+        try {
+        	byte[] bytes = aesCipher.decrypt(Base64.decodeBase64(input), key2.getBytes()).getBytes();
+
+        	return new String(bytes);
+        } catch (Exception e) {
+        	return null;
+        }
+
+    }	
 	
 }

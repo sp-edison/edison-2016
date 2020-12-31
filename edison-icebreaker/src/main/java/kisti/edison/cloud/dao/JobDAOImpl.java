@@ -5,10 +5,8 @@ package kisti.edison.cloud.dao;
 
 import java.util.List;
 
-import kisti.edison.cloud.model.Host;
 import kisti.edison.cloud.model.Job;
 import kisti.edison.cloud.model.Job.JobState;
-import kisti.edison.cloud.model.VirtualMachine;
 
 import org.hibernate.CacheMode;
 import org.hibernate.OptimisticLockException;

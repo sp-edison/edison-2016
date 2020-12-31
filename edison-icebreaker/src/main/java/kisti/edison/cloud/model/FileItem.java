@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlType;
  * @author root
  * 
  */
-@XmlType(propOrder = { "id", "name", "type", "size", "description", "path" })
+@XmlType(propOrder = { "id", "name", "type", "size", "description", "path", "lastModified", "parentPath" })
 @XmlRootElement(name = "file")
 public class FileItem implements Serializable {
 	private static final long serialVersionUID = -7554401562930725502L;
@@ -29,17 +29,24 @@ public class FileItem implements Serializable {
 	private String description;
 
 	private String path;
+	
+	private String lastModified;
+	
+	private String parentPath;
 
 	public FileItem() {
 	}
 
 	public FileItem(String id, String name, String type, Long size,
-			String description) {
+			String description, String path, String lastModified, String parentPath) {
 		this.setId(id);
 		this.setName(name);
 		this.setType(type);
 		this.setSize(size);
 		this.setDescription(description);
+		this.setPath(path);
+		this.setLastModified(lastModified);
+		this.setParentPath(parentPath);
 	}
 
 	@XmlAttribute
@@ -90,12 +97,36 @@ public class FileItem implements Serializable {
 	public void setPath(String path) {
 		this.path = path;
 	}
+	
+	/**
+	 * @return the lastModified
+	 */
+	public String getLastModified() {
+		return lastModified;
+	}
+
+	/**
+	 * @param lastModified the lastModified to set
+	 */
+	public void setLastModified(String lastModified) {
+		this.lastModified = lastModified;
+	}
+	
+	public String getParentPath(){
+		return parentPath;	
+	}
+	
+	public void setParentPath(String parentPath){
+		this.parentPath = parentPath;
+	}
+
 
 	@Override
 	public String toString() {
 		return "FileItem [id=" + id + ", name=" + name + ", type=" + type
 				+ ", size=" + size + ", description=" + description + ", path="
-				+ path + "]";
+				+ path + ", lastModified =" + lastModified + ", parentPath =" + parentPath + "]";
+		
 	}
 
 }

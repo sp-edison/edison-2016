@@ -35,13 +35,13 @@ public class UserDAOImpl extends HibernateDAO implements UserDAO {
 	}
 
 	public User createUser(Session session, User user) {
-		LOG.info("createUser() : pw = " + user.getPassword());
-		LOG.info("createUser() : pw (tobe) = "
-				+ new Sha256Hash("gmlwjd").toHex());
-		LOG.info("createUser() : pw (orig-str) = "
-				+ new Sha256Hash(user.getPassword()).toHex());
-		LOG.info("createUser() : pw (orig-ca)  = "
-				+ new Sha256Hash(user.getPassword().toCharArray()).toHex());
+//		LOG.info("createUser() : pw = " + user.getPassword());
+//		LOG.info("createUser() : pw (tobe) = "
+//				+ new Sha256Hash("gmlwjd").toHex());
+//		LOG.info("createUser() : pw (orig-str) = "
+//				+ new Sha256Hash(user.getPassword()).toHex());
+//		LOG.info("createUser() : pw (orig-ca)  = "
+//				+ new Sha256Hash(user.getPassword().toCharArray()).toHex());
 		if(session == null) {
 			session = getSession();
 		}
@@ -84,13 +84,13 @@ public class UserDAOImpl extends HibernateDAO implements UserDAO {
 	public User updateUser(Session session, User user) {
 		// Transaction tr = session.beginTransaction();
 
-		LOG.info("updateUser() : pw = " + user.getPassword());
-		LOG.info("updateUser() : pw (tobe) = "
-				+ new Sha256Hash("gmlwjd").toHex());
-		LOG.info("updateUser() : pw (orig-str) = "
-				+ new Sha256Hash(user.getPassword()).toHex());
-		LOG.info("updateUser() : pw (orig-ca)  = "
-				+ new Sha256Hash(user.getPassword().toCharArray()).toHex());
+//		LOG.info("updateUser() : pw = " + user.getPassword());
+//		LOG.info("updateUser() : pw (tobe) = "
+//				+ new Sha256Hash("gmlwjd").toHex());
+//		LOG.info("updateUser() : pw (orig-str) = "
+//				+ new Sha256Hash(user.getPassword()).toHex());
+//		LOG.info("updateUser() : pw (orig-ca)  = "
+//				+ new Sha256Hash(user.getPassword().toCharArray()).toHex());
 		
 		if(session == null) {
 			session = getSession();
