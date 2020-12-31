@@ -1,0 +1,16 @@
+#!/usr/bin/expect
+
+set timeout 20
+
+set cmd [lrange $argv 2 end]
+set otp [lindex $argv 1]
+set password [lindex $argv 0]
+
+eval spawn $cmd
+expect "Password(OTP):"
+send "$otp\r";
+expect "Password:";
+send "$password\r";
+#expect "password:";
+#send "$password\r";
+interact
