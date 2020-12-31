@@ -122,13 +122,18 @@ vi pom.xml
               <artifactId>org.opennebula.client</artifactId>
               <version>1.0</version>
               <scope>system</scope>
-              <systemPath>/root/edison-2016/edison-icebreaker/src/main/webapp/WEB-INF/lib/org.opennebula.client.jar</systemPath>
+              <systemPath>/git_clone_path/edison-2016/edison-icebreaker/src/main/webapp/WEB-INF/lib/org.opennebula.client.jar</systemPath>
         </dependency>
 ```
 
 ```
+mvn -Ptest compile package
+```
+or
+```
 mvn -Ptest tomcat7:redeploy
 ```
+
 
 
 * IB configuration
